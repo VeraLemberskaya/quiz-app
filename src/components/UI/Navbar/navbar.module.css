@@ -1,0 +1,47 @@
+@import "../../../styles/colors.css";
+
+.Navbar {
+  border-bottom: 1px solid #ecece8;
+  font-size: 1.1rem;
+}
+
+.NavLogo {
+  width: 13rem;
+  cursor: pointer;
+}
+
+.Toggler {
+  display: none;
+  cursor: pointer;
+}
+
+.Bar {
+  width: 28px;
+  height: 2px;
+  background-color: var(--font-color);
+  margin: 6px 0;
+  transition: transform 0.2s;
+  border-radius: 1px;
+}
+
+.CrossBar1 {
+  transform: rotate(45deg) translate(2px, 4px);
+}
+
+.CrossBar2 {
+  display: none;
+}
+
+.CrossBar3 {
+  transform: rotate(-45deg) translate(2px, -4px);
+}
+
+@media (max-width: 992px) {
+  .NavLinksHolder {
+    display: none;
+  }
+
+  .Toggler {
+    display: inline-block;
+  }
+}

@@ -1,0 +1,18 @@
+.SideBarHolder {
+  position: relative;
+}
+
+.SideBarBody {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: #fff;
+  transition: transform 0.15s ease-in-out;
+  padding-top: 5rem;
+}
+
+.SideBarClosed {
+  transform: translateX(100%);
+}
