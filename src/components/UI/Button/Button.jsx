@@ -11,7 +11,7 @@ const BUTTON_SIZES = {
 };
 
 const Button = (props) => {
-  const { type, size, ...otherProps } = props;
+  const { type, size, startIcon, endIcon, ...otherProps } = props;
 
   const btnTypeClass = BUTTON_TYPES[type] ?? "";
   const btnSizeClass = BUTTON_SIZES[size] ?? "";
@@ -21,7 +21,9 @@ const Button = (props) => {
       className={`${style.Button} ${btnTypeClass} ${btnSizeClass}`}
       {...otherProps}
     >
+      {startIcon ? <span className={style.StartIcon}>{startIcon}</span> : null}
       {props.children}
+      {endIcon ? <span className={style.EndIcon}>{endIcon}</span> : null}
     </button>
   );
 };

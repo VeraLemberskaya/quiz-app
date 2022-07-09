@@ -1,8 +1,14 @@
 @import "../../../styles/colors.css";
 
+.NavContainer {
+  position: sticky;
+  top: 0;
+}
+
 .Navbar {
   border-bottom: 1px solid #ecece8;
   font-size: 1.1rem;
+  background-color: #fff;
 }
 
 .NavLogo {
@@ -37,6 +43,12 @@
 }
 
 @media (max-width: 992px) {
+  .Navbar {
+    font-size: 1rem;
+  }
+  .NavLogo {
+    width: 10rem;
+  }
   .NavLinksHolder {
     display: none;
   }
