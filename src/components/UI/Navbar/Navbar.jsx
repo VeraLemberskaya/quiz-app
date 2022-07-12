@@ -10,9 +10,9 @@ const Navbar = () => {
   const [sidebarShown, setSidebarShown] = React.useState(false);
 
   return (
-    <>
+    <div className={styles.NavContainer}>
       <div
-        className={`${styles.Navbar} container d-flex justify-content-between align-items-center pb-3`}
+        className={`${styles.Navbar} container d-flex justify-content-between align-items-center pb-3 pt-4`}
       >
         <Link to="/">
           <div className={`${styles.NavLogo} user-select-none`}>
@@ -38,7 +38,7 @@ const Navbar = () => {
         </div>
       </div>
       <Sidebar sidebarShown={sidebarShown} />
-    </>
+    </div>
   );
 };
 

@@ -2,15 +2,14 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 
 import Navbar from "../Navbar";
+import styles from "./layout.module.css";
 
 const Layout = () => {
   return (
-    <>
-      <div className="pt-4">
-        <Navbar />
-      </div>
+    <div className={styles.Layout}>
+      <Navbar />
       <Outlet />
-    </>
+    </div>
   );
 };
 
