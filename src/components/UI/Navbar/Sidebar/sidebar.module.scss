@@ -1,0 +1,28 @@
+@import "../../../../styles/colors";
+@import "../../../../styles/media";
+@import "../../../../styles/variables";
+
+.sideBarHolder {
+  position: relative;
+
+  .sideBarBody {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-color: $white-color;
+    z-index: 100;
+    transition: transform $transition, height $transition;
+    padding-top: 8rem;
+    height: calc(100vh - $navbar-height);
+    width: 100vw;
+    @include for-tablet-landscape {
+      height: calc(100vh - $navbar-height-small);
+    }
+  }
+
+  .sideBarClosed {
+    transform: translateX(100%);
+  }
+}

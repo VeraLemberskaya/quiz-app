@@ -1,0 +1,22 @@
+@import "../../../styles/media";
+
+.layout {
+  min-height: 100vh;
+  position: relative;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 16rem;
+  height: 13rem;
+  background-image: url("../../../assets/bottom-bg.svg");
+  background-repeat: no-repeat;
+  background-position: 0% 100%;
+  background-size: contain;
+  @include for-laptop {
+    width: 9.5rem;
+    height: 8rem;
+  }
+}

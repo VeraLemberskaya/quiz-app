@@ -1,0 +1,19 @@
+@import "../../../../styles/colors";
+@import "../../../../styles/media";
+@import "../../../../styles/variables";
+
+.navLinks {
+  gap: 4.8rem;
+  @include for-tablet-landscape {
+    flex-direction: column;
+  }
+
+  .navLink {
+    text-decoration: none;
+    color: $silver-color;
+    transition: $transition;
+    &:hover {
+      color: $grey-color;
+    }
+  }
+}

@@ -1,0 +1,65 @@
+@import "../../../styles/colors";
+@import "../../../styles/media";
+@import "../../../styles/variables";
+
+.navContainer {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: $navbar-height;
+  @include for-tablet-landscape {
+    height: $navbar-height-small;
+  }
+
+  .navbar {
+    border-bottom: 1px solid $carrara-color;
+    font-size: 1.6rem;
+    background-color: $white-color;
+    @include for-tablet-landscape {
+      font-size: 1.4rem;
+    }
+
+    .navLogo {
+      width: 22rem;
+      cursor: pointer;
+      @include for-tablet-landscape {
+        width: 16rem;
+      }
+    }
+
+    .navLinksHolder {
+      @include for-tablet-landscape {
+        display: none;
+      }
+    }
+
+    .toggler {
+      display: none;
+      cursor: pointer;
+      @include for-tablet-landscape {
+        display: inline-block;
+      }
+
+      .bar {
+        width: 28px;
+        height: 2px;
+        background-color: $font-color;
+        margin: 6px 0;
+        transition: transform 0.2s;
+        border-radius: 1px;
+      }
+
+      .crossBar1 {
+        transform: rotate(45deg) translate(2px, 4px);
+      }
+
+      .crossBar2 {
+        display: none;
+      }
+
+      .crossBar3 {
+        transform: rotate(-45deg) translate(2px, -4px);
+      }
+    }
+  }
+}

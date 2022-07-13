@@ -1,13 +1,13 @@
 import React from "react";
-import style from "./button.module.css";
+import styles from "./button.module.scss";
 
 const BUTTON_TYPES = {
-  primary: style.Primary,
-  outlined: style.Outlined,
+  primary: styles.primary,
+  outlined: styles.outlined,
 };
 
 const BUTTON_SIZES = {
-  large: style.Large,
+  large: styles.large,
 };
 
 const Button = (props) => {
@@ -18,12 +18,12 @@ const Button = (props) => {
 
   return (
     <button
-      className={`${style.Button} ${btnTypeClass} ${btnSizeClass}`}
+      className={`${styles.button} ${btnTypeClass} ${btnSizeClass}`}
       {...otherProps}
     >
-      {startIcon ? <span className={style.StartIcon}>{startIcon}</span> : null}
+      {startIcon ? <span className={styles.startIcon}>{startIcon}</span> : null}
       {props.children}
-      {endIcon ? <span className={style.EndIcon}>{endIcon}</span> : null}
+      {endIcon ? <span className={styles.endIcon}>{endIcon}</span> : null}
     </button>
   );
 };

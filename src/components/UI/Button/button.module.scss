@@ -1,0 +1,75 @@
+@import "../../../styles/colors";
+@import "../../../styles/media";
+@import "../../../styles/variables";
+
+.button {
+  text-decoration: none;
+  border: none;
+  outline: none;
+  transition: $transition;
+  padding: 0.8rem 2.4rem;
+  color: $theme-color;
+  cursor: pointer;
+  background-color: transparent;
+  &:hover {
+    color: $silver-color;
+    svg {
+      fill: $silver-color;
+    }
+  }
+  svg {
+    transition: $transition;
+    fill: $theme-color;
+  }
+}
+
+.primary {
+  color: $white-color;
+  background: $theme-color;
+  border: 1px solid $theme-color;
+  box-shadow: 0 18px 40px -12px $theme-color;
+  &:hover {
+    background: $white-color;
+    color: $theme-color;
+    svg {
+      fill: $theme-color;
+    }
+  }
+  svg {
+    fill: $white-color;
+  }
+}
+
+.outlined {
+  background: $white-color;
+  color: $theme-color;
+  border: 1px solid $theme-color;
+  &:hover {
+    color: $white-color;
+    background: $theme-color;
+    svg {
+      fill: $white-color;
+    }
+  }
+  svg {
+    transition: $transition;
+    fill: $theme-color;
+  }
+}
+
+.large {
+  font-size: 1.92rem;
+  padding: 1rem 2.8rem;
+  @include for-tablet-landscape {
+    font-size: 1.6rem;
+    padding: 0.8rem 2.4rem;
+  }
+}
+
+.startIcon {
+  margin-right: 0.8rem;
+}
+
+.endIcon {
+  margin-left: 0.8rem;
+}
