@@ -6,8 +6,8 @@ import Logo from "../../../assets/logo.svg";
 import NavLinks from "./NavLinks";
 import Sidebar from "./Sidebar";
 
-const Navbar = () => {
-  const [sidebarShown, setSidebarShown] = React.useState(false);
+const Navbar: React.FC = () => {
+  const [sidebarShown, setSidebarShown] = React.useState<boolean>(false);
 
   return (
     <div className={styles.navContainer}>

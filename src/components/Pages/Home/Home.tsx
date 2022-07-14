@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
 
 import { Button } from "../../UI";
+import { ButtonSize, ButtonType } from "../../UI/Button";
 import styles from "./home.module.scss";
 import Image from "../../../assets/people-quiz.svg";
 
-const Home = () => {
-  console.log(styles);
+const Home: React.FC = () => {
   return (
     <div
       className={`${styles.homeContainer} container d-flex justify-content-between}`}
@@ -25,12 +25,15 @@ const Home = () => {
         </h3>
         <div className={`${styles.btnContainer} d-flex`}>
           <Link to="/">
-            <Button type="primary" size="large">
+            <Button type={ButtonType.PRIMARY} buttonSize={ButtonSize.LARGE}>
               Start solving
             </Button>
           </Link>
           <Link to="/">
-            <Button size="large" startIcon={<AiFillCaretDown />}>
+            <Button
+              buttonSize={ButtonSize.LARGE}
+              startIcon={<AiFillCaretDown />}
+            >
               know more
             </Button>
           </Link>

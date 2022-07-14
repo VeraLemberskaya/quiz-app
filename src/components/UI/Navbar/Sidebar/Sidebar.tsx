@@ -3,7 +3,11 @@ import NavLinks from "../NavLinks";
 
 import styles from "./sidebar.module.scss";
 
-const Sidebar = ({ sidebarShown }) => {
+type SidebarProps = {
+  sidebarShown: boolean;
+};
+
+const Sidebar: React.FC<SidebarProps> = ({ sidebarShown }) => {
   return (
     <div className={styles.sideBarHolder}>
       <div
