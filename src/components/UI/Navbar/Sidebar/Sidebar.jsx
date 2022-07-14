@@ -1,14 +1,14 @@
 import React from "react";
 import NavLinks from "../NavLinks";
 
-import styles from "./sidebar.module.css";
+import styles from "./sidebar.module.scss";
 
 const Sidebar = ({ sidebarShown }) => {
   return (
-    <div className={styles.SideBarHolder}>
+    <div className={styles.sideBarHolder}>
       <div
-        className={`${styles.SideBarBody} ${
-          sidebarShown ? "" : styles.SideBarClosed
+        className={`${styles.sideBarBody} ${
+          sidebarShown ? "" : styles.sideBarClosed
         }`}
       >
         <NavLinks />

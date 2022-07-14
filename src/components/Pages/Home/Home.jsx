@@ -3,26 +3,27 @@ import { Link } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
 
 import { Button } from "../../UI";
-import styles from "./home.module.css";
+import styles from "./home.module.scss";
 import Image from "../../../assets/people-quiz.svg";
 
 const Home = () => {
+  console.log(styles);
   return (
     <div
-      className={`${styles.HomeContainer} container d-flex justify-content-between}`}
+      className={`${styles.homeContainer} container d-flex justify-content-between}`}
     >
-      <div className={styles.Info}>
-        <h1 className={styles.H1}>
+      <div className={styles.info}>
+        <h1 className={styles.title}>
           Learn
           <br />
           new concepts
           <br />
           for each question
         </h1>
-        <h3 className={`${styles.H3} py-2 my-5`}>
+        <h3 className={`${styles.subtitle} py-2 my-5`}>
           We help you prepare for exams and quizes
         </h3>
-        <div className={`${styles.BtnContainer} d-flex`}>
+        <div className={`${styles.btnContainer} d-flex`}>
           <Link to="/">
             <Button type="primary" size="large">
               Start solving
@@ -35,7 +36,7 @@ const Home = () => {
           </Link>
         </div>
       </div>
-      <div className={styles.Image}>
+      <div className={styles.image}>
         <img className="w-100" src={Image} />
       </div>
     </div>
