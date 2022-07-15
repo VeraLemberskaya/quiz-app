@@ -1,0 +1,18 @@
+@import "../../../styles/media";
+
+.answersContainer {
+  gap: 6rem;
+  @include for-tablet-landscape {
+    gap: 3rem;
+    width: 65%;
+    margin: 0 auto;
+    flex-direction: column;
+  }
+  @include for-tablet-portrait {
+    width: 80%;
+  }
+  @include for-phone-only {
+    gap: 1rem;
+    width: 100%;
+  }
+}

@@ -24,7 +24,7 @@ const Home: React.FC = () => {
           We help you prepare for exams and quizes
         </h3>
         <div className={`${styles.btnContainer} d-flex`}>
-          <Link to="/">
+          <Link to="/quiz">
             <Button type={ButtonType.PRIMARY} buttonSize={ButtonSize.LARGE}>
               Start solving
             </Button>
