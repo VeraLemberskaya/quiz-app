@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
 
-import Button, { ButtonType } from "../../Button";
+import Button from "../../Button";
 import styles from "./navlinks.module.scss";
 
-const NavLinks: React.FC = () => {
+const NavLinks: FC = () => {
   return (
     <div className={`${styles.navLinks} d-flex align-items-center`}>
       <Link className={styles.navLink} to="/">
@@ -17,7 +17,7 @@ const NavLinks: React.FC = () => {
         About us
       </Link>
       <Link className={styles.navLink} to="/">
-        <Button type={ButtonType.OUTLINED}>Login</Button>
+        <Button type="outlined">Login</Button>
       </Link>
     </div>
   );
