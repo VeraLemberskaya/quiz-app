@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 
 import styles from "./navbar.module.scss";
@@ -6,8 +6,8 @@ import Logo from "../../../assets/logo.svg";
 import NavLinks from "./NavLinks";
 import Sidebar from "./Sidebar";
 
-const Navbar = () => {
-  const [sidebarShown, setSidebarShown] = React.useState(false);
+const Navbar: FC = () => {
+  const [sidebarShown, setSidebarShown] = useState<boolean>(false);
 
   return (
     <div className={styles.navContainer}>

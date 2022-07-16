@@ -6,8 +6,7 @@ import { Button } from "../../UI";
 import styles from "./home.module.scss";
 import Image from "../../../assets/people-quiz.svg";
 
-const Home = () => {
-  console.log(styles);
+const Home: React.FC = () => {
   return (
     <div
       className={`${styles.homeContainer} container d-flex justify-content-between}`}
@@ -25,12 +24,12 @@ const Home = () => {
         </h3>
         <div className={`${styles.btnContainer} d-flex`}>
           <Link to="/">
-            <Button type="primary" size="large">
+            <Button type="primary" buttonSize="large">
               Start solving
             </Button>
           </Link>
           <Link to="/">
-            <Button size="large" startIcon={<AiFillCaretDown />}>
+            <Button buttonSize="large" startIcon={<AiFillCaretDown />}>
               know more
             </Button>
           </Link>

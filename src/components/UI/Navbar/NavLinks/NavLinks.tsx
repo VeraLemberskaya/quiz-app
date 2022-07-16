@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
 
 import Button from "../../Button";
 import styles from "./navlinks.module.scss";
 
-const NavLinks = () => {
+const NavLinks: FC = () => {
   return (
     <div className={`${styles.navLinks} d-flex align-items-center`}>
       <Link className={styles.navLink} to="/">

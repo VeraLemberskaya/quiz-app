@@ -1,9 +1,13 @@
-import React from "react";
+import React, { FC } from "react";
 import NavLinks from "../NavLinks";
 
 import styles from "./sidebar.module.scss";
 
-const Sidebar = ({ sidebarShown }) => {
+type Props = {
+  sidebarShown: boolean;
+};
+
+const Sidebar: FC<Props> = ({ sidebarShown }) => {
   return (
     <div className={styles.sideBarHolder}>
       <div

@@ -2,10 +2,9 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 
 import Navbar from "../Navbar";
-import BottomBg from "../../../assets/bottom-bg.svg";
 import styles from "./layout.module.scss";
 
-const Layout = () => {
+const Layout: React.FC = () => {
   return (
     <div className={styles.layout}>
       <Navbar />
