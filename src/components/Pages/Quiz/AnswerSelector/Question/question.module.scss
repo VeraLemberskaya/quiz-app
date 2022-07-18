@@ -1,5 +1,6 @@
-@import "../../../../styles/colors";
-@import "../../../../styles/media";
+@import "../../../../../styles/colors";
+@import "../../../../../styles/media";
+@import "../../../../../styles/mixins";
 
 .questionContainer {
   margin-top: 3rem;
@@ -7,6 +8,9 @@
   width: 100%;
   background-color: $theme-color;
   padding: 4.5rem 2.7rem;
+  flex-direction: column;
+  gap: 2rem;
+  @include flex-center;
   @include for-laptop {
     padding: 4rem 2rem;
   }
@@ -15,6 +19,13 @@
   }
   @include for-phone-only {
     margin-bottom: 3rem;
+  }
+  .imgContainer {
+    height: 15rem;
+    img {
+      height: 100%;
+      object-fit: contain;
+    }
   }
   .questionTitle {
     text-align: center;

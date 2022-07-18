@@ -1,56 +1,71 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import styles from "./quiz.module.scss";
-import Question from "./Question";
-import Answer from "./Answer";
-
-const questions = [
-  {
-    id: 1,
-    title: "Some question title? Some question title?",
-    answers: ["answer1", "answer2 answer2.0", "answer3", "answer4"],
-    correctAnswer: 2,
-  },
-  {
-    id: 2,
-    title: "Some another question? Some question title?",
-    answers: ["answer5", "answer6", "answer7", "answer8"],
-    correctAnswer: 2,
-  },
-];
+import { Button, Loader } from "../../UI";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { decrement, increment, initQuiz } from "../../../redux/quiz/slice";
+import {
+  selectCurrentQuestion,
+  selectQuizStatus,
+} from "../../../redux/quiz/selectors";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import AnswerSelector from "./AnswerSelector";
 
 const Quiz: React.FC = () => {
-  const [answers, setAnswers] = useState<Record<string, number>>();
+  const status = useAppSelector(selectQuizStatus);
+  const currentQuestion = useAppSelector(selectCurrentQuestion);
+  const dispatch = useAppDispatch();
 
-  const handleAnswerSelect = (data: { questionId: number; answer: number }) => {
-    setAnswers((oldAnswers) => ({
-      ...oldAnswers,
-      [data.questionId]: data.answer,
-    }));
+  const handleAnswerSelect = (data: { id: string; answer: number }) => {
+    //something
   };
+
+  const handleNextClick = () => {
+    dispatch(increment());
+  };
+
+  const handlePreviousClick = () => {
+    dispatch(decrement());
+  };
+
+  useEffect(() => {
+    dispatch(initQuiz());
+  }, []);
 
   return (
     <>
-      {questions.map((question) => (
-        <>
-          <Question>{question.title}</Question>
-          <div className="container">
-            <div className={`${styles.answersContainer} row`}>
-              {question.answers.map((answer, index) => (
-                <Answer
-                  questionId={question.id}
+      {status === "loading" ? (
+        <Loader />
+      ) : (
+        <div className={styles.quizBody}>
+          <AnswerSelector id={currentQuestion.id} onSelect={handleAnswerSelect}>
+            <AnswerSelector.Question img={currentQuestion.img}>
+              {currentQuestion.question}
+            </AnswerSelector.Question>
+            <AnswerSelector.AnswersContainer>
+              {currentQuestion.answers.map((answer, index) => (
+                <AnswerSelector.Answer
                   key={JSON.stringify(answer)}
                   index={index}
-                  onSelect={handleAnswerSelect}
-                  selected={answers && answers[question.id] === index}
                 >
                   {answer}
-                </Answer>
+                </AnswerSelector.Answer>
               ))}
-            </div>
+            </AnswerSelector.AnswersContainer>
+          </AnswerSelector>
+          <div className={`${styles.btnContainer} container d-flex`}>
+            <Button
+              startIcon={<AiFillCaretLeft />}
+              onClick={handlePreviousClick}
+            >
+              Previos
+            </Button>
+            <Button endIcon={<AiFillCaretRight />} onClick={handleNextClick}>
+              Next
+            </Button>
           </div>
-        </>
-      ))}
+        </div>
+      )}
     </>
   );
 };

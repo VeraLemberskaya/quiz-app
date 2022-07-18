@@ -1,7 +1,7 @@
-@import "../../../../styles/colors";
-@import "../../../../styles/variables";
-@import "../../../../styles/media";
-@import "../../../../styles/mixins";
+@import "../../../../../styles/colors";
+@import "../../../../../styles/variables";
+@import "../../../../../styles/media";
+@import "../../../../../styles/mixins";
 
 .answerContainer {
   background-color: $alto-color;
@@ -15,6 +15,9 @@
   @include for-tablet-landscape {
     min-height: 7rem;
     align-items: flex-start;
+  }
+  input[type="radio"] {
+    display: none;
   }
   &:hover {
     background-color: $silver-color;
@@ -40,14 +43,5 @@
       font-size: 1.8rem;
       margin-left: 1.5rem;
     }
-  }
-}
-
-.selected {
-  background-color: $theme-color;
-  color: $white-color;
-  &:hover {
-    background-color: $theme-color;
-    color: $white-color;
   }
 }
