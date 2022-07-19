@@ -1,45 +1,36 @@
-import React from "react";
+import React, { FC } from "react";
 
 import styles from "./button.module.scss";
 import { ButtonType, ButtonSize } from "./types";
 
-const BUTTON_TYPES = new Map<ButtonType, string>([
-  [ButtonType.PRIMARY, styles.primary],
-  [ButtonType.OUTLINED, styles.outlined],
-]);
+const BUTTON_TYPES: { [key in ButtonType]: string } = {
+  primary: styles.primary,
+  outlined: styles.outlined,
+};
 
-const BUTTON_SIZES = new Map<ButtonSize, string>([
-  [ButtonSize.LARGE, styles.large],
-]);
+const BUTTON_SIZES: { [key in ButtonSize]: string } = {
+  large: styles.large,
+};
 
-type ButtonProps = {
+type Props = {
   type?: ButtonType;
   buttonSize?: ButtonSize;
   startIcon?: JSX.Element;
   endIcon?: JSX.Element;
 } & React.HTMLProps<HTMLButtonElement>;
 
-const Button: React.FC<ButtonProps> = ({
+const Button: FC<Props> = ({
   type,
   buttonSize,
   startIcon,
   endIcon,
   ...props
 }) => {
-  let btnTypeClass = "",
-    btnSizeClass = "";
-
-  if (type) {
-    btnTypeClass = BUTTON_TYPES.get(type) ?? "";
-  }
-
-  if (buttonSize) {
-    btnSizeClass = BUTTON_SIZES.get(buttonSize) ?? "";
-  }
-
   return (
     <button
-      className={`${styles.button} ${btnTypeClass} ${btnSizeClass}`}
+      className={`${styles.button} ${type ? BUTTON_TYPES[type] : ""} ${
+        buttonSize ? BUTTON_SIZES[buttonSize] : ""
+      }`}
       {...props}
     >
       {startIcon ? <span className={styles.startIcon}>{startIcon}</span> : null}

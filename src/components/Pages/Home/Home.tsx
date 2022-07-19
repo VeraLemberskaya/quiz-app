@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
 
 import { Button } from "../../UI";
-import { ButtonSize, ButtonType } from "../../UI/Button";
 import styles from "./home.module.scss";
 import Image from "../../../assets/people-quiz.svg";
 
@@ -25,15 +24,12 @@ const Home: React.FC = () => {
         </h3>
         <div className={`${styles.btnContainer} d-flex`}>
           <Link to="/quiz">
-            <Button type={ButtonType.PRIMARY} buttonSize={ButtonSize.LARGE}>
+            <Button type="primary" buttonSize="large">
               Start solving
             </Button>
           </Link>
           <Link to="/">
-            <Button
-              buttonSize={ButtonSize.LARGE}
-              startIcon={<AiFillCaretDown />}
-            >
+            <Button buttonSize="large" startIcon={<AiFillCaretDown />}>
               know more
             </Button>
           </Link>
