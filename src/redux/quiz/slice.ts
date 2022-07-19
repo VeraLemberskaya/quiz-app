@@ -2,15 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 import { QUESTIONS_NUMBER } from "../../constants";
-import {
-  generateRandomCapitalQuestion,
-  generateRandomFlagsQuestion,
-} from "../../utils/generateRandomQuestion";
+import { generateRandomQuestion } from "../../utils/generateRandomQuestion";
 import { Question, QuizSliceState, Country } from "./types";
 
 export const initQuiz = createAsyncThunk<Question[]>(
   "quiz/initQuiz",
   async () => {
+    console.log("triggered");
     const { data: countries } = await axios.get<Country[]>(
       "https://restcountries.com/v2/all"
     );
@@ -18,7 +16,7 @@ export const initQuiz = createAsyncThunk<Question[]>(
     const questions: Question[] = [];
 
     while (questions.length !== QUESTIONS_NUMBER) {
-      const question = generateRandomFlagsQuestion(countries);
+      const question = generateRandomQuestion(countries);
       if (!questions.some((curr) => curr.id === question.id)) {
         questions.push(question);
       }
@@ -39,7 +37,7 @@ const quizSlice = createSlice({
   initialState,
   reducers: {
     increment: (state) => {
-      if (state.currentIndex !== state.currentQuiz.length - 1) {
+      if (state.currentIndex !== QUESTIONS_NUMBER) {
         state.currentIndex++;
       }
     },
