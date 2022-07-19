@@ -29,7 +29,11 @@ const Home: React.FC = () => {
             </Button>
           </Link>
           <Link to="/">
-            <Button buttonSize="large" startIcon={<AiFillCaretDown />}>
+            <Button
+              type="disabled"
+              buttonSize="large"
+              startIcon={<AiFillCaretDown />}
+            >
               know more
             </Button>
           </Link>
