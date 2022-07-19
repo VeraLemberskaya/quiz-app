@@ -17,6 +17,15 @@
       fill: $silver-color;
     }
   }
+  &:disabled {
+    background-color: $alto-color;
+    color: $font-color;
+    box-shadow: 0 18px 40px -12px $alto-color;
+    cursor: auto;
+    svg {
+      fill: $font-color;
+    }
+  }
   svg {
     transition: $transition;
     fill: $theme-color;
@@ -53,15 +62,6 @@
   }
   svg {
     fill: $theme-color;
-  }
-}
-
-.disabled {
-  background-color: $silver-color;
-  color: $font-color;
-  box-shadow: 0 18px 40px -12px $silver-color;
-  svg {
-    fill: $font-color;
   }
 }
 

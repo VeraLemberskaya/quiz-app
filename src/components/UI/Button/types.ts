@@ -1,2 +1,2 @@
-export type ButtonType = "primary" | "outlined" | "disabled";
+export type ButtonType = "primary" | "outlined";
 export type ButtonSize = "large";

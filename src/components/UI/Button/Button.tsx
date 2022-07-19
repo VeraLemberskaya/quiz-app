@@ -6,7 +6,6 @@ import { ButtonType, ButtonSize } from "./types";
 const BUTTON_TYPES: { [key in ButtonType]: string } = {
   primary: styles.primary,
   outlined: styles.outlined,
-  disabled: styles.disabled,
 };
 
 const BUTTON_SIZES: { [key in ButtonSize]: string } = {
