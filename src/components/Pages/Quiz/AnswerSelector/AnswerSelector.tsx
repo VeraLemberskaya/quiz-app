@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import Answer from "./Answer/Answer";
 import AnswersContainer from "./AnswersContainer";
@@ -7,28 +7,33 @@ import { AnswerSelectorContext, AnswerSelectorContextType } from "./context";
 
 type Props = {
   id: string;
-  onSelect: (data: { id: string; answer: number }) => void;
+  onSelect?: (answer: number) => void;
+  correctAnswer: number;
   children: React.ReactNode;
 };
 
-const AnswerSelector = ({ id, onSelect, children }: Props) => {
+const AnswerSelector = ({ id, onSelect, correctAnswer, children }: Props) => {
   const [answer, setAnswer] = useState<number | null>(null);
 
   useEffect(() => {
-    if (answer != null) {
-      onSelect({ id, answer });
+    setAnswer(null);
+  }, [id]);
+
+  useEffect(() => {
+    if (answer != null && onSelect) {
+      onSelect(answer);
     }
   }, [answer]);
 
   const value: AnswerSelectorContextType = useMemo(
     () => ({
       answer,
+      correctAnswer,
       setAnswer: (answer: number) => {
         setAnswer(answer);
       },
-      id,
     }),
-    [answer, id, setAnswer]
+    [answer, setAnswer]
   );
 
   return (

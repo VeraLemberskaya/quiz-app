@@ -1,9 +1,9 @@
 import { createContext, useContext } from "react";
 
 export type AnswerSelectorContextType = {
-  id: string;
-  setAnswer: (answer: number) => void;
   answer: number | null;
+  correctAnswer: number;
+  setAnswer: (answer: number) => void;
 };
 
 export const AnswerSelectorContext =

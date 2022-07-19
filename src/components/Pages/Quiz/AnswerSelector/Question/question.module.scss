@@ -22,9 +22,11 @@
     margin-bottom: 3rem;
   }
   .imgContainer {
-    height: 15rem;
+    height: 17rem;
+    padding: 0.5rem;
+    background-color: $white-color;
     @include for-phone-only {
-      height: 12rem;
+      height: 14rem;
     }
     img {
       height: 100%;
