@@ -1,0 +1,59 @@
+@import "../../../../../styles/colors";
+@import "../../../../../styles/variables";
+@import "../../../../../styles/media";
+@import "../../../../../styles/mixins";
+
+.answerContainer {
+  border: none;
+  outline: none;
+  background-color: $alto-color;
+  position: relative;
+  flex-direction: column;
+  min-height: 8.5rem;
+  padding: 1.5rem;
+  transition: background-color $transition, color $transition;
+  cursor: pointer;
+  @include flex-center;
+  @include for-tablet-landscape {
+    min-height: 7rem;
+    align-items: flex-start;
+  }
+  &:hover:not(.disabled) {
+    background-color: $silver-color;
+    color: #222;
+  }
+
+  .answerIndex {
+    font-size: 1.4rem;
+    color: inherit;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+  }
+
+  .answer {
+    font-size: 2.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: inherit;
+    margin: 0 auto;
+    width: fit-content;
+    @include for-tablet-landscape {
+      font-size: 1.8rem;
+      margin-left: 1.5rem;
+    }
+  }
+}
+
+.disabled {
+  cursor: auto;
+}
+
+.wrong {
+  background-color: $red-color;
+  color: $white-color;
+}
+.correct {
+  background-color: $green-color;
+  color: $white-color;
+}

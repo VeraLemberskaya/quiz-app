@@ -13,7 +13,7 @@
     top: 0;
     background-color: $white-color;
     z-index: 100;
-    transition: transform $transition, height $transition;
+    transition: transform $transition;
     padding-top: 8rem;
     height: calc(100vh - $navbar-height);
     width: 100vw;
