@@ -8,7 +8,6 @@ import { Question, QuizSliceState, Country } from "./types";
 export const initQuiz = createAsyncThunk<Question[]>(
   "quiz/initQuiz",
   async () => {
-    console.log("triggered");
     const { data: countries } = await axios.get<Country[]>(
       "https://restcountries.com/v2/all"
     );

@@ -4,14 +4,14 @@
 
 .button {
   text-decoration: none;
-  border: none;
+  border: 1px solid transparent;
+  background-color: transparent;
   outline: none;
   transition: $transition;
   padding: 0.8rem 2.4rem;
   color: $theme-color;
   cursor: pointer;
-  background-color: transparent;
-  &:hover {
+  &:hover:not(:disabled) {
     color: $silver-color;
     svg {
       fill: $silver-color;
@@ -32,7 +32,7 @@
   }
 }
 
-.primary {
+.primary:not(:disabled) {
   color: $white-color;
   background: $theme-color;
   border: 1px solid $theme-color;
@@ -49,11 +49,11 @@
   }
 }
 
-.outlined {
+.outlined:not(:disabled) {
   background: $white-color;
   color: $theme-color;
   border: 1px solid $theme-color;
-  &:hover {
+  &:hover:not(:disabled) {
     color: $white-color;
     background: $theme-color;
     svg {

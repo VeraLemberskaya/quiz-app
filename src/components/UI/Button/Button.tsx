@@ -26,12 +26,13 @@ const Button: FC<Props> = ({
   endIcon,
   ...props
 }) => {
+  const { className, ...otherProps } = props;
   return (
     <button
-      className={`${styles.button} ${type ? BUTTON_TYPES[type] : ""} ${
-        buttonSize ? BUTTON_SIZES[buttonSize] : ""
-      }`}
-      {...props}
+      className={`${className} ${styles.button} ${
+        type ? BUTTON_TYPES[type] : ""
+      } ${buttonSize ? BUTTON_SIZES[buttonSize] : ""}`}
+      {...otherProps}
     >
       {startIcon ? <span className={styles.startIcon}>{startIcon}</span> : null}
       {props.children}

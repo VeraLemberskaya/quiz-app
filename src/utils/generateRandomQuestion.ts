@@ -3,10 +3,17 @@ import { Question, Country } from "../redux/quiz/types";
 import { getRandomInt } from "./getRandomInt";
 import { shuffle } from "./shuffle";
 
+const getValidCountryIndex = (countries: Country[]) => {
+  while (true) {
+    const index = getRandomInt(countries.length);
+    if (countries[index].capital) return index;
+  }
+};
+
 export const generateRandomCapitalQuestion: (
   countries: Country[]
 ) => Question = (countries) => {
-  const countryIndex = getRandomInt(countries.length);
+  const countryIndex = getValidCountryIndex(countries);
 
   const { name: countryName, capital } = countries[countryIndex];
 
@@ -15,7 +22,7 @@ export const generateRandomCapitalQuestion: (
   const answersIndexcountries: number[] = [countryIndex];
 
   while (answers.length !== ANSWERS_NUMBER) {
-    const index = getRandomInt(countries.length);
+    const index = getValidCountryIndex(countries);
 
     if (!answersIndexcountries.includes(index)) {
       answersIndexcountries.push(index);

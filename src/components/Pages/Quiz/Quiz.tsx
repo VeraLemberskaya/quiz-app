@@ -3,30 +3,37 @@ import React, { useEffect, useState } from "react";
 import styles from "./quiz.module.scss";
 import { Button, Loader } from "../../UI";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { decrement, increment, initQuiz } from "../../../redux/quiz/slice";
+import { increment, initQuiz } from "../../../redux/quiz/slice";
 import {
   selectCurrentQuestion,
   selectQuizData,
-  selectQuizStatus,
 } from "../../../redux/quiz/selectors";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import { AiFillCaretRight } from "react-icons/ai";
 import AnswerSelector from "./AnswerSelector";
 import { QUESTIONS_NUMBER } from "../../../constants";
 
 const Quiz: React.FC = () => {
-  const [buttonNextVisible, setButtonNextVisible] = useState<boolean>(false);
+  const [btnNextActive, setBtnNextActive] = useState<boolean>(false);
   const { status, currentIndex } = useAppSelector(selectQuizData);
   const currentQuestion = useAppSelector(selectCurrentQuestion);
   const dispatch = useAppDispatch();
 
   const handleAnswerSelect = (answer: number) => {
-    if (currentIndex < QUESTIONS_NUMBER) {
-      setButtonNextVisible(true);
+    if (currentIndex !== QUESTIONS_NUMBER - 1) {
+      if (answer === currentQuestion.correctAnswer) {
+        setTimeout(() => {
+          setBtnNextActive(true);
+        }, 1200);
+      } else {
+        setTimeout(() => {
+          setBtnNextActive(true);
+        }, 2500);
+      }
     }
   };
 
   useEffect(() => {
-    setButtonNextVisible(false);
+    setBtnNextActive(false);
   }, [currentIndex]);
 
   useEffect(() => {
@@ -36,10 +43,6 @@ const Quiz: React.FC = () => {
   const handleNextClick = () => {
     dispatch(increment());
   };
-
-  // const handlePreviousClick = () => {
-  //   dispatch(decrement());
-  // };
 
   return (
     <>
@@ -63,18 +66,17 @@ const Quiz: React.FC = () => {
               ))}
             </AnswerSelector.AnswersContainer>
           </AnswerSelector>
-          <div className={`${styles.btnContainer} container d-flex`}>
-            {/* <Button
-              startIcon={<AiFillCaretLeft />}
-              onClick={handlePreviousClick}
+          <div className="container mt-5 mb-4">
+            <Button
+              className={styles.btnNext}
+              type="primary"
+              buttonSize="large"
+              endIcon={<AiFillCaretRight />}
+              onClick={handleNextClick}
+              disabled={!btnNextActive}
             >
-              Previos
-            </Button> */}
-            {buttonNextVisible && (
-              <Button endIcon={<AiFillCaretRight />} onClick={handleNextClick}>
-                Next
-              </Button>
-            )}
+              Next
+            </Button>
           </div>
         </div>
       )}

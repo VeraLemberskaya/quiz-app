@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { useAnswerSelectorContext } from "../context";
 import styles from "./answer.module.scss";
@@ -6,14 +6,6 @@ import styles from "./answer.module.scss";
 type Props = {
   index: number;
   children: React.ReactNode;
-};
-
-type AnswerType = "disabled" | "correct" | "wrong";
-
-const ANSWER_TYPES: { [key in AnswerType]: string } = {
-  disabled: styles.disabled,
-  correct: styles.correct + " " + styles.disabled,
-  wrong: styles.wrong + " " + styles.disabled,
 };
 
 const letterACode: number = 65;
@@ -24,11 +16,10 @@ const Answer: React.FC<Props> = ({ index, children }) => {
   const getAnswerClass = () => {
     if (answer !== null) {
       if (index === correctAnswer) {
-        return ANSWER_TYPES["correct"];
+        return answer === index ? styles.correct : styles.correctDelay;
       } else if (answer === index) {
-        return ANSWER_TYPES["wrong"];
+        return styles.wrong;
       }
-      return ANSWER_TYPES["disabled"];
     }
     return "";
   };
@@ -51,4 +42,4 @@ const Answer: React.FC<Props> = ({ index, children }) => {
   );
 };
 
-export default Answer;
+export default React.memo(Answer);
