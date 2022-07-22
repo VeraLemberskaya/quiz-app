@@ -8,15 +8,26 @@ import { AnswerSelectorContext, AnswerSelectorContextType } from "./context";
 type Props = {
   id: string;
   onSelect?: (answer: number) => void;
+  answer?: number;
   correctAnswer: number;
   children: React.ReactNode;
 };
 
-const AnswerSelector = ({ id, onSelect, correctAnswer, children }: Props) => {
-  const [answer, setAnswer] = useState<number | null>(null);
+const AnswerSelector = ({
+  id,
+  onSelect,
+  answer: answerIndex,
+  correctAnswer,
+  children,
+}: Props) => {
+  const [answer, setAnswer] = useState<number | null>(answerIndex ?? null);
 
   useEffect(() => {
-    setAnswer(null);
+    if (answerIndex !== undefined) {
+      setAnswer(answerIndex);
+    } else {
+      setAnswer(null);
+    }
   }, [id]);
 
   useEffect(() => {
@@ -27,13 +38,14 @@ const AnswerSelector = ({ id, onSelect, correctAnswer, children }: Props) => {
 
   const value: AnswerSelectorContextType = useMemo(
     () => ({
+      isAnswered: answerIndex !== undefined ? true : false,
       answer,
       correctAnswer,
       setAnswer: (answer: number) => {
         setAnswer(answer);
       },
     }),
-    [answer, setAnswer]
+    [answer, setAnswer, answerIndex]
   );
 
   return (

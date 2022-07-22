@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
 
 export type AnswerSelectorContextType = {
+  isAnswered: boolean;
   answer: number | null;
   correctAnswer: number;
   setAnswer: (answer: number) => void;

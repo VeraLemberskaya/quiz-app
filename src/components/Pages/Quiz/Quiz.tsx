@@ -6,7 +6,7 @@ import styles from "./quiz.module.scss";
 import { Button, Loader } from "../../UI";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
-  clearQuiz,
+  resetQuiz,
   increment,
   initQuiz,
   setAnswer,
@@ -16,7 +16,7 @@ import {
   selectQuizData,
   selectQuizScore,
 } from "../../../redux/quiz/selectors";
-import AnswerSelector from "./AnswerSelector";
+import AnswerSelector from "../../AnswerSelector";
 import { QUESTIONS_NUMBER } from "../../../constants";
 import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
@@ -109,8 +109,11 @@ const Quiz: React.FC = () => {
             <Modal
               score={totalScore}
               onComplete={() => {
-                dispatch(clearQuiz());
+                dispatch(resetQuiz());
                 navigate("/");
+              }}
+              onCheckResult={() => {
+                navigate("/results");
               }}
             />
           </CSSTransition>

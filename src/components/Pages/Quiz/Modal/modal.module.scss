@@ -68,10 +68,13 @@
       }
     }
   }
-  .btnComplete {
+  .btnContainer {
     position: absolute;
-    right: 3rem;
     bottom: 3rem;
+    width: 100%;
+    display: flex;
+    padding: 0 3rem;
+    justify-content: space-between;
   }
 }
 

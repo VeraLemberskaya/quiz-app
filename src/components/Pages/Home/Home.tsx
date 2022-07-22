@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
 
 import { Button } from "../../UI";
 import styles from "./home.module.scss";
 import Image from "../../../assets/people-quiz.svg";
+import { useAppDispatch } from "../../../redux/hooks";
+import { resetQuiz } from "../../../redux/quiz/slice";
 
 const Home: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(resetQuiz());
+  }, []);
+
   return (
     <div
       className={`${styles.homeContainer} container d-flex justify-content-between}`}

@@ -11,14 +11,16 @@ type Props = {
 const letterACode: number = 65;
 
 const Answer: React.FC<Props> = ({ index, children }) => {
-  const { setAnswer, answer, correctAnswer } = useAnswerSelectorContext();
+  const { setAnswer, answer, correctAnswer, isAnswered } =
+    useAnswerSelectorContext();
 
   const getAnswerClass = () => {
     if (answer !== null) {
       if (index === correctAnswer) {
+        if (isAnswered) return styles.answeredCorrect;
         return answer === index ? styles.correct : styles.correctDelay;
       } else if (answer === index) {
-        return styles.wrong;
+        return isAnswered ? styles.answeredWrong : styles.wrong;
       }
     }
     return "";
