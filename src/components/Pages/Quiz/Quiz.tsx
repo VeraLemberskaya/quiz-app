@@ -3,7 +3,7 @@ import { AiFillCaretRight } from "react-icons/ai";
 import { CSSTransition } from "react-transition-group";
 
 import styles from "./quiz.module.scss";
-import { Button, Loader } from "../../UI";
+import { Button, Loader, Stepper } from "../../UI";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
   resetQuiz,
@@ -19,7 +19,7 @@ import {
 import AnswerSelector from "../../AnswerSelector";
 import { QUESTIONS_NUMBER } from "../../../constants";
 import Modal from "./Modal";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Quiz: React.FC = () => {
   const [btnNextActive, setBtnNextActive] = useState<boolean>(false);
@@ -30,6 +30,7 @@ const Quiz: React.FC = () => {
   const currentQuestion = useAppSelector(selectCurrentQuestion);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { state: isResultPage } = useLocation();
 
   const handleAnswerSelect = (answer: number) => {
     dispatch(setAnswer(currentQuestion.id, answer));
@@ -68,6 +69,7 @@ const Quiz: React.FC = () => {
         <Loader />
       ) : (
         <div className={styles.quizBody}>
+          {/* <Stepper stepsCount={5} activeStep={1} /> */}
           <AnswerSelector
             id={currentQuestion.id}
             onSelect={handleAnswerSelect}
@@ -113,7 +115,11 @@ const Quiz: React.FC = () => {
                 navigate("/");
               }}
               onCheckResult={() => {
-                navigate("/results");
+                navigate("/results", {
+                  state: {
+                    isResultPage: true,
+                  },
+                });
               }}
             />
           </CSSTransition>

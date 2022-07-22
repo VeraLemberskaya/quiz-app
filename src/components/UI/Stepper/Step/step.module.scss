@@ -1,0 +1,10 @@
+@import "../../../../styles/colors";
+@import "../../../../styles/mixins";
+
+.stepBody {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 5px solid $theme-color;
+  @include flex-center;
+}
