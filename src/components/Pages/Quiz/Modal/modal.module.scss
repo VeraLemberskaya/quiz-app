@@ -1,0 +1,87 @@
+@import "../../../../styles/colors";
+@import "../../../../styles/mixins";
+@import "../../../../styles/media";
+
+.modalBody {
+  position: absolute;
+  background-color: $white-color;
+  height: 65rem;
+  width: 120rem;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -40%);
+  z-index: 11;
+  @include for-laptop {
+    width: 90rem;
+    height: 55rem;
+  }
+  @include for-tablet-landscape {
+    width: 70rem;
+  }
+  @include for-tablet-portrait {
+    width: 55rem;
+  }
+  @include for-phone-only {
+    width: 95%;
+    height: 70vh;
+  }
+  .imageContainer {
+    width: 60rem;
+    height: 50rem;
+    background-image: url(../../../../assets/modal-bg.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    @include absolute-center;
+    @include for-tablet-portrait {
+      width: 50rem;
+      height: 45rem;
+    }
+    @include for-phone-only {
+      width: 32rem;
+      height: 32rem;
+    }
+    .text {
+      color: $white-color;
+      text-align: center;
+      @include absolute-center;
+      .subtitle {
+        color: inherit;
+        font-size: 4.5rem;
+        font-weight: 500;
+        @include for-tablet-portrait {
+          font-size: 3rem;
+        }
+        @include for-phone-only {
+          font-size: 2rem;
+        }
+      }
+      .title {
+        color: inherit;
+        font-size: 20rem;
+        font-weight: bold;
+        @include for-tablet-portrait {
+          font-size: 16rem;
+        }
+        @include for-phone-only {
+          font-size: 12rem;
+        }
+      }
+    }
+  }
+  .btnComplete {
+    position: absolute;
+    right: 3rem;
+    bottom: 3rem;
+  }
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.25);
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
