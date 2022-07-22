@@ -1,25 +1,39 @@
 import React, { useEffect, useState } from "react";
+import { AiFillCaretRight } from "react-icons/ai";
+import { CSSTransition } from "react-transition-group";
 
 import styles from "./quiz.module.scss";
 import { Button, Loader } from "../../UI";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { increment, initQuiz } from "../../../redux/quiz/slice";
+import {
+  clearQuiz,
+  increment,
+  initQuiz,
+  setAnswer,
+} from "../../../redux/quiz/slice";
 import {
   selectCurrentQuestion,
   selectQuizData,
+  selectQuizScore,
 } from "../../../redux/quiz/selectors";
-import { AiFillCaretRight } from "react-icons/ai";
 import AnswerSelector from "./AnswerSelector";
 import { QUESTIONS_NUMBER } from "../../../constants";
+import Modal from "./Modal";
+import { useNavigate } from "react-router-dom";
 
 const Quiz: React.FC = () => {
   const [btnNextActive, setBtnNextActive] = useState<boolean>(false);
+  const [modalOpened, setModalOpened] = useState<boolean>(false);
+
   const { status, currentIndex } = useAppSelector(selectQuizData);
+  const totalScore = useAppSelector(selectQuizScore);
   const currentQuestion = useAppSelector(selectCurrentQuestion);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleAnswerSelect = (answer: number) => {
-    if (currentIndex !== QUESTIONS_NUMBER - 1) {
+    dispatch(setAnswer(currentQuestion.id, answer));
+    if (currentIndex < QUESTIONS_NUMBER - 1) {
       if (answer === currentQuestion.correctAnswer) {
         setTimeout(() => {
           setBtnNextActive(true);
@@ -29,6 +43,10 @@ const Quiz: React.FC = () => {
           setBtnNextActive(true);
         }, 2500);
       }
+    } else {
+      setTimeout(() => {
+        setModalOpened(true);
+      }, 2000);
     }
   };
 
@@ -78,6 +96,24 @@ const Quiz: React.FC = () => {
               Next
             </Button>
           </div>
+          <CSSTransition
+            in={modalOpened}
+            timeout={1000}
+            classNames={{
+              enter: styles.modalEnter,
+              enterActive: styles.modalEnterActive,
+            }}
+            mountOnEnter
+            unmountOnExit
+          >
+            <Modal
+              score={totalScore}
+              onComplete={() => {
+                dispatch(clearQuiz());
+                navigate("/");
+              }}
+            />
+          </CSSTransition>
         </div>
       )}
     </>

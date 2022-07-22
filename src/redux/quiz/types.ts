@@ -12,6 +12,7 @@ export interface QuizSliceState {
   status: Status;
   currentQuiz: Question[];
   currentIndex: number;
+  answers: Record<string, number>;
 }
 
 //COUNTRY TYPE
