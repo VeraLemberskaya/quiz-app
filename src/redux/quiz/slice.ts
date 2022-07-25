@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 import { QUESTIONS_NUMBER } from "../../constants";
@@ -29,6 +29,7 @@ const initialState: QuizSliceState = {
   status: "loading",
   currentQuiz: [],
   currentIndex: 0,
+  answers: {},
 };
 
 const quizSlice = createSlice({
@@ -45,12 +46,25 @@ const quizSlice = createSlice({
         state.currentIndex--;
       }
     },
+    clearQuiz: () => {
+      return initialState;
+    },
+    setAnswer: {
+      reducer(state, action: PayloadAction<{ id: string; answer: number }>) {
+        const { id, answer } = action.payload;
+        state.answers = {
+          ...state.answers,
+          [id]: answer,
+        };
+      },
+      prepare(id: string, answer: number) {
+        return { payload: { id, answer } };
+      },
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(initQuiz.pending, (state) => {
-      state.status = "loading";
-      state.currentQuiz = [];
-      state.currentIndex = 0;
+      state = initialState;
     });
     builder.addCase(initQuiz.fulfilled, (state, action) => {
       state.status = "success";
@@ -62,6 +76,6 @@ const quizSlice = createSlice({
   },
 });
 
-export const { increment, decrement } = quizSlice.actions;
+export const { increment, decrement, setAnswer, clearQuiz } = quizSlice.actions;
 
 export default quizSlice.reducer;

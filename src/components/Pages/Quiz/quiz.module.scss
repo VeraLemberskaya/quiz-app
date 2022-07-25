@@ -9,3 +9,12 @@
   position: relative;
   float: right;
 }
+
+.modalEnter {
+  opacity: 0;
+}
+
+.modalEnterActive {
+  opacity: 1;
+  transition: opacity 1s;
+}
