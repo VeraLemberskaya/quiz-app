@@ -1,7 +1,7 @@
-@import "../../../styles/colors";
-@import "../../../styles/variables";
-@import "../../../styles/media";
-@import "../../../styles/mixins";
+@import "../../../../../styles/colors";
+@import "../../../../../styles/variables";
+@import "../../../../../styles/media";
+@import "../../../../../styles/mixins";
 
 .answerContainer {
   border: none;
@@ -11,7 +11,6 @@
   flex-direction: column;
   min-height: 8.5rem;
   padding: 1.5rem;
-  transition: background-color $transition, color $transition;
   cursor: pointer;
   @include flex-center;
   @include for-tablet-landscape {
@@ -125,11 +124,9 @@
   background-color: $green-color;
   color: $white-color;
   box-shadow: 0 0 25px $green-color;
-  transition: 0s;
 }
 
 .answeredWrong {
   background-color: $red-color;
   color: $white-color;
-  transition: 0s;
 }

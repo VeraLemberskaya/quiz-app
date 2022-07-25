@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import { Home, Quiz, Results } from "./components/Pages";
+import { Home, Quiz } from "./components/Pages";
 import { Layout } from "./components/UI";
 
 function App() {

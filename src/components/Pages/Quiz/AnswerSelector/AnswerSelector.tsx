@@ -3,7 +3,11 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Answer from "./Answer/Answer";
 import AnswersContainer from "./AnswersContainer";
 import Question from "./Question";
-import { AnswerSelectorContext, AnswerSelectorContextType } from "./context";
+import {
+  AnswerSelectorContext,
+  AnswerSelectorContextType,
+  AnswerSelectorModeType,
+} from "./context";
 
 type Props = {
   id: string;
@@ -11,6 +15,7 @@ type Props = {
   answer?: number;
   correctAnswer: number;
   children: React.ReactNode;
+  mode: AnswerSelectorModeType;
 };
 
 const AnswerSelector = ({
@@ -19,11 +24,14 @@ const AnswerSelector = ({
   answer: answerIndex,
   correctAnswer,
   children,
+  mode,
 }: Props) => {
-  const [answer, setAnswer] = useState<number | null>(answerIndex ?? null);
+  const [answer, setAnswer] = useState<number | null>(
+    mode === "selection" ? null : answerIndex ?? null
+  );
 
   useEffect(() => {
-    if (answerIndex !== undefined) {
+    if (mode === "review" && answerIndex) {
       setAnswer(answerIndex);
     } else {
       setAnswer(null);
@@ -31,21 +39,21 @@ const AnswerSelector = ({
   }, [id]);
 
   useEffect(() => {
-    if (answer != null && onSelect) {
+    if (mode === "selection" && answer != null && onSelect) {
       onSelect(answer);
     }
   }, [answer]);
 
   const value: AnswerSelectorContextType = useMemo(
     () => ({
-      isAnswered: answerIndex !== undefined ? true : false,
+      mode,
       answer,
       correctAnswer,
       setAnswer: (answer: number) => {
         setAnswer(answer);
       },
     }),
-    [answer, setAnswer, answerIndex]
+    [answer, setAnswer, mode, correctAnswer]
   );
 
   return (

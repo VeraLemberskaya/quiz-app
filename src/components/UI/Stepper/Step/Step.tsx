@@ -3,11 +3,24 @@ import React, { FC } from "react";
 import styles from "./step.module.scss";
 
 type Props = {
-  children: number;
+  children: React.ReactNode;
+  isActive: boolean;
+  hasConnector: boolean;
 };
 
-const Step: FC<Props> = ({ children }) => {
-  return <div className={styles.stepBody}>{children}</div>;
+const Step: FC<Props> = ({ isActive, children, hasConnector }) => {
+  return (
+    <div className={`${styles.stepBody} ${isActive ? styles.active : ""}`}>
+      {hasConnector && (
+        <div className={styles.stepConnectorContainer}>
+          <span className={styles.stepConnector} />
+        </div>
+      )}
+      <div className={styles.stepLabelContainer}>
+        <div className={styles.stepLabel}>{children}</div>
+      </div>
+    </div>
+  );
 };
 
 export default Step;

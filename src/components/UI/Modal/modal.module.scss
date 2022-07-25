@@ -1,0 +1,39 @@
+@import "../../../styles/colors";
+@import "../../../styles/mixins";
+@import "../../../styles/media";
+
+.modalBody {
+  position: absolute;
+  background-color: $white-color;
+  height: 65rem;
+  width: 120rem;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -40%);
+  z-index: 11;
+  @include for-laptop {
+    width: 90rem;
+    height: 55rem;
+  }
+  @include for-tablet-landscape {
+    width: 70rem;
+  }
+  @include for-tablet-portrait {
+    width: 55rem;
+  }
+  @include for-phone-only {
+    width: 95%;
+    height: 70vh;
+  }
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.25);
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}

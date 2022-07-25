@@ -1,10 +1,67 @@
 @import "../../../../styles/colors";
 @import "../../../../styles/mixins";
+@import "../../../../styles/media";
+@import "../../../../styles/variables";
 
 .stepBody {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  border: 5px solid $theme-color;
-  @include flex-center;
+  flex: 1;
+  position: relative;
+  .stepConnectorContainer {
+    z-index: -1;
+    --webkit-flex: 1 1 auto;
+    --ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 1.5rem;
+    left: calc(-50% + 15px);
+    right: calc(50% + 10px);
+    .stepConnector {
+      display: block;
+      border: 3px solid $silver-color;
+      &::before {
+        content: "";
+        background-color: $theme-color;
+        position: absolute;
+        width: 0%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        transition: width $transition;
+      }
+      @include for-phone-only {
+        border-width: 2px;
+      }
+    }
+  }
+  .stepLabelContainer {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 5px solid $silver-color;
+    background-color: $carrara-color;
+    transition: all 0.3s ease-in-out;
+    @include flex-center;
+    @include for-phone-only {
+      border-width: 4px;
+    }
+    .stepLabel {
+      opacity: 50%;
+    }
+  }
+}
+
+.active {
+  .stepConnector {
+    &::before {
+      width: 100% !important;
+    }
+  }
+  .stepLabelContainer {
+    border-color: $theme-color;
+    background: transparent;
+    .stepLabel {
+      opacity: 1;
+    }
+  }
 }
