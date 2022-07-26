@@ -1,6 +1,9 @@
 import { createContext, useContext } from "react";
 
+export type AnswerSelectorModeType = "selection" | "review";
+
 export type AnswerSelectorContextType = {
+  mode: AnswerSelectorModeType;
   answer: number | null;
   correctAnswer: number;
   setAnswer: (answer: number) => void;

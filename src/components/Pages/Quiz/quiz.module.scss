@@ -1,8 +1,33 @@
+@import "../../../styles/media";
+@import "../../../styles/mixins";
+@import "../../../styles/colors";
+
 .quizBody {
   height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  .btnContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    @include for-tablet-landscape {
+      width: 65%;
+      margin: 0 auto;
+    }
+    @include for-tablet-portrait {
+      width: 80%;
+    }
+    @include for-phone-only {
+      width: 100%;
+    }
+    .backToMenuBtn {
+      @include for-tablet-landscape {
+        display: none;
+      }
+    }
+  }
 }
 
 .btnNext {
@@ -16,5 +41,14 @@
 
 .modalEnterActive {
   opacity: 1;
-  transition: opacity 1s;
+  transition: opacity 0.3s;
+}
+
+.modalExit {
+  opacity: 1;
+}
+
+.modalExitActive {
+  opacity: 0;
+  transition: opacity 0.3s;
 }

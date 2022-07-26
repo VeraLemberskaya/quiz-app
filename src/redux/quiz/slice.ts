@@ -46,7 +46,10 @@ const quizSlice = createSlice({
         state.currentIndex--;
       }
     },
-    clearQuiz: () => {
+    resetCurrentQuestion: (state) => {
+      state.currentIndex = 0;
+    },
+    resetQuiz: () => {
       return initialState;
     },
     setAnswer: {
@@ -76,6 +79,12 @@ const quizSlice = createSlice({
   },
 });
 
-export const { increment, decrement, setAnswer, clearQuiz } = quizSlice.actions;
+export const {
+  increment,
+  decrement,
+  setAnswer,
+  resetQuiz,
+  resetCurrentQuestion,
+} = quizSlice.actions;
 
 export default quizSlice.reducer;
