@@ -1,0 +1,61 @@
+@import "../../../styles/colors";
+@import "../../../styles/variables";
+
+.inputWrapper {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  height: 7rem;
+  border: 0.5px solid $silver-color;
+  transition: border $transition;
+  padding-left: 1.8rem;
+  .label {
+    user-select: none;
+    position: absolute;
+    color: $grey-color;
+    left: 1rem;
+    top: 2.2rem;
+    cursor: text;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1.7rem;
+    transition: transform $transition;
+  }
+  .inputContainer {
+    margin-top: 32px;
+    width: 100%;
+    .input {
+      width: 100%;
+      outline: none;
+      border: none;
+      color: $theme-color;
+      font-size: 1.7rem;
+      font-family: Roboto, Helvetica, Arial, sans-serif;
+    }
+  }
+  &::before {
+    content: "";
+    background-color: $theme-color;
+    width: 5px;
+    height: 0;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    transition: height $transition;
+  }
+}
+
+.focused {
+  border-left: 1px solid $theme-color !important;
+  &::before {
+    height: 100%;
+  }
+}
+
+.focused,
+.filled {
+  border-color: $grey-color;
+
+  .label {
+    transform: translate(0px, -15px) scale(0.8);
+  }
+}

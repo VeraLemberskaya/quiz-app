@@ -12,6 +12,7 @@ import {
   setAnswer,
   resetCurrentQuestion,
   decrement,
+  setQuestionIndex,
 } from "../../../redux/quiz/slice";
 import {
   selectCurrentQuestion,
@@ -36,7 +37,8 @@ const Quiz: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const isResultPage = (useLocation().state as LocationState) ?? false;
+  const isResultPage =
+    (useLocation().state as LocationState)?.isResultPage ?? false;
 
   useEffect(() => {
     if (!isResultPage) {
@@ -98,6 +100,10 @@ const Quiz: React.FC = () => {
     }
   };
 
+  const handleStepChange = (index: number) => {
+    dispatch(setQuestionIndex(index));
+  };
+
   return (
     <>
       {status === "loading" ? (
@@ -105,7 +111,12 @@ const Quiz: React.FC = () => {
       ) : (
         <div className={styles.quizBody}>
           <div className="mt-5">
-            <Stepper stepsCount={5} activeStep={currentIndex} />
+            <Stepper
+              stepCount={QUESTIONS_NUMBER}
+              activeStep={currentIndex}
+              onStepChange={handleStepChange}
+              disabled={!isResultPage}
+            />
             <AnswerSelector
               id={currentQuestion.id}
               onSelect={handleAnswerSelect}

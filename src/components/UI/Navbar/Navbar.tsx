@@ -37,7 +37,10 @@ const Navbar: FC = () => {
           />
         </div>
       </div>
-      <Sidebar sidebarShown={sidebarShown} />
+      <Sidebar
+        sidebarShown={sidebarShown}
+        onClose={() => setSidebarShown(false)}
+      />
     </div>
   );
 };

@@ -11,8 +11,8 @@ import {
 
 type Props = {
   id: string;
-  onSelect?: (answer: number) => void;
-  answer?: number;
+  onSelect: (answer: number) => void;
+  answer: number;
   correctAnswer: number;
   children: React.ReactNode;
   mode: AnswerSelectorModeType;
@@ -27,7 +27,7 @@ const AnswerSelector = ({
   mode,
 }: Props) => {
   const [answer, setAnswer] = useState<number | null>(
-    mode === "selection" ? null : answerIndex ?? null
+    mode === "selection" ? null : answerIndex
   );
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const AnswerSelector = ({
   }, [id]);
 
   useEffect(() => {
-    if (mode === "selection" && answer != null && onSelect) {
+    if (mode === "selection" && answer !== null) {
       onSelect(answer);
     }
   }, [answer]);
