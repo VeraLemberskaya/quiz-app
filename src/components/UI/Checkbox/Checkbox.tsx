@@ -11,7 +11,10 @@ const Checkbox: FC<Props> = (props) => {
   const [checked, setChecked] = useState<boolean>(false);
   const { label, ...otherProps } = props;
 
-  const handleCheckboxClick = () => {
+  const handleCheckboxClick = (event: React.FormEvent<HTMLInputElement>) => {
+    if (props.onChange) {
+      props.onChange(event);
+    }
     setChecked((prevState) => !prevState);
   };
 
