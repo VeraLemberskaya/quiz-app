@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import { Home, Login, Quiz } from "./components/Pages";
+import { Home, Login, Quiz, Register } from "./components/Pages";
 import { Layout } from "./components/UI";
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
         <Route path="/results" element={<Quiz />} />
       </Route>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   );
 }

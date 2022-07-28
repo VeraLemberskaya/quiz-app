@@ -142,7 +142,7 @@ const Quiz: React.FC = () => {
                 {isResultPage && (
                   <Button
                     onClick={handleBtnPreviousClick}
-                    type="outlined"
+                    buttonType="outlined"
                     buttonSize="large"
                     startIcon={<AiFillCaretLeft />}
                     disabled={!btnPreviousActive}
@@ -165,7 +165,7 @@ const Quiz: React.FC = () => {
                 )}
                 <Button
                   onClick={handleBtnNextClick}
-                  type="primary"
+                  buttonType="primary"
                   buttonSize="large"
                   endIcon={<AiFillCaretRight />}
                   disabled={!btnNextActive}
