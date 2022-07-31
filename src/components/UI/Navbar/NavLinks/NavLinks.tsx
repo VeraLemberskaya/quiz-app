@@ -16,7 +16,7 @@ const NavLinks: FC = () => {
       <Link className={styles.navLink} to="/">
         About us
       </Link>
-      <Link className={styles.navLink} to="/">
+      <Link className={styles.navLink} to="/login">
         <Button type="outlined">Login</Button>
       </Link>
     </div>

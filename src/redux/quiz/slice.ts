@@ -46,6 +46,9 @@ const quizSlice = createSlice({
         state.currentIndex--;
       }
     },
+    setQuestionIndex: (state, action: PayloadAction<number>) => {
+      state.currentIndex = action.payload;
+    },
     resetCurrentQuestion: (state) => {
       state.currentIndex = 0;
     },
@@ -82,6 +85,7 @@ const quizSlice = createSlice({
 export const {
   increment,
   decrement,
+  setQuestionIndex,
   setAnswer,
   resetQuiz,
   resetCurrentQuestion,

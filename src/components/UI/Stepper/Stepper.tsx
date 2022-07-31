@@ -4,19 +4,30 @@ import Step from "./Step";
 import styles from "./stepper.module.scss";
 
 type Props = {
-  stepsCount: number;
+  stepCount: number;
   activeStep: number;
+  disabled: boolean;
+  onStepChange: (step: number) => void;
 };
 
-const Stepper: FC<Props> = ({ stepsCount, activeStep }) => {
+const Stepper: FC<Props> = ({
+  stepCount,
+  activeStep,
+  onStepChange,
+  disabled,
+}) => {
   const makeSteps = () => {
     const steps = [];
-    for (let index = 0; index < stepsCount; index++) {
+    for (let index = 0; index < stepCount; index++) {
       steps.push(
         <Step
           key={index}
-          hasConnector={!!steps.length}
+          hasConnector={index !== 0}
           isActive={index <= activeStep}
+          onSelect={() => {
+            onStepChange(index);
+          }}
+          disabled={disabled}
         >
           {index + 1}
         </Step>

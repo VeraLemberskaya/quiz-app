@@ -1,0 +1,73 @@
+@import "../../../styles/colors";
+@import "../../../styles/mixins";
+@import "../../../styles/variables";
+
+.checkboxWrapper {
+  .label {
+    cursor: pointer;
+    color: $grey-color;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1.7rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: color $transition;
+    .checkbox {
+      cursor: pointer;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 3px;
+      border: 1px solid $silver-color;
+      transition: box-shadow $transition;
+      @include flex-center;
+      svg {
+        visibility: collapse;
+        fill: $grey-color;
+      }
+    }
+    .input {
+      display: none;
+    }
+  }
+  &:hover {
+    .label {
+      color: $dark-grey-color;
+      .checkbox {
+        border: none;
+        box-shadow: 0 0 0 3px $silver-color;
+      }
+    }
+  }
+}
+
+.checked {
+  border-color: $theme-color;
+  .label {
+    .checkbox {
+      animation: 0.15s ease-in-out bg-change;
+      @keyframes bg-change {
+        0% {
+          opacity: 0;
+          background-color: transparent;
+        }
+        50% {
+          background-color: rgba(245, 138, 16, 0.3);
+        }
+        100% {
+          opacity: 1;
+          background-color: transparent;
+        }
+      }
+      svg {
+        visibility: visible;
+      }
+    }
+  }
+  &:hover {
+    .label {
+      .checkbox {
+        box-shadow: 0 0 0 3px rgba(252, 201, 34, 0.68);
+      }
+    }
+  }
+}

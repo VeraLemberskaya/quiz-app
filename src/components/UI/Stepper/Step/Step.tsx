@@ -6,11 +6,23 @@ type Props = {
   children: React.ReactNode;
   isActive: boolean;
   hasConnector: boolean;
+  disabled: boolean;
+  onSelect: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-const Step: FC<Props> = ({ isActive, children, hasConnector }) => {
+const Step: FC<Props> = ({
+  isActive,
+  children,
+  hasConnector,
+  onSelect,
+  disabled,
+}) => {
   return (
-    <div className={`${styles.stepBody} ${isActive ? styles.active : ""}`}>
+    <button
+      className={`${styles.stepBody} ${isActive ? styles.active : ""}`}
+      onClick={onSelect}
+      disabled={disabled}
+    >
       {hasConnector && (
         <div className={styles.stepConnectorContainer}>
           <span className={styles.stepConnector} />
@@ -19,7 +31,7 @@ const Step: FC<Props> = ({ isActive, children, hasConnector }) => {
       <div className={styles.stepLabelContainer}>
         <div className={styles.stepLabel}>{children}</div>
       </div>
-    </div>
+    </button>
   );
 };
 
