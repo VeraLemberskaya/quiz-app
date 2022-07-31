@@ -1,0 +1,65 @@
+@import "../../../styles/mixins";
+@import "../../../styles/colors";
+@import "../../../styles/variables";
+
+.dropdownContainer {
+  position: relative;
+  .dropdownToggle {
+    @include flex-center;
+    cursor: pointer;
+    gap: 0.3rem;
+    color: $theme-color;
+    font-weight: 500;
+    border-radius: 5px;
+    padding: 0.5rem;
+    transition: background-color $transition, color $transition;
+    svg {
+      fill: $theme-color;
+      stroke-width: 1;
+      stroke: $theme-color;
+      transition: fill $transition, stroke $transition;
+    }
+    &:hover {
+      color: $white-color;
+      background-color: $theme-color-opacity;
+      svg {
+        fill: $white-color;
+        stroke: $white-color;
+      }
+    }
+    .icon {
+      margin-left: 1.5rem;
+      transition: transform $transition;
+    }
+    &:is(.opened) {
+      .icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .dropdownMenu {
+    position: absolute;
+    left: 0;
+    margin-top: 0.5rem;
+    min-width: 13rem;
+    background-color: $white-color;
+    box-shadow: 0 2px 2px 2px $silver-color;
+    border-radius: 2px;
+    overflow: hidden;
+    .dropdownItem {
+      font-size: 1.6rem;
+      text-decoration: none;
+      color: $font-color;
+      padding: 0.3rem;
+      padding-left: 1rem;
+      cursor: pointer;
+      transition: background-color $transition;
+      &:hover {
+        background-color: $carrara-color;
+      }
+    }
+  }
+}
+
+@include accordion-transition(0.2s);

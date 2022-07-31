@@ -35,20 +35,4 @@
   float: right;
 }
 
-.modalEnter {
-  opacity: 0;
-}
-
-.modalEnterActive {
-  opacity: 1;
-  transition: opacity 0.3s;
-}
-
-.modalExit {
-  opacity: 1;
-}
-
-.modalExitActive {
-  opacity: 0;
-  transition: opacity 0.3s;
-}
+@include fade-transition(2s);

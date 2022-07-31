@@ -1,6 +1,7 @@
 @import "../../../styles/colors";
 @import "../../../styles/media";
 @import "../../../styles/mixins";
+@import "../../../styles/variables";
 
 .registerBody {
   min-height: 100vh;
@@ -32,7 +33,7 @@
     .formHeader {
       width: fit-content;
       margin: 0 auto;
-      margin-bottom: 5rem;
+      margin-bottom: 4rem;
       flex-direction: column;
       @include flex-center;
       @include for-phone-only {
@@ -56,6 +57,37 @@
         }
         @include for-phone-only {
           font-size: 1.8rem;
+        }
+      }
+    }
+    .editRow {
+      color: $grey-color;
+      .editBtn {
+        border: none;
+        outline: none;
+        background: transparent;
+        cursor: pointer;
+        width: 4rem;
+        height: 4rem;
+        padding: 0.8rem;
+        border-radius: 50%;
+        transition: background-color $transition;
+        margin-left: auto;
+        @include flex-center;
+        svg {
+          width: 100%;
+          height: 100%;
+          fill: $grey-color;
+          transition: fill $transition;
+        }
+        &:hover:not(:disabled) {
+          background-color: $theme-color-opacity;
+          svg {
+            fill: $white-color;
+          }
+        }
+        &:disabled {
+          cursor: default;
         }
       }
     }

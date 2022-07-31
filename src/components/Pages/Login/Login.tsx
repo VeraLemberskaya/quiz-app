@@ -1,12 +1,16 @@
 import React, { FC } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { BiError } from "react-icons/bi";
+import { Link, useNavigate } from "react-router-dom";
 
+import axios from "../../../axios";
 import styles from "./login.module.scss";
 import GraduateImg from "../../../assets/graduate-hat.svg";
 import Logo from "../../../assets/logo.svg";
 import { Button, Checkbox, TextField } from "../../UI";
-import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { setUser } from "../../../redux/user/slice";
+import { loginEndPoint } from "../../../constants";
 
 type FormInputs = {
   email: string;
@@ -14,14 +18,19 @@ type FormInputs = {
 };
 
 const Login: FC = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormInputs>({ mode: "onChange" });
+  } = useForm<FormInputs>({ mode: "onBlur" });
 
-  const handleLoginFormSubmit: SubmitHandler<FormInputs> = (data) => {
-    console.log(data);
+  const handleFormSubmit: SubmitHandler<FormInputs> = async (data) => {
+    const { data: responseData } = await axios.post(loginEndPoint, data);
+    dispatch(setUser(responseData));
+    navigate("/");
   };
 
   return (
@@ -38,7 +47,7 @@ const Login: FC = () => {
         <div className={styles.formContainer}>
           <form
             className={styles.form}
-            onSubmit={handleSubmit(handleLoginFormSubmit)}
+            onSubmit={handleSubmit(handleFormSubmit)}
           >
             <TextField
               placeholder="Email Address"
@@ -46,7 +55,7 @@ const Login: FC = () => {
                 required: "Field is required.",
                 pattern: {
                   value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-                  message: "Incorrect input.",
+                  message: "Please enter correct email.",
                 },
               })}
               errorIcon={<BiError />}

@@ -6,3 +6,4 @@ export { default as Modal } from "./Modal";
 export { default as TextField } from "./TextField";
 export { default as Checkbox } from "./Checkbox";
 export { default as Stepper } from "./Stepper";
+export { default as Dropdown } from "./Dropdown";

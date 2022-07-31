@@ -1,10 +1,5 @@
-import React, {
-  FC,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import styles from "./textField.module.scss";
 
@@ -12,18 +7,36 @@ type Props = Omit<React.HTMLProps<HTMLInputElement>, "type" | "checked"> & {
   type?: "password" | "text";
   error?: string;
   errorIcon?: JSX.Element;
+  focused?: boolean;
 };
 
 const TextField = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const [inputFocused, setInputFocused] = useState<boolean>(false);
+  const {
+    placeholder,
+    value,
+    type = "text",
+    error,
+    errorIcon,
+    focused = false,
+    ...otherProps
+  } = props;
+  const [inputValue, setInputValue] = useState(value ?? "");
+  const [inputFocused, setInputFocused] = useState<boolean>(focused);
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { placeholder, type = "text", error, errorIcon, ...otherProps } = props;
 
   useEffect(() => {
     if (inputRef.current === document.activeElement) {
       setInputFocused(true);
     }
   }, [document.activeElement]);
+
+  useEffect(() => {
+    if (focused) {
+      setInputFocused(true);
+      inputRef.current?.focus();
+    }
+  }, [focused]);
 
   useImperativeHandle<HTMLInputElement | null, HTMLInputElement | null>(
     ref,
@@ -35,13 +48,26 @@ const TextField = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
     inputRef.current?.focus();
   };
 
-  const handleTextFieldBlur: React.FocusEventHandler<HTMLInputElement> = (
-    event: React.FocusEvent<HTMLInputElement, Element>
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
+    event
   ) => {
-    if (otherProps.onBlur) {
-      otherProps.onBlur(event);
+    if (props.onChange) {
+      props.onChange(event);
+    }
+    setInputValue(event.target.value);
+  };
+
+  const handleInputBlur: React.FocusEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    if (props.onBlur) {
+      props.onBlur(event);
     }
     setInputFocused(false);
+  };
+
+  const handleEyeIconClick = () => {
+    setPasswordVisible((prevState) => !prevState);
   };
 
   return (
@@ -49,21 +75,28 @@ const TextField = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
       <span
         className={`${styles.inputWrapper} ${
           inputFocused ? styles.focused : ""
-        } ${inputRef.current?.value ? styles.filled : ""} ${
+        } ${props.value || inputRef.current?.value ? styles.filled : ""} ${
           error ? styles.invalid : ""
-        }`}
+        } ${props.disabled ? styles.disabled : ""}`}
         onClick={handleTextFieldClick}
       >
         <label className={styles.label}>{placeholder}</label>
         <div className={styles.inputContainer}>
           <input
             ref={inputRef}
-            type={type}
+            value={inputValue}
+            type={type === "text" ? type : passwordVisible ? "text" : type}
             className={styles.input}
             {...otherProps}
-            onBlur={handleTextFieldBlur}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
           />
         </div>
+        {type === "password" && (
+          <span onClick={handleEyeIconClick} className={styles.eyeIcon}>
+            {passwordVisible ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+          </span>
+        )}
       </span>
       <span className={`${styles.error} ${error ? styles.visible : ""}`}>
         {errorIcon && errorIcon}
