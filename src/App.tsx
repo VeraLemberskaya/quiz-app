@@ -24,6 +24,14 @@ const NotAuthenticatedRoute: FC<Props> = ({ children }) => {
   return children;
 };
 
+const PrivateRoute: FC<Props> = ({ children }) => {
+  const user = useAppSelector(selectCurrentUser);
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+  return children;
+};
+
 function App() {
   return (
     <>
@@ -59,7 +67,14 @@ function App() {
             </NotAuthenticatedRoute>
           }
         />
-        <Route path="/account" element={<Register />} />
+        <Route
+          path="/account"
+          element={
+            <PrivateRoute>
+              <Register />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </>
   );

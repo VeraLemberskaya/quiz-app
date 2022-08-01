@@ -18,6 +18,7 @@ const TextField = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
     error,
     errorIcon,
     focused = false,
+    className,
     ...otherProps
   } = props;
   const [inputValue, setInputValue] = useState(value ?? "");
@@ -71,7 +72,7 @@ const TextField = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   };
 
   return (
-    <div className={styles.textFieldWrapper}>
+    <div className={`${className} ${styles.textFieldWrapper}`}>
       <span
         className={`${styles.inputWrapper} ${
           inputFocused ? styles.focused : ""

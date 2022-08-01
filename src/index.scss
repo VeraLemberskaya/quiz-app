@@ -20,6 +20,9 @@ body {
   a {
     text-decoration: none;
   }
+  img {
+    user-select: none;
+  }
 
   h1,
   h2,

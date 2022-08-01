@@ -51,10 +51,10 @@ const NavLinks: FC = () => {
               {user.name}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={handleLogOut}>Log out</Dropdown.Item>
               <Link to="/account">
                 <Dropdown.Item>Account</Dropdown.Item>
               </Link>
+              <Dropdown.Item onClick={handleLogOut}>Log out</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </>
