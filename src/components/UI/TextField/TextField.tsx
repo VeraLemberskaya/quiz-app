@@ -1,4 +1,10 @@
-import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, {
+  Ref,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import styles from "./textField.module.scss";
@@ -10,39 +16,31 @@ type Props = Omit<React.HTMLProps<HTMLInputElement>, "type" | "checked"> & {
   focused?: boolean;
 };
 
-const TextField = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
+const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
   const {
     placeholder,
     value,
+    label,
     type = "text",
     error,
     errorIcon,
-    focused = false,
     className,
     ...otherProps
   } = props;
   const [inputValue, setInputValue] = useState(value ?? "");
-  const [inputFocused, setInputFocused] = useState<boolean>(focused);
+  const [inputFocused, setInputFocused] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    console.log(document.activeElement);
+
     if (inputRef.current === document.activeElement) {
       setInputFocused(true);
     }
   }, [document.activeElement]);
 
-  useEffect(() => {
-    if (focused) {
-      setInputFocused(true);
-      inputRef.current?.focus();
-    }
-  }, [focused]);
-
-  useImperativeHandle<HTMLInputElement | null, HTMLInputElement | null>(
-    ref,
-    () => inputRef.current
-  );
+  useImperativeHandle(ref, () => inputRef.current, [inputRef.current]);
 
   const handleTextFieldClick = () => {
     setInputFocused(true);
@@ -72,39 +70,42 @@ const TextField = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   };
 
   return (
-    <div className={`${className} ${styles.textFieldWrapper}`}>
-      <span
-        className={`${styles.inputWrapper} ${
-          inputFocused ? styles.focused : ""
-        } ${props.value || inputRef.current?.value ? styles.filled : ""} ${
-          error ? styles.invalid : ""
-        } ${props.disabled ? styles.disabled : ""}`}
-        onClick={handleTextFieldClick}
-      >
-        <label className={styles.label}>{placeholder}</label>
-        <div className={styles.inputContainer}>
-          <input
-            ref={inputRef}
-            value={inputValue}
-            type={type === "text" ? type : passwordVisible ? "text" : type}
-            className={styles.input}
-            {...otherProps}
-            onChange={handleInputChange}
-            onBlur={handleInputBlur}
-          />
-        </div>
-        {type === "password" && (
-          <span onClick={handleEyeIconClick} className={styles.eyeIcon}>
-            {passwordVisible ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-          </span>
-        )}
-      </span>
-      <span className={`${styles.error} ${error ? styles.visible : ""}`}>
-        {errorIcon && errorIcon}
-        {error}
-      </span>
-    </div>
+    <>
+      <div className={`${className} ${styles.textFieldWrapper}`}>
+        {label && <p className={styles.label}>{label}</p>}
+        <span
+          className={`${styles.inputWrapper} ${
+            inputFocused ? styles.focused : ""
+          } ${props.value || inputRef.current?.value ? styles.filled : ""} ${
+            error ? styles.invalid : ""
+          } ${props.disabled ? styles.disabled : ""}`}
+          onClick={handleTextFieldClick}
+        >
+          <label className={styles.label}>{placeholder}</label>
+          <div className={styles.inputContainer}>
+            <input
+              ref={inputRef}
+              value={inputValue}
+              type={type === "text" ? type : passwordVisible ? "text" : type}
+              className={styles.input}
+              {...otherProps}
+              onChange={handleInputChange}
+              onBlur={handleInputBlur}
+            />
+          </div>
+          {type === "password" && (
+            <span onClick={handleEyeIconClick} className={styles.eyeIcon}>
+              {passwordVisible ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+            </span>
+          )}
+        </span>
+        <span className={`${styles.error} ${error ? styles.visible : ""}`}>
+          {errorIcon && errorIcon}
+          {error}
+        </span>
+      </div>
+    </>
   );
-});
+};
 
-export default TextField;
+export default React.forwardRef(TextField);
