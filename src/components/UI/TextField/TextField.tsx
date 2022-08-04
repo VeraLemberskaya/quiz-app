@@ -33,8 +33,6 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    console.log(document.activeElement);
-
     if (inputRef.current === document.activeElement) {
       setInputFocused(true);
     }
@@ -65,6 +63,15 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
     setInputFocused(false);
   };
 
+  const handleInputFocus: React.FocusEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    if (props.onFocus) {
+      props.onFocus(event);
+    }
+    setInputFocused(true);
+  };
+
   const handleEyeIconClick = () => {
     setPasswordVisible((prevState) => !prevState);
   };
@@ -91,6 +98,7 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
               {...otherProps}
               onChange={handleInputChange}
               onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
             />
           </div>
           {type === "password" && (

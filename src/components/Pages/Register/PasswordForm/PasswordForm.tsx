@@ -31,7 +31,7 @@ const PasswordForm: FC<Props> = ({ onSubmit }) => {
 
   const checkOldPassword = async () => {
     const inputValue = getValues("oldPassword");
-    if (inputValue && inputValue.length >= 6) {
+    if (inputValue && !errors.oldPassword) {
       try {
         await axios.post("users/check-password", {
           id: user?.id,
@@ -39,33 +39,27 @@ const PasswordForm: FC<Props> = ({ onSubmit }) => {
         });
       } catch (err) {
         setError("oldPassword", {
-          type: "custom",
+          type: "oldPassword",
           message: `${(err as AxiosError).response?.data}`,
         });
       }
     }
   };
 
-  const checkNewPassword = () => {
-    const newPassword = getValues("newPassword");
-    const newPasswordRepeat = getValues("newPasswordRepeat");
+  const checkPasswords = (newPassword: string, newPasswordRepeat: string) => {
     if (newPassword !== newPasswordRepeat) {
       setError("newPasswordRepeat", {
-        type: "custom",
+        type: "newPasswordRepeat",
         message: "Repeated password doesn't match.",
       });
+      return false;
     }
+    return true;
   };
 
   const handleFormSubmit: SubmitHandler<FormInputs> = async (data) => {
-    const newPassword = getValues("newPassword");
-    const newPasswordRepeat = getValues("newPasswordRepeat");
-    if (newPassword !== newPasswordRepeat) {
-      setError("newPasswordRepeat", {
-        type: "custom",
-        message: "Repeated password doesn't match.",
-      });
-    } else {
+    const { newPassword, newPasswordRepeat } = data;
+    if (checkPasswords(newPassword, newPasswordRepeat)) {
       const { data: response } = await axios.post("users/change-password", {
         id: user?.id,
         password: newPassword,
@@ -79,8 +73,7 @@ const PasswordForm: FC<Props> = ({ onSubmit }) => {
   };
 
   const checkField = (name: keyof FormInputs) => {
-    const value = getValues(name);
-    if (value.length > 0 && value.length < 6) {
+    if (errors[name]?.type === "minLength") {
       setError(name, {
         type: "minLength",
         message: "Password should contain 6 or more characters.",
@@ -124,9 +117,10 @@ const PasswordForm: FC<Props> = ({ onSubmit }) => {
         {...register("newPasswordRepeat", {
           onBlur(event) {
             checkField("newPasswordRepeat");
-            const value = event.target.value;
-            if (value.length >= 6) {
-              checkNewPassword();
+            const newPassword = getValues("newPassword");
+            const passwordRepeate = event.target.value;
+            if (!errors.newPasswordRepeat && !errors.newPassword) {
+              checkPasswords(newPassword, passwordRepeate);
             }
           },
           required: "Field is required",

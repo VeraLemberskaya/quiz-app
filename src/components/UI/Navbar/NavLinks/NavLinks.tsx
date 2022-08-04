@@ -15,6 +15,7 @@ const NavLinks: FC = () => {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
+    localStorage.removeItem("rememberMe");
     dispatch(resetUser());
     navigate("/login");
   };

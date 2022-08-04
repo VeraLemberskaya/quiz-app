@@ -24,7 +24,7 @@ type FormInputs = {
 
 const Register: FC = () => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
-  const [isEdited, setIsEdited] = useState<boolean>(false);
+  const [editSuccess, setEditSuccess] = useState<boolean>(false);
   const [passwordFormVisible, setPasswordFormVisible] =
     useState<boolean>(false);
   const [passwordChangeSuccess, setPasswordChangeSuccess] =
@@ -41,8 +41,9 @@ const Register: FC = () => {
     handleSubmit,
     setValue,
     setFocus,
+    setError,
     formState: { errors },
-  } = useForm<FormInputs>({ mode: "onBlur" });
+  } = useForm<FormInputs>({ mode: "onChange" });
 
   useEffect(() => {
     if (isAccountPage) {
@@ -62,7 +63,7 @@ const Register: FC = () => {
       const { data: response } = await axios.put(`users/${user.id}`, data);
       dispatch(setUser(response));
       setIsEditable(false);
-      setIsEdited(true);
+      setEditSuccess(true);
     }
   };
 
@@ -101,7 +102,7 @@ const Register: FC = () => {
                   ? "Password has been successfully updated."
                   : isEditable
                   ? "Edit your personal data."
-                  : isEdited && "Data have been successfully updated."}
+                  : editSuccess && "Data have been successfully updated."}
                 <button
                   className={styles.iconBtn}
                   onClick={() => {
@@ -148,11 +149,16 @@ const Register: FC = () => {
                 value={user?.email}
                 placeholder="Email Address"
                 {...register("email", {
-                  required: "Field is required.",
-                  pattern: {
-                    value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-                    message: "Please enter correct email.",
+                  onBlur() {
+                    if (errors.email?.type === "pattern") {
+                      setError("email", {
+                        type: "pattern",
+                        message: "Please enter correct email.",
+                      });
+                    }
                   },
+                  required: "Field is required.",
+                  pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
                 })}
                 errorIcon={<BiError />}
                 error={errors.email?.message}
@@ -163,11 +169,17 @@ const Register: FC = () => {
                   type="password"
                   placeholder="Password"
                   {...register("password", {
-                    required: "Field is required.",
-                    minLength: {
-                      value: 6,
-                      message: "Password should contain 6 or more characters.",
+                    onBlur() {
+                      if (errors.password?.type === "minLength") {
+                        setError("password", {
+                          type: "minLength",
+                          message:
+                            "Password should contain 6 or more characters.",
+                        });
+                      }
                     },
+                    required: "Field is required.",
+                    minLength: 6,
                   })}
                   errorIcon={<BiError />}
                   error={errors.password?.message}
@@ -186,7 +198,7 @@ const Register: FC = () => {
                 buttonType="primary"
                 type="submit"
                 buttonSize="large"
-                disabled={disabled}
+                disabled={isEditable && !!Object.keys(errors).length}
               >
                 {isAccountPage ? "Submit" : "Sign up"}
               </Button>

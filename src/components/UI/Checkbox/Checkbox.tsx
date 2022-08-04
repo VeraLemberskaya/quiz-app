@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { Ref, useState } from "react";
 import { HiCheck } from "react-icons/hi";
 
 import styles from "./checkbox.module.scss";
@@ -7,7 +7,7 @@ type Props = Omit<React.HTMLProps<HTMLInputElement>, "type"> & {
   label?: string;
 };
 
-const Checkbox: FC<Props> = (props) => {
+const Checkbox = (props: Props, ref: Ref<HTMLInputElement>) => {
   const [checked, setChecked] = useState<boolean>(false);
   const { label, ...otherProps } = props;
 
@@ -24,6 +24,7 @@ const Checkbox: FC<Props> = (props) => {
     >
       <label className={styles.label}>
         <input
+          ref={ref}
           className={styles.input}
           type="checkbox"
           {...otherProps}
@@ -39,4 +40,4 @@ const Checkbox: FC<Props> = (props) => {
   );
 };
 
-export default Checkbox;
+export default React.forwardRef(Checkbox);
