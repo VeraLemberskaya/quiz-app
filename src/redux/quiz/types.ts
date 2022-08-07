@@ -15,6 +15,14 @@ export interface QuizSliceState {
   answers: Record<string, number>;
 }
 
+export type Game = {
+  date: string;
+  quiz: Question[];
+  answers: Record<string, number>;
+  score: number;
+  id: string;
+};
+
 //COUNTRY TYPE
 export interface Country {
   name: string;

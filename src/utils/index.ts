@@ -4,3 +4,4 @@ export {
   generateRandomCapitalQuestion,
   generateRandomFlagsQuestion,
 } from "./generateRandomQuestion";
+export { getFormattedDate } from "./getFormattedDate";

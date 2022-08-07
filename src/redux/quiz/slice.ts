@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../axios";
 import { countriesEndPoint, QUESTIONS_NUMBER } from "../../constants";
 import { generateRandomQuestion } from "../../utils/generateRandomQuestion";
-import { Question, QuizSliceState, Country } from "./types";
+import { Question, QuizSliceState, Game, Country } from "./types";
 
 export const initQuiz = createAsyncThunk<Question[]>(
   "quiz/initQuiz",
@@ -20,6 +20,14 @@ export const initQuiz = createAsyncThunk<Question[]>(
     }
 
     return questions;
+  }
+);
+
+export const loadQuizResults = createAsyncThunk<Game, string>(
+  "quiz/loadQuiz",
+  async (url) => {
+    const { data: game } = await axios.get<Game>(url);
+    return game;
   }
 );
 
@@ -76,6 +84,15 @@ const quizSlice = createSlice({
     });
     builder.addCase(initQuiz.rejected, (state) => {
       state.status = "error";
+    });
+    builder.addCase(loadQuizResults.pending, (state) => {
+      state = initialState;
+    });
+    builder.addCase(loadQuizResults.fulfilled, (state, action) => {
+      const { quiz, answers } = action.payload;
+      state.currentQuiz = quiz;
+      state.answers = answers;
+      state.status = "success";
     });
   },
 });

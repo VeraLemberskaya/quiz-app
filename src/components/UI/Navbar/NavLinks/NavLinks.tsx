@@ -31,6 +31,9 @@ const NavLinks: FC = () => {
       <Link className={styles.navLink} to="/">
         About us
       </Link>
+      <Link className={styles.navLink} to="/statistics">
+        Statistics
+      </Link>
       {user ? (
         <>
           <Link

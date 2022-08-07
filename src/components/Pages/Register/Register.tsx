@@ -106,7 +106,7 @@ const Register: FC = () => {
                 <button
                   className={styles.iconBtn}
                   onClick={() => {
-                    setTimeout(() => setFocus("name"), 0);
+                    setTimeout(() => setFocus("name"));
                     setIsEditable(true);
                   }}
                   disabled={isEditable}
