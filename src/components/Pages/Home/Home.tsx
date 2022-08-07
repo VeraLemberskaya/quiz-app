@@ -9,12 +9,6 @@ import { useAppDispatch } from "../../../redux/hooks";
 import { resetQuiz } from "../../../redux/quiz/slice";
 
 const Home: React.FC = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(resetQuiz());
-  }, []);
-
   return (
     <div
       className={`${styles.homeContainer} container d-flex justify-content-between}`}

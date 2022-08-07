@@ -5,6 +5,9 @@
 $transition: 0.25s ease-in-out;
 
 .textFieldWrapper {
+  .label {
+    color: $grey-color;
+  }
   width: 100%;
   .inputWrapper {
     position: relative;
@@ -49,7 +52,11 @@ $transition: 0.25s ease-in-out;
         @include for-phone-only {
           font-size: 1.6rem;
         }
+        &[type="password"] {
+          font-family: Verdana, serif;
+        }
         &:-webkit-autofill {
+          -webkit-text-fill-color: $theme-color;
           box-shadow: inset 0 0 0 1000px $white-color !important;
         }
         &:disabled {
@@ -100,7 +107,7 @@ $transition: 0.25s ease-in-out;
     border-color: $grey-color;
 
     .label {
-      transform: translate(0px, -15px) scale(0.8);
+      transform: translate(-2px, -15px) scale(0.8);
     }
   }
 
@@ -125,6 +132,9 @@ $transition: 0.25s ease-in-out;
     font-size: 1.5rem;
     transition: height $transition;
     @include flex-center;
+    @include for-phone-only {
+      font-size: 1.4rem;
+    }
     svg {
       fill: $red-color;
     }

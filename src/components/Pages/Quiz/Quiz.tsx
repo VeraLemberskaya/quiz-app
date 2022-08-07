@@ -44,6 +44,9 @@ const Quiz: React.FC = () => {
     if (!isResultPage) {
       dispatch(initQuiz());
     }
+    return () => {
+      dispatch(resetQuiz());
+    };
   }, []);
 
   useEffect(() => {

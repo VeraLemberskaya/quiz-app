@@ -10,11 +10,12 @@
   transition: $transition;
   padding: 0.8rem 2.4rem;
   color: $theme-color;
+  width: fit-content;
   cursor: pointer;
   &:hover:not(:disabled) {
-    color: $silver-color;
+    color: $grey-color;
     svg {
-      fill: $silver-color;
+      fill: $grey-color;
     }
   }
   &:disabled {
@@ -23,7 +24,7 @@
     box-shadow: 0 18px 40px -12px $alto-color;
     cursor: auto;
     svg {
-      fill: $font-color;
+      fill: $grey-color;
     }
   }
   svg {
