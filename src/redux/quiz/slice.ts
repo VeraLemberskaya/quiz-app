@@ -1,16 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
 
-import { QUESTIONS_NUMBER } from "../../constants";
+import axios from "../../axios";
+import { countriesEndPoint, QUESTIONS_NUMBER } from "../../constants";
 import { generateRandomQuestion } from "../../utils/generateRandomQuestion";
 import { Question, QuizSliceState, Country } from "./types";
 
 export const initQuiz = createAsyncThunk<Question[]>(
   "quiz/initQuiz",
   async () => {
-    const { data: countries } = await axios.get<Country[]>(
-      "https://restcountries.com/v2/all"
-    );
+    const { data: countries } = await axios.get<Country[]>(countriesEndPoint);
 
     const questions: Question[] = [];
 

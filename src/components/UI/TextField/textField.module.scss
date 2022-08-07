@@ -1,61 +1,137 @@
 @import "../../../styles/colors";
-@import "../../../styles/variables";
+@import "../../../styles/mixins";
+@import "../../../styles/media";
 
-.inputWrapper {
-  position: relative;
-  display: inline-flex;
+$transition: 0.25s ease-in-out;
+
+.textFieldWrapper {
   width: 100%;
-  height: 7rem;
-  border: 0.5px solid $silver-color;
-  transition: border $transition;
-  padding-left: 1.8rem;
-  .label {
-    user-select: none;
-    position: absolute;
-    color: $grey-color;
-    left: 1rem;
-    top: 2.2rem;
-    cursor: text;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-size: 1.7rem;
-    transition: transform $transition;
-  }
-  .inputContainer {
-    margin-top: 32px;
+  .inputWrapper {
+    position: relative;
+    display: inline-flex;
+    border-radius: 2px;
     width: 100%;
-    .input {
-      width: 100%;
-      outline: none;
-      border: none;
-      color: $theme-color;
-      font-size: 1.7rem;
+    height: 7rem;
+    border: 0.5px solid $silver-color;
+    transition: $transition;
+    padding-left: 1.6rem;
+    @include for-phone-only {
+      height: 6rem;
+    }
+    .label {
+      user-select: none;
+      position: absolute;
+      color: $grey-color;
+      left: 1rem;
+      top: 2.2rem;
+      cursor: text;
       font-family: Roboto, Helvetica, Arial, sans-serif;
+      font-size: 1.7rem;
+      transition: transform $transition;
+      @include for-phone-only {
+        top: 1.8rem;
+        font-size: 1.6rem;
+      }
+    }
+    .inputContainer {
+      margin-top: 32px;
+      width: 100%;
+      @include for-phone-only {
+        margin-top: 28px;
+      }
+      .input {
+        width: 100%;
+        outline: none;
+        border: none;
+        color: $theme-color;
+        font-size: 1.7rem;
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+        @include for-phone-only {
+          font-size: 1.6rem;
+        }
+        &:-webkit-autofill {
+          box-shadow: inset 0 0 0 1000px $white-color !important;
+        }
+        &:disabled {
+          background-color: $white-color;
+        }
+      }
+    }
+    .eyeIcon {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 2rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      @include flex-center;
+      @include for-phone-only {
+        width: 2rem;
+        height: 2rem;
+      }
+      svg {
+        fill: $grey-color;
+        width: inherit;
+        height: inherit;
+      }
+    }
+    &::before {
+      content: "";
+      background-color: $theme-color;
+      width: 5px;
+      height: 0;
+      left: 0;
+      bottom: 0;
+      position: absolute;
+      transition: $transition;
     }
   }
-  &::before {
-    content: "";
-    background-color: $theme-color;
-    width: 5px;
+
+  .focused:not(.disabled) {
+    border-left: 0px;
+    &::before {
+      height: 100%;
+    }
+  }
+
+  .focused,
+  .filled {
+    border-color: $grey-color;
+
+    .label {
+      transform: translate(0px, -15px) scale(0.8);
+    }
+  }
+
+  .invalid:not(.disabled) {
+    box-shadow: 0 0 0 5px rgba(228, 33, 33, 0.5);
+    border: none;
+    .input {
+      color: $red-color !important;
+    }
+    &::before {
+      background-color: $dark-red-color;
+    }
+  }
+
+  .error {
     height: 0;
-    left: 0;
-    bottom: 0;
-    position: absolute;
+    margin-top: 1rem;
+    visibility: hidden;
+    color: $red-color;
+    width: fit-content;
+    gap: 0.4rem;
+    font-size: 1.5rem;
     transition: height $transition;
+    @include flex-center;
+    svg {
+      fill: $red-color;
+    }
   }
-}
 
-.focused {
-  border-left: 1px solid $theme-color !important;
-  &::before {
-    height: 100%;
-  }
-}
-
-.focused,
-.filled {
-  border-color: $grey-color;
-
-  .label {
-    transform: translate(0px, -15px) scale(0.8);
+  .visible {
+    height: 2.2rem;
+    visibility: visible;
   }
 }

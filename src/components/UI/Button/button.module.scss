@@ -19,7 +19,7 @@
   }
   &:disabled {
     background-color: $alto-color;
-    color: $font-color;
+    color: $grey-color;
     box-shadow: 0 18px 40px -12px $alto-color;
     cursor: auto;
     svg {

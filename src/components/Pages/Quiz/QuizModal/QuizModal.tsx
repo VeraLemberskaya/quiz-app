@@ -20,7 +20,7 @@ const QuizModal: FC = () => {
       </div>
       <div className={styles.btnContainer}>
         <Button
-          type="outlined"
+          buttonType="outlined"
           buttonSize="large"
           onClick={() => {
             navigate("/results", {
@@ -33,7 +33,7 @@ const QuizModal: FC = () => {
           Check results
         </Button>
         <Button
-          type="primary"
+          buttonType="primary"
           buttonSize="large"
           onClick={() => {
             navigate("/");

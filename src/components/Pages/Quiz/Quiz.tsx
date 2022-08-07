@@ -142,7 +142,7 @@ const Quiz: React.FC = () => {
                 {isResultPage && (
                   <Button
                     onClick={handleBtnPreviousClick}
-                    type="outlined"
+                    buttonType="outlined"
                     buttonSize="large"
                     startIcon={<AiFillCaretLeft />}
                     disabled={!btnPreviousActive}
@@ -165,7 +165,7 @@ const Quiz: React.FC = () => {
                 )}
                 <Button
                   onClick={handleBtnNextClick}
-                  type="primary"
+                  buttonType="primary"
                   buttonSize="large"
                   endIcon={<AiFillCaretRight />}
                   disabled={!btnNextActive}
@@ -179,10 +179,10 @@ const Quiz: React.FC = () => {
             in={!isResultPage && modalOpened}
             timeout={300}
             classNames={{
-              enter: styles.modalEnter,
-              enterActive: styles.modalEnterActive,
-              exit: styles.modalExit,
-              exitActive: styles.modalExitActive,
+              enter: styles.fadeEnter,
+              enterActive: styles.fadeEnterActive,
+              exit: styles.fadeExit,
+              exitActive: styles.fadeExitActive,
             }}
             mountOnEnter
             unmountOnExit

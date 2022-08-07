@@ -10,3 +10,40 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+@mixin fade-transition($timeout) {
+  .fadeEnter {
+    opacity: 0;
+  }
+
+  .fadeEnterActive {
+    opacity: 1;
+    transition: opacity $timeout;
+  }
+
+  .fadeExit {
+    opacity: 1;
+  }
+
+  .fadeExitActive {
+    opacity: 0;
+    transition: opacity $timeout;
+  }
+}
+
+@mixin accordion-transition($timeout) {
+  .accordionEnter {
+    max-height: 0;
+    transition: max-height $timeout * 2 ease-in;
+  }
+  .accordionEnterActive {
+    max-height: 100vh;
+  }
+  .accordionExit {
+    max-height: 100vh;
+  }
+  .accordionExitActive {
+    max-height: 0;
+    transition: max-height $timeout ease-out;
+  }
+}

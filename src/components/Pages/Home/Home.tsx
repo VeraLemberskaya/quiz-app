@@ -32,7 +32,7 @@ const Home: React.FC = () => {
         </h3>
         <div className={`${styles.btnContainer} d-flex`}>
           <Link to="/quiz">
-            <Button type="primary" buttonSize="large">
+            <Button buttonType="primary" buttonSize="large">
               Start solving
             </Button>
           </Link>

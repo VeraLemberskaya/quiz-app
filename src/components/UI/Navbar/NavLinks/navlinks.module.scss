@@ -1,5 +1,6 @@
 @import "../../../../styles/colors";
 @import "../../../../styles/media";
+@import "../../../../styles/mixins";
 @import "../../../../styles/variables";
 
 .navLinks {
@@ -9,11 +10,40 @@
   }
 
   .navLink {
+    cursor: pointer;
     text-decoration: none;
     color: $silver-color;
     transition: $transition;
+    svg {
+      fill: $silver-color;
+      transition: fill $transition;
+    }
     &:hover {
       color: $grey-color;
+      svg {
+        fill: $grey-color;
+      }
+    }
+  }
+
+  .phoneOnly {
+    display: none;
+    @include for-tablet-landscape {
+      display: block;
+      &:is(.logOutLink) {
+        color: $dark-red-color;
+        @include flex-center;
+        gap: 1rem;
+        svg {
+          fill: $dark-red-color;
+        }
+      }
+    }
+  }
+
+  .dropdown {
+    @include for-tablet-landscape {
+      display: none;
     }
   }
 }

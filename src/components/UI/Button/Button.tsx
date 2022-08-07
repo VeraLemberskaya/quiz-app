@@ -13,14 +13,14 @@ const BUTTON_SIZES: { [key in ButtonSize]: string } = {
 };
 
 type Props = {
-  type?: ButtonType;
+  buttonType?: ButtonType;
   buttonSize?: ButtonSize;
   startIcon?: JSX.Element;
   endIcon?: JSX.Element;
-} & React.HTMLProps<HTMLButtonElement>;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button: FC<Props> = ({
-  type,
+  buttonType,
   buttonSize,
   startIcon,
   endIcon,
@@ -30,7 +30,7 @@ const Button: FC<Props> = ({
   return (
     <button
       className={`${className} ${styles.button} ${
-        type ? BUTTON_TYPES[type] : ""
+        buttonType ? BUTTON_TYPES[buttonType] : ""
       } ${buttonSize ? BUTTON_SIZES[buttonSize] : ""}`}
       {...otherProps}
     >
