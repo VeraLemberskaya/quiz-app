@@ -129,6 +129,7 @@ const Statistics: FC = () => {
           containerClassName={styles.paginationContainer}
           activeLinkClassName={styles.activePageLink}
           pageLinkClassName={styles.pageLink}
+          breakLinkClassName={styles.breakLink}
           previousLinkClassName={styles.navLink}
           nextLinkClassName={styles.navLink}
           disabledLinkClassName={styles.disabled}

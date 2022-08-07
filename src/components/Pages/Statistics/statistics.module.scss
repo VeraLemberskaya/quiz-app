@@ -87,6 +87,12 @@
     display: flex;
     list-style: none;
     gap: 1rem;
+    .breakLink {
+      color: $grey-color;
+      display: flex;
+      align-items: flex-end;
+      height: 100%;
+    }
     .pageLink {
       color: $dark-grey-color;
       background-color: $alto-color;
@@ -298,6 +304,12 @@
       margin: 0 auto;
       margin-top: 3rem;
       gap: 1rem;
+      .breakLink {
+        color: $grey-color;
+        display: flex;
+        align-items: flex-end;
+        height: 100%;
+      }
     }
     .pageLink {
       display: none;
