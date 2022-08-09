@@ -23,14 +23,6 @@ export const initQuiz = createAsyncThunk<Question[]>(
   }
 );
 
-export const loadQuizResults = createAsyncThunk<Game, string>(
-  "quiz/loadQuiz",
-  async (url) => {
-    const { data: game } = await axios.get<Game>(url);
-    return game;
-  }
-);
-
 const initialState: QuizSliceState = {
   status: "loading",
   currentQuiz: [],
@@ -42,6 +34,24 @@ const quizSlice = createSlice({
   name: "quiz",
   initialState,
   reducers: {
+    setCurrentQuiz: {
+      reducer(
+        state,
+        action: PayloadAction<{
+          quiz: Question[];
+          answers: Record<string, number>;
+        }>
+      ) {
+        const { quiz, answers } = action.payload;
+        state.currentQuiz = quiz;
+        state.answers = answers;
+        state.status = "success";
+        state.currentIndex = 0;
+      },
+      prepare(quiz: Question[], answers: Record<string, number>) {
+        return { payload: { quiz, answers } };
+      },
+    },
     increment: (state) => {
       if (state.currentIndex !== QUESTIONS_NUMBER) {
         state.currentIndex++;
@@ -85,19 +95,11 @@ const quizSlice = createSlice({
     builder.addCase(initQuiz.rejected, (state) => {
       state.status = "error";
     });
-    builder.addCase(loadQuizResults.pending, (state) => {
-      state = initialState;
-    });
-    builder.addCase(loadQuizResults.fulfilled, (state, action) => {
-      const { quiz, answers } = action.payload;
-      state.currentQuiz = quiz;
-      state.answers = answers;
-      state.status = "success";
-    });
   },
 });
 
 export const {
+  setCurrentQuiz,
   increment,
   decrement,
   setQuestionIndex,

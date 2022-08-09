@@ -1,6 +1,7 @@
 @import "../../../styles/colors";
 @import "../../../styles/mixins";
 @import "../../../styles/variables";
+@import "../../../styles/media";
 
 .checkboxWrapper {
   .label {
@@ -12,6 +13,9 @@
     align-items: center;
     gap: 1rem;
     transition: color $transition;
+    @include for-tablet-landscape {
+      font-size: 1.6rem;
+    }
     .checkbox {
       cursor: pointer;
       width: 2rem;
@@ -20,6 +24,10 @@
       border: 1px solid $silver-color;
       transition: box-shadow $transition;
       @include flex-center;
+      @include for-tablet-landscape {
+        width: 1.8rem;
+        height: 1.8rem;
+      }
       svg {
         visibility: collapse;
         fill: $grey-color;

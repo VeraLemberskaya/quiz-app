@@ -19,11 +19,13 @@
     }
     @include for-tablet-portrait {
       align-items: center;
-      text-align: center;
     }
     .title {
       font-size: 3.2rem;
       color: $theme-color;
+      @include for-tablet-portrait {
+        text-align: center;
+      }
     }
     .subtitle {
       font-weight: 400;
@@ -62,14 +64,11 @@
       }
     }
     .userInfo {
-      margin-top: 2rem;
       color: $grey-color;
       font-size: 1.8rem;
+      display: flex;
       @include for-tablet-landscape {
         font-size: 1.6rem;
-      }
-      @include for-tablet-portrait {
-        margin-top: 1rem;
       }
       span {
         cursor: pointer;
@@ -290,6 +289,7 @@
     }
   }
   .paginationContainer {
+    z-index: -1;
     position: absolute;
     width: 130%;
     left: -16%;
@@ -361,38 +361,5 @@
     }
   }
 }
-
-// .paginationContainer {
-//   margin-top: 3rem;
-//   margin-left: auto;
-//   margin-right: auto;
-//   width: fit-content;
-//   display: flex;
-//   list-style: none;
-//   gap: 1rem;
-//   .pageLink {
-//     color: $dark-grey-color;
-//     background-color: $alto-color;
-//     width: 3rem;
-//     height: 3rem;
-//     border-radius: 50%;
-//     transition: color $transition, background-color $transition;
-//     @include flex-center;
-//   }
-//   .activePageLink {
-//     background-color: $theme-color;
-//     color: $white-color;
-//   }
-//   .navLink {
-//     svg {
-//       fill: $dark-grey-color;
-//     }
-//     &:is(.disabled) {
-//       svg {
-//         fill: $silver-color;
-//       }
-//     }
-//   }
-// }
 
 @include fade-transition(0.2s);

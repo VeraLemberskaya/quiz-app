@@ -1,0 +1,49 @@
+@import "../../../../styles/media";
+@import "../../../../styles/variables";
+@import "../../../../styles/colors";
+
+.filterContainer {
+  .filterWrapper {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    transition: max-height $transition;
+    .dropdownWrapper {
+      font-size: 1.6rem;
+      color: $grey-color;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    @include for-tablet-portrait {
+      overflow: hidden;
+      max-height: 0;
+      width: 98%;
+      position: static;
+      justify-content: flex-end;
+      flex-direction: row-reverse;
+    }
+  }
+
+  .opened {
+    margin-top: 2rem;
+    max-height: 3.5rem;
+    overflow: visible;
+    @include for-phone-only {
+      margin-top: 1rem;
+    }
+  }
+
+  .filterIcon {
+    display: none;
+    @include for-tablet-portrait {
+      display: block;
+      position: absolute;
+      right: 0;
+      top: -5px;
+    }
+  }
+}

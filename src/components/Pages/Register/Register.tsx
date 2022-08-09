@@ -79,12 +79,13 @@ const Register: FC = () => {
     <div className={styles.registerBody}>
       <div className={styles.container}>
         <div className={styles.formHeader}>
-          <button
+          <Button
+            buttonType="iconBtn"
             onClick={handleBtnBackClick}
-            className={`${styles.iconBtn} position-absolute top-0 start-0 mt-2 ms-2`}
+            className={`position-absolute top-0 start-0 mt-2 ms-2`}
           >
             <BiArrowBack />
-          </button>
+          </Button>
           <img className={styles.logo} src={Logo} alt="QuizGrad" />
           <h4 className={styles.subtitle}>
             {isAccountPage
@@ -103,8 +104,8 @@ const Register: FC = () => {
                   : isEditable
                   ? "Edit your personal data."
                   : editSuccess && "Data have been successfully updated."}
-                <button
-                  className={styles.iconBtn}
+                <Button
+                  buttonType="iconBtn"
                   onClick={() => {
                     setTimeout(() => setFocus("name"));
                     setIsEditable(true);
@@ -112,7 +113,7 @@ const Register: FC = () => {
                   disabled={isEditable}
                 >
                   <AiOutlineEdit />
-                </button>
+                </Button>
               </div>
             )}
             <form onSubmit={handleSubmit(handleFormSubmit)}>

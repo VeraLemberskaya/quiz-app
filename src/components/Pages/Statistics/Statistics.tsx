@@ -12,21 +12,25 @@ import styles from "./statistics.module.scss";
 import { User } from "../../../redux/user/types";
 import { Loader, Modal } from "../../UI";
 import UserStatistics from "./UserStatusticts";
+import Filters from "./Filters";
+import { FilterValue } from "./Filters/Filters";
 
 type Data = {
   userCount: number;
-  gameCount: number;
+  totalGames: number;
   totalScore: number;
-  pageCount: number;
   winner: User;
 };
 
 const Statistics: FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0);
+  const [pageCount, setPageCount] = useState<number>(0);
   const [currentUsers, setCurrentUsers] = useState<User[] | null>(null);
   const [statisticsData, setStatisticsData] = useState<Data | null>(null);
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [filterValue, setFilterValue] = useState<FilterValue>("score");
+  const [findMeChecked, setFindMeChecked] = useState<boolean>(false);
 
   const currentUser = useAppSelector(selectCurrentUser);
 
@@ -39,15 +43,33 @@ const Statistics: FC = () => {
   useEffect(() => {
     setCurrentUsers(null);
     axios
-      .get<User[]>("users", {
+      .get<{ data: User[]; pageCount: number }>("users", {
         params: {
           page: currentPage,
+          orderBy: filterValue,
         },
       })
-      .then(({ data: users }) => {
-        setCurrentUsers(users);
+      .then(({ data }) => {
+        setCurrentUsers(data.data);
+        setPageCount(data.pageCount);
       });
-  }, [currentPage]);
+  }, [currentPage, filterValue]);
+
+  useEffect(() => {
+    if (findMeChecked) {
+      axios
+        .get<{ page: number }>(`user-page/${currentUser?.id}`, {
+          params: {
+            orderBy: filterValue,
+          },
+        })
+        .then(({ data }) => {
+          setCurrentPage(data.page);
+        });
+    } else {
+      setCurrentPage(0);
+    }
+  }, [findMeChecked, filterValue]);
 
   const handlePageChange = ({ selected: page }: { selected: number }) => {
     setCurrentPage(page);
@@ -56,6 +78,14 @@ const Statistics: FC = () => {
   const handleUserSelect = (user: User) => {
     setModalOpened(true);
     setSelectedUser(user);
+  };
+
+  const handleFilterChange = (filterValue: FilterValue) => {
+    setFilterValue(filterValue);
+  };
+
+  const handleCheckboxChange = (checked: boolean) => {
+    setFindMeChecked(checked);
   };
 
   const closeModal = () => {
@@ -73,7 +103,9 @@ const Statistics: FC = () => {
       <div className={`${styles.cell}  ${styles.textEllipsis}`}>
         {user.email}
       </div>
-      <div className={`${styles.cell} ${styles.textEnd}`}>{user.gameCount}</div>
+      <div className={`${styles.cell} ${styles.textEnd}`}>
+        {user.totalGames}
+      </div>
       <div className={`${styles.cell} ${styles.textEnd}`}>{user.score}</div>
     </div>
   ));
@@ -94,7 +126,7 @@ const Statistics: FC = () => {
             <BsFillPersonFill />
           </div>
           <div className={styles.headerBlock}>
-            <span> {statisticsData.gameCount}</span>
+            <span> {statisticsData.totalGames}</span>
             Games
             <MdQuiz />
           </div>
@@ -104,11 +136,19 @@ const Statistics: FC = () => {
             <AiFillTrophy />
           </div>
         </div>
-        <div className={styles.userInfo}>
-          Winner:
-          <span onClick={() => handleUserSelect(statisticsData.winner)}>
-            {statisticsData.winner.email}
-          </span>
+        <div className="position-relative mt-4 w-100">
+          <div className={styles.userInfo}>
+            Winner:
+            <span onClick={() => handleUserSelect(statisticsData.winner)}>
+              {statisticsData.winner.email}
+            </span>
+          </div>
+          <Filters
+            filterValue={filterValue}
+            checked={findMeChecked}
+            onFilterChange={handleFilterChange}
+            onCheckboxChange={handleCheckboxChange}
+          />
         </div>
       </div>
       <div className={styles.tableWrapper}>
@@ -121,8 +161,9 @@ const Statistics: FC = () => {
           {!currentUsers ? <Loader /> : userRows}
         </div>
         <ReactPaginate
-          pageCount={statisticsData ? statisticsData.pageCount : 0}
+          pageCount={pageCount}
           initialPage={0}
+          forcePage={currentPage}
           onPageChange={handlePageChange}
           previousLabel={<MdArrowBackIos />}
           nextLabel={<MdArrowForwardIos />}

@@ -4,7 +4,7 @@ export type User = {
   surname: string;
   email: string;
   score: number;
-  gameCount: number;
+  totalGames: number;
 };
 
 export type UserSliceState = {

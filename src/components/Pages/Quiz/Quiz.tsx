@@ -3,7 +3,6 @@ import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { CSSTransition } from "react-transition-group";
 
 import styles from "./quiz.module.scss";
-import axios from "../../../axios";
 import { Button, Loader, Stepper } from "../../UI";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
@@ -14,7 +13,6 @@ import {
   resetCurrentQuestion,
   decrement,
   setQuestionIndex,
-  loadQuizResults,
 } from "../../../redux/quiz/slice";
 import {
   selectCurrentQuestion,
@@ -22,12 +20,7 @@ import {
 } from "../../../redux/quiz/selectors";
 import AnswerSelector from "./AnswerSelector";
 import { QUESTIONS_NUMBER } from "../../../constants";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import QuizModal from "./QuizModal";
 
 type LocationState = {
@@ -38,7 +31,6 @@ const Quiz: React.FC = () => {
   const [btnPreviousActive, setBtnPreviousActive] = useState<boolean>(false);
   const [btnNextActive, setBtnNextActive] = useState<boolean>(false);
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  const [searchParams] = useSearchParams();
 
   const { status, currentIndex, answers } = useAppSelector(selectQuizData);
   const currentQuestion = useAppSelector(selectCurrentQuestion);
@@ -52,11 +44,7 @@ const Quiz: React.FC = () => {
     if (!isResultPage) {
       dispatch(initQuiz());
     } else {
-      const userId = searchParams.get("userId");
-      const gameId = searchParams.get("gameId");
-      if (userId && gameId) {
-        dispatch(loadQuizResults(`users/${userId}/games/${gameId}`));
-      } else {
+      if (!currentQuestion) {
         navigate("/");
       }
     }

@@ -6,6 +6,7 @@
   position: relative;
   .dropdownToggle {
     @include flex-center;
+    min-width: 11rem;
     cursor: pointer;
     gap: 0.3rem;
     color: $theme-color;
@@ -42,7 +43,7 @@
     position: absolute;
     left: 0;
     margin-top: 0.5rem;
-    min-width: 13rem;
+    min-width: 14rem;
     width: 100%;
     background-color: $white-color;
     box-shadow: 0 2px 2px 2px $silver-color;

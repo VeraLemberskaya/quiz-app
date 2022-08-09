@@ -6,36 +6,39 @@ import {
   MdOutlineClose,
 } from "react-icons/md";
 import { BiMedal } from "react-icons/bi";
+import ReactPaginate from "react-paginate";
 
+import styles from "../statistics.module.scss";
 import axios from "../../../../axios";
 import { User } from "../../../../redux/user/types";
 import { Button, Loader } from "../../../UI";
-import styles from "../statistics.module.scss";
 import { Game } from "../../../../redux/quiz/types";
-import ReactPaginate from "react-paginate";
+import { useAppDispatch } from "../../../../redux/hooks";
+import { setCurrentQuiz } from "../../../../redux/quiz/slice";
+import { QUESTIONS_NUMBER } from "../../../../constants";
 
 type Props = {
   user: User | null;
   onClose?: () => void;
 };
 
-const GAMES_PER_PAGE = 5;
-
 const UserStatisticsModal: FC<Props> = ({ user, onClose }) => {
   const [currentPage, setCurrentPage] = useState<number>(0);
+  const [pageCount, setPageCount] = useState<number>(0);
   const [userGames, setUserGames] = useState<Game[] | null>(null);
   const navigate = useNavigate();
-  const pageCount = user ? Math.ceil(user?.gameCount / GAMES_PER_PAGE) : 0;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     axios
-      .get<Game[]>(`users/${user?.id}/games`, {
+      .get<{ data: Game[]; pageCount: number }>(`users/${user?.id}/games`, {
         params: {
           page: currentPage,
         },
       })
-      .then(({ data: games }) => {
-        setUserGames(games);
+      .then(({ data }) => {
+        setUserGames(data.data);
+        setPageCount(data.pageCount);
       });
   }, [currentPage]);
 
@@ -45,18 +48,12 @@ const UserStatisticsModal: FC<Props> = ({ user, onClose }) => {
 
   const handleGameSelect = (game: Game) => {
     if (user) {
-      const params = createSearchParams({ userId: user.id, gameId: game.id });
-      navigate(
-        {
-          pathname: "/results",
-          search: `?${params}`,
+      dispatch(setCurrentQuiz(game.quiz, game.answers));
+      navigate("/results", {
+        state: {
+          isResultPage: true,
         },
-        {
-          state: {
-            isResultPage: true,
-          },
-        }
-      );
+      });
     }
   };
 
@@ -71,7 +68,7 @@ const UserStatisticsModal: FC<Props> = ({ user, onClose }) => {
           Total score: <span>{user?.score}</span>
         </div>
         <div className={styles.subtitle}>
-          Games played: <span>{user?.gameCount}</span>
+          Games played: <span>{user?.totalGames}</span>
         </div>
       </div>
       {!userGames ? (
@@ -92,7 +89,7 @@ const UserStatisticsModal: FC<Props> = ({ user, onClose }) => {
                     onClick={() => handleGameSelect(game)}
                   >
                     <div className={`${styles.cell} ${styles.textCenter}`}>
-                      {game.score === 5 && (
+                      {game.score === QUESTIONS_NUMBER && (
                         <span className={styles.icon}>
                           <BiMedal />
                         </span>
