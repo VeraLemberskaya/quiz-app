@@ -31,7 +31,7 @@ const Answer: React.FC<Props> = ({ index, children }) => {
 
   return (
     <button
-      className={`${styles.answerContainer} ${getAnswerClass()} col`}
+      className={`${styles.answerContainer} ${getAnswerClass()}`}
       onClick={handleAnswerClick}
       disabled={mode === "review" ? true : answer !== null}
     >

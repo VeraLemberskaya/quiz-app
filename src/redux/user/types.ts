@@ -1,9 +1,14 @@
+export type Role = "ADMIN" | "QUEST";
+export type UserAction = "CONFIGURE_SETTINGS";
+
 export type User = {
   id: string;
   name: string;
   surname: string;
   email: string;
   score: number;
+  role: Role;
+  permissions: UserAction[];
   totalGames: number;
 };
 

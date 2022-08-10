@@ -10,7 +10,7 @@ import { selectCurrentUser } from "../../../redux/user/selectors";
 import axios from "../../../axios";
 import styles from "./statistics.module.scss";
 import { User } from "../../../redux/user/types";
-import { Loader, Modal } from "../../UI";
+import { Loader, Modal, PageTitle } from "../../UI";
 import UserStatistics from "./UserStatusticts";
 import Filters from "./Filters";
 import { FilterValue } from "./Filters/Filters";
@@ -116,7 +116,7 @@ const Statistics: FC = () => {
     <div className={`${styles.statisticsBody} container`}>
       <div className={styles.header}>
         <div>
-          <h1 className={styles.title}>Statistics</h1>
+          <PageTitle>Statistics</PageTitle>
           <h4 className={styles.subtitle}>Be the best among the rest!</h4>
         </div>
         <div className={styles.blockContainer}>

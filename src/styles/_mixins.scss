@@ -34,16 +34,19 @@
 @mixin accordion-transition($timeout) {
   .accordionEnter {
     max-height: 0;
+    overflow: hidden;
     transition: max-height $timeout * 2 ease-in;
   }
   .accordionEnterActive {
     max-height: 100vh;
   }
   .accordionExit {
+    overflow: visible;
     max-height: 100vh;
   }
   .accordionExitActive {
     max-height: 0;
+    overflow: hidden;
     transition: max-height $timeout ease-out;
   }
 }

@@ -5,6 +5,9 @@
 
 .navLinks {
   gap: 4.8rem;
+  @include for-laptop {
+    gap: 3.5rem;
+  }
   @include for-tablet-landscape {
     flex-direction: column;
   }

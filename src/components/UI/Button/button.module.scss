@@ -78,7 +78,6 @@
   padding: 0.8rem;
   border-radius: 50%;
   transition: background-color $transition;
-  margin-left: auto;
   @include flex-center;
   @include for-phone-only {
     width: 3.5rem;

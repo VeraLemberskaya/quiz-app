@@ -1,8 +1,14 @@
 @import "../../../../../styles/media";
 
 .answersContainer {
-  gap: 6rem;
+  gap: 3rem 6rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  &:is(.gridFourCol) {
+    grid-template-columns: repeat(4, 1fr);
+  }
   @include for-tablet-landscape {
+    display: flex;
     gap: 3rem;
     width: 65%;
     margin: 0 auto;
