@@ -3,6 +3,8 @@ export type User = {
   name: string;
   surname: string;
   email: string;
+  score: number;
+  totalGames: number;
 };
 
 export type UserSliceState = {

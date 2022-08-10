@@ -3,7 +3,7 @@
 @import "../../../styles/colors";
 
 .quizBody {
-  height: 90%;
+  height: 89vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -35,4 +35,4 @@
   float: right;
 }
 
-@include fade-transition(2s);
+@include fade-transition(0.3s);

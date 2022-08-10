@@ -143,5 +143,8 @@ $transition: 0.25s ease-in-out;
   .visible {
     height: 2.2rem;
     visibility: visible;
+    @include for-phone-only {
+      height: 3.2rem;
+    }
   }
 }

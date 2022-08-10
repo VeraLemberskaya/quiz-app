@@ -8,10 +8,10 @@ type Props = Omit<React.HTMLProps<HTMLInputElement>, "type"> & {
 };
 
 const Checkbox = (props: Props, ref: Ref<HTMLInputElement>) => {
-  const [checked, setChecked] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(props.checked ?? false);
   const { label, ...otherProps } = props;
 
-  const handleCheckboxClick = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleCheckboxClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (props.onChange) {
       props.onChange(event);
     }

@@ -31,7 +31,7 @@ const AnswerSelector = ({
   );
 
   useEffect(() => {
-    if (mode === "review" && answerIndex) {
+    if (mode === "review") {
       setAnswer(answerIndex);
     } else {
       setAnswer(null);

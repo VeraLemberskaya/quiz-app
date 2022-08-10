@@ -6,6 +6,7 @@ import { ButtonType, ButtonSize } from "./types";
 const BUTTON_TYPES: { [key in ButtonType]: string } = {
   primary: styles.primary,
   outlined: styles.outlined,
+  iconBtn: styles.iconBtn,
 };
 
 const BUTTON_SIZES: { [key in ButtonSize]: string } = {
@@ -29,7 +30,7 @@ const Button: FC<Props> = ({
   const { className, ...otherProps } = props;
   return (
     <button
-      className={`${className} ${styles.button} ${
+      className={`${className ? className : ""} ${styles.button} ${
         buttonType ? BUTTON_TYPES[buttonType] : ""
       } ${buttonSize ? BUTTON_SIZES[buttonSize] : ""}`}
       {...otherProps}

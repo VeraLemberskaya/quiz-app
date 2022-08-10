@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../axios";
 import { countriesEndPoint, QUESTIONS_NUMBER } from "../../constants";
 import { generateRandomQuestion } from "../../utils/generateRandomQuestion";
-import { Question, QuizSliceState, Country } from "./types";
+import { Question, QuizSliceState, Game, Country } from "./types";
 
 export const initQuiz = createAsyncThunk<Question[]>(
   "quiz/initQuiz",
@@ -34,6 +34,24 @@ const quizSlice = createSlice({
   name: "quiz",
   initialState,
   reducers: {
+    setCurrentQuiz: {
+      reducer(
+        state,
+        action: PayloadAction<{
+          quiz: Question[];
+          answers: Record<string, number>;
+        }>
+      ) {
+        const { quiz, answers } = action.payload;
+        state.currentQuiz = quiz;
+        state.answers = answers;
+        state.status = "success";
+        state.currentIndex = 0;
+      },
+      prepare(quiz: Question[], answers: Record<string, number>) {
+        return { payload: { quiz, answers } };
+      },
+    },
     increment: (state) => {
       if (state.currentIndex !== QUESTIONS_NUMBER) {
         state.currentIndex++;
@@ -81,6 +99,7 @@ const quizSlice = createSlice({
 });
 
 export const {
+  setCurrentQuiz,
   increment,
   decrement,
   setQuestionIndex,

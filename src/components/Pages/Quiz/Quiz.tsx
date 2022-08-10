@@ -43,6 +43,10 @@ const Quiz: React.FC = () => {
   useEffect(() => {
     if (!isResultPage) {
       dispatch(initQuiz());
+    } else {
+      if (!currentQuestion) {
+        navigate("/");
+      }
     }
     return () => {
       dispatch(resetQuiz());
@@ -69,12 +73,6 @@ const Quiz: React.FC = () => {
       setBtnNextActive(false);
     }
   }, [currentIndex]);
-
-  useEffect(() => {
-    if (isResultPage && !currentQuestion) {
-      navigate("/");
-    }
-  }, [currentQuestion]);
 
   const handleBtnNextClick = () => {
     dispatch(increment());
@@ -154,7 +152,7 @@ const Quiz: React.FC = () => {
                   </Button>
                 )}
               </div>
-              <div>
+              <div className="d-flex">
                 {isResultPage && (
                   <Link
                     to="/"

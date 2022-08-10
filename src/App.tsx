@@ -3,7 +3,7 @@ import { injectStyle } from "react-toastify/dist/inject-style";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import { Home, Login, Quiz, Register } from "./components/Pages";
+import { Home, Login, Quiz, Register, Statistics } from "./components/Pages";
 import { Layout } from "./components/UI";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { selectCurrentUser } from "./redux/user/selectors";
@@ -64,6 +64,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/results" element={<Quiz />} />
+          <Route path="/statistics" element={<Statistics />} />
         </Route>
         <Route
           path="/login"
