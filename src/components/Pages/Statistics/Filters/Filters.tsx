@@ -43,10 +43,9 @@ const Filters: FC<Props> = ({
         </Button>
       </div>
       <div
-        className={classNames(
-          styles.filterWrapper,
-          filtersOpened && styles.opened
-        )}
+        className={classNames(styles.filterWrapper, {
+          [styles.opened]: filtersOpened,
+        })}
       >
         <Checkbox
           label="Find me"

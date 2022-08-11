@@ -133,7 +133,7 @@ const Settings: FC = () => {
               </div>
             </CSSTransition>
           </div>
-          <div className="d-flex align-items-end me-5" style={{ zIndex: 1 }}>
+          <div className="d-flex align-items-end me-5" style={{ zIndex: 2 }}>
             <h6 className={`${styles.settingTitle} me-3`}>Question amount:</h6>
             <Dropdown>
               <Dropdown.Toggle>{selectedQuestionAmount}</Dropdown.Toggle>

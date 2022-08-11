@@ -13,10 +13,9 @@ const Sidebar: FC<Props> = ({ sidebarShown, onClose }) => {
   return (
     <div className={styles.sideBarHolder}>
       <div
-        className={classNames(
-          styles.sideBarBody,
-          !sidebarShown && styles.sideBarClosed
-        )}
+        className={classNames(styles.sideBarBody, {
+          [styles.sideBarClosed]: !sidebarShown,
+        })}
         onClick={onClose}
       >
         <NavLinks />

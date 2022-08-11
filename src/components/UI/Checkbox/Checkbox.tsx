@@ -21,7 +21,9 @@ const Checkbox = (props: Props, ref: Ref<HTMLInputElement>) => {
 
   return (
     <div
-      className={classNames(styles.checkboxWrapper, checked && styles.checked)}
+      className={classNames(styles.checkboxWrapper, {
+        [styles.checked]: checked,
+      })}
     >
       <label className={styles.label}>
         <input

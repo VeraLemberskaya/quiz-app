@@ -14,7 +14,9 @@ const Toggle: FC<Props> = ({ children }) => {
 
   return (
     <div
-      className={classNames(styles.dropdownToggle, isOpened && styles.opened)}
+      className={classNames(styles.dropdownToggle, {
+        [styles.opened]: isOpened,
+      })}
       onClick={() => toggleOpened()}
     >
       {children}

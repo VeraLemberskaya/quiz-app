@@ -20,7 +20,7 @@ const Step: FC<Props> = ({
 }) => {
   return (
     <button
-      className={classNames(styles.stepBody, isActive && styles.active)}
+      className={classNames(styles.stepBody, { [styles.active]: isActive })}
       onClick={onSelect}
       disabled={disabled}
     >

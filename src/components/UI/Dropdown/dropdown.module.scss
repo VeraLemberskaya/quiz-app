@@ -3,6 +3,7 @@
 @import "../../../styles/variables";
 
 .dropdownContainer {
+  z-index: 1;
   position: relative;
   .dropdownToggle {
     @include flex-center;

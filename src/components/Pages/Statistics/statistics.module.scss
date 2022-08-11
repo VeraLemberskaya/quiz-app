@@ -113,7 +113,6 @@
 
 .tableWrapper {
   position: relative;
-  z-index: 1;
   margin-top: 2rem;
   .tableHeader {
     display: grid;
@@ -256,30 +255,33 @@
     @include for-phone-only {
       width: 100%;
     }
-    .table {
-      min-height: fit-content;
-      @include for-phone-only {
-        min-height: 20rem;
-      }
-    }
-    .cell {
-      .icon {
-        position: absolute;
-        left: 1rem;
-        width: 2.3rem;
-        height: 2.3rem;
-        margin-bottom: 0.5rem;
-        svg {
-          width: inherit;
-          height: inherit;
-          fill: $dark-green-color;
+    .tableWrapper {
+      z-index: 1;
+      .table {
+        min-height: fit-content;
+        @include for-phone-only {
+          min-height: 20rem;
         }
       }
-      @include for-laptop {
-        min-height: 5rem;
-      }
-      @include for-phone-only {
-        min-height: 4rem;
+      .cell {
+        .icon {
+          position: absolute;
+          left: 1rem;
+          width: 2.3rem;
+          height: 2.3rem;
+          margin-bottom: 0.5rem;
+          svg {
+            width: inherit;
+            height: inherit;
+            fill: $dark-green-color;
+          }
+        }
+        @include for-laptop {
+          min-height: 5rem;
+        }
+        @include for-phone-only {
+          min-height: 4rem;
+        }
       }
     }
   }

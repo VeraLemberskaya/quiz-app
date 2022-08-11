@@ -1,5 +1,4 @@
 import { FC, useEffect } from "react";
-import { injectStyle } from "react-toastify/dist/inject-style";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -18,10 +17,6 @@ import { setUser } from "./redux/user/slice";
 import { initSettings } from "./redux/settings/slice";
 import { selectCurrentSettings } from "./redux/settings/selectors";
 import { getSavedUser } from "./api/requests";
-
-if (typeof window !== "undefined") {
-  injectStyle();
-}
 
 type Props = {
   children: JSX.Element;

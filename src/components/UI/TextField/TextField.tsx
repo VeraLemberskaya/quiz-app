@@ -82,13 +82,12 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
       <div className={classNames(className, styles.textFieldWrapper)}>
         {label && <p className={styles.label}>{label}</p>}
         <span
-          className={classNames(
-            styles.inputWrapper,
-            inputFocused && styles.focused,
-            (props.value || inputRef.current?.value) && styles.filled,
-            error && styles.invalid,
-            props.disabled && styles.disabled
-          )}
+          className={classNames(styles.inputWrapper, {
+            [styles.focused]: inputFocused,
+            [styles.filled]: props.value || inputRef.current?.value,
+            [styles.invalid]: error,
+            [styles.disabled]: props.disabled,
+          })}
           onClick={handleTextFieldClick}
         >
           <label className={styles.label}>{placeholder}</label>
@@ -110,7 +109,7 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
             </span>
           )}
         </span>
-        <span className={classNames(styles.error, error && styles.visible)}>
+        <span className={classNames(styles.error, { [styles.visible]: error })}>
           {errorIcon && errorIcon}
           {error}
         </span>

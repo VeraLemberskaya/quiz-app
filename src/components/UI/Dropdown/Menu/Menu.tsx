@@ -26,7 +26,9 @@ const Menu: FC<Props> = ({ children }) => {
       unmountOnExit
     >
       <div
-        className={classNames(styles.dropdownMenu, isOpened && styles.opened)}
+        className={classNames(styles.dropdownMenu, {
+          [styles.opened]: isOpened,
+        })}
       >
         {children}
       </div>

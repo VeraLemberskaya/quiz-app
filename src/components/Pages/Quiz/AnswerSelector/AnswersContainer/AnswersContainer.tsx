@@ -13,10 +13,9 @@ const AnswersContainer: FC<Props> = ({ children }) => {
   return (
     <div className="container">
       <div
-        className={classNames(
-          styles.answersContainer,
-          childrenCount === 4 && styles.gridFourCol
-        )}
+        className={classNames(styles.answersContainer, {
+          [styles.gridFourCol]: childrenCount === 4,
+        })}
       >
         {children}
       </div>
