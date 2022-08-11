@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { Ref, useState } from "react";
 import { HiCheck } from "react-icons/hi";
 
@@ -20,7 +21,7 @@ const Checkbox = (props: Props, ref: Ref<HTMLInputElement>) => {
 
   return (
     <div
-      className={`${styles.checkboxWrapper} ${checked ? styles.checked : ""}`}
+      className={classNames(styles.checkboxWrapper, checked && styles.checked)}
     >
       <label className={styles.label}>
         <input

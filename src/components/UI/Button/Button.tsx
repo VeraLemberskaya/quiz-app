@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import classNames from "classnames";
 
 import styles from "./button.module.scss";
 import { ButtonType, ButtonSize } from "./types";
@@ -28,11 +29,15 @@ const Button: FC<Props> = ({
   ...props
 }) => {
   const { className, ...otherProps } = props;
+
   return (
     <button
-      className={`${className ? className : ""} ${styles.button} ${
-        buttonType ? BUTTON_TYPES[buttonType] : ""
-      } ${buttonSize ? BUTTON_SIZES[buttonSize] : ""}`}
+      className={classNames(
+        className,
+        styles.button,
+        buttonType && BUTTON_TYPES[buttonType],
+        buttonSize && BUTTON_SIZES[buttonSize]
+      )}
       {...otherProps}
     >
       {startIcon ? <span className={styles.startIcon}>{startIcon}</span> : null}

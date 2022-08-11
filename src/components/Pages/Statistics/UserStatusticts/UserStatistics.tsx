@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState } from "react";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   MdArrowBackIos,
   MdArrowForwardIos,

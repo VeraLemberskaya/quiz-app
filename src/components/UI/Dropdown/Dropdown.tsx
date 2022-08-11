@@ -6,6 +6,7 @@ import Item from "./Item";
 import Menu from "./Menu";
 import Toggle from "./Toggle";
 import { useOutsideClickEffect } from "../../../hooks";
+import classNames from "classnames";
 
 type Props = {
   children: React.ReactNode;
@@ -32,7 +33,7 @@ const Dropdown = ({ children, className }: Props) => {
   return (
     <DropdownContext.Provider value={value}>
       <div
-        className={`${className ? className : ""} ${styles.dropdownContainer}`}
+        className={classNames(className, styles.dropdownContainer)}
         onClick={(event) => event.stopPropagation()}
       >
         {children}

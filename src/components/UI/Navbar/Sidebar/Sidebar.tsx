@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { FC } from "react";
 import NavLinks from "../NavLinks";
 
@@ -12,9 +13,10 @@ const Sidebar: FC<Props> = ({ sidebarShown, onClose }) => {
   return (
     <div className={styles.sideBarHolder}>
       <div
-        className={`${styles.sideBarBody} ${
-          sidebarShown ? "" : styles.sideBarClosed
-        }`}
+        className={classNames(
+          styles.sideBarBody,
+          !sidebarShown && styles.sideBarClosed
+        )}
         onClick={onClose}
       >
         <NavLinks />

@@ -1,4 +1,5 @@
-import React from "react";
+import classNames from "classnames";
+import React, { FC } from "react";
 
 import { useAnswerSelectorContext } from "../context";
 import styles from "./answer.module.scss";
@@ -10,7 +11,7 @@ type Props = {
 
 const letterACode: number = 65;
 
-const Answer: React.FC<Props> = ({ index, children }) => {
+const Answer: FC<Props> = ({ index, children }) => {
   const { setAnswer, answer, correctAnswer, mode } = useAnswerSelectorContext();
 
   const getAnswerClass = () => {
@@ -22,7 +23,6 @@ const Answer: React.FC<Props> = ({ index, children }) => {
         return mode === "review" ? styles.answeredWrong : styles.wrong;
       }
     }
-    return "";
   };
 
   const handleAnswerClick = () => {
@@ -31,7 +31,7 @@ const Answer: React.FC<Props> = ({ index, children }) => {
 
   return (
     <button
-      className={`${styles.answerContainer} ${getAnswerClass()}`}
+      className={classNames(styles.answerContainer, getAnswerClass())}
       onClick={handleAnswerClick}
       disabled={mode === "review" ? true : answer !== null}
     >

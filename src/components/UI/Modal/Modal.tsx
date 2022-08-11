@@ -11,7 +11,7 @@ type Props = {
 const Modal: FC<Props> = ({ children, onOverlayClick }) => {
   return ReactDOM.createPortal(
     <>
-      <div className={`${styles.modalBody}`}>{children} </div>
+      <div className={styles.modalBody}>{children} </div>
       <div className={styles.overlay} onClick={onOverlayClick} />
     </>,
     document.body

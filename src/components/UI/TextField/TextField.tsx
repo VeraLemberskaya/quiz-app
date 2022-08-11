@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, {
   Ref,
   useEffect,
@@ -78,14 +79,16 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
 
   return (
     <>
-      <div className={`${className} ${styles.textFieldWrapper}`}>
+      <div className={classNames(className, styles.textFieldWrapper)}>
         {label && <p className={styles.label}>{label}</p>}
         <span
-          className={`${styles.inputWrapper} ${
-            inputFocused ? styles.focused : ""
-          } ${props.value || inputRef.current?.value ? styles.filled : ""} ${
-            error ? styles.invalid : ""
-          } ${props.disabled ? styles.disabled : ""}`}
+          className={classNames(
+            styles.inputWrapper,
+            inputFocused && styles.focused,
+            (props.value || inputRef.current?.value) && styles.filled,
+            error && styles.invalid,
+            props.disabled && styles.disabled
+          )}
           onClick={handleTextFieldClick}
         >
           <label className={styles.label}>{placeholder}</label>
@@ -107,7 +110,7 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
             </span>
           )}
         </span>
-        <span className={`${styles.error} ${error ? styles.visible : ""}`}>
+        <span className={classNames(styles.error, error && styles.visible)}>
           {errorIcon && errorIcon}
           {error}
         </span>

@@ -1,9 +1,9 @@
 import React, { FC, useState } from "react";
 import { BsFilterRight } from "react-icons/bs";
-import { CSSTransition } from "react-transition-group";
 
 import styles from "./filters.module.scss";
 import { Button, Checkbox, Dropdown } from "../../../UI";
+import classNames from "classnames";
 
 export type FilterValue = "score" | "games";
 
@@ -43,9 +43,10 @@ const Filters: FC<Props> = ({
         </Button>
       </div>
       <div
-        className={`${styles.filterWrapper} ${
-          filtersOpened ? styles.opened : ""
-        }`}
+        className={classNames(
+          styles.filterWrapper,
+          filtersOpened && styles.opened
+        )}
       >
         <Checkbox
           label="Find me"

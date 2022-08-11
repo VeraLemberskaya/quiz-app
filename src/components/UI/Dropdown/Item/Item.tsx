@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { FC } from "react";
 import { useDropdownContext } from "../context";
 
@@ -7,7 +8,7 @@ type Props = {
   children: React.ReactNode;
 } & React.HTMLProps<HTMLDivElement>;
 
-const Item: FC<Props> = ({ children, onClick, ...otherProps }) => {
+const Item: FC<Props> = ({ children, onClick, className, ...otherProps }) => {
   const { toggleOpened } = useDropdownContext();
 
   const handleDropdownItemClick: React.MouseEventHandler<HTMLDivElement> = (
@@ -21,7 +22,7 @@ const Item: FC<Props> = ({ children, onClick, ...otherProps }) => {
 
   return (
     <div
-      className={styles.dropdownItem}
+      className={classNames(className, styles.dropdownItem)}
       {...otherProps}
       onClick={handleDropdownItemClick}
     >
