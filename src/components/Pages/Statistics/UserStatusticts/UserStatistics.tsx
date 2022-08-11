@@ -9,13 +9,13 @@ import { BiMedal } from "react-icons/bi";
 import ReactPaginate from "react-paginate";
 
 import styles from "../statistics.module.scss";
-import axios from "../../../../axios";
 import { User } from "../../../../redux/user/types";
 import { Button, Loader } from "../../../UI";
 import { Game } from "../../../../redux/quiz/types";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setCurrentQuiz } from "../../../../redux/quiz/slice";
 import { selectSelectedQuestionAmount } from "../../../../redux/settings/selectors";
+import { getUserGames } from "../../../../api/requests";
 
 type Props = {
   user: User | null;
@@ -31,16 +31,12 @@ const UserStatisticsModal: FC<Props> = ({ user, onClose }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    axios
-      .get<{ data: Game[]; pageCount: number }>(`users/${user?.id}/games`, {
-        params: {
-          page: currentPage,
-        },
-      })
-      .then(({ data }) => {
+    if (user) {
+      getUserGames(user, { page: currentPage }).then((data) => {
         setUserGames(data.data);
         setPageCount(data.pageCount);
       });
+    }
   }, [currentPage]);
 
   const handlePageChange = ({ selected: page }: { selected: number }) => {

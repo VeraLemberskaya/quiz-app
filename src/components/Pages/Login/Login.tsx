@@ -1,16 +1,15 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { BiError } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 
-import axios from "../../../axios";
 import styles from "./login.module.scss";
 import GraduateImg from "../../../assets/graduate-hat.svg";
 import Logo from "../../../assets/logo.svg";
 import { Button, Checkbox, TextField } from "../../UI";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch } from "../../../redux/hooks";
 import { setUser } from "../../../redux/user/slice";
-import { loginEndPoint } from "../../../constants";
+import { authenticateUser, saveUser } from "../../../api/requests";
 
 type FormInputs = {
   email: string;
@@ -31,12 +30,10 @@ const Login: FC = () => {
 
   const handleFormSubmit: SubmitHandler<FormInputs> = async (data) => {
     const { rememberMe, ...credentials } = data;
-    const { data: user } = await axios.post(loginEndPoint, credentials);
+    const user = await authenticateUser(credentials);
     if (user) {
       if (rememberMe) {
-        const { data: response } = await axios.post("users/save-user", {
-          id: user.id,
-        });
+        const response = await saveUser(user);
         if (response) {
           localStorage.setItem("rememberMe", "true");
         }

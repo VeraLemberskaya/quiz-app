@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import axios from "../../axios";
+import { getQuiz } from "../../api/requests";
 import { Question, QuizSliceState } from "./types";
 
 export const initQuiz = createAsyncThunk<Question[]>(
   "quiz/initQuiz",
   async () => {
-    const { data: questions } = await axios.get("questions");
-    return questions;
+    return await getQuiz();
   }
 );
 

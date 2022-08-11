@@ -1,8 +1,7 @@
-import React, { FC, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Modal, Button } from "../../../UI";
 
 import styles from "./quizModal.module.scss";
-import axios from "../../../../axios";
 import { useAppSelector } from "../../../../redux/hooks";
 import {
   selectQuizData,
@@ -11,6 +10,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { selectCurrentUser } from "../../../../redux/user/selectors";
 import { getFormattedDate } from "../../../../utils";
+import { saveUserGame } from "../../../../api/requests";
+import { Game } from "../../../../redux/quiz/types";
 
 const QuizModal: FC = () => {
   const { currentQuiz, answers } = useAppSelector(selectQuizData);
@@ -19,17 +20,14 @@ const QuizModal: FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const game = {
+    const game: Omit<Game, "id"> = {
       date: getFormattedDate(new Date()),
       quiz: currentQuiz,
       answers,
       score: totalScore,
     };
     if (user) {
-      axios.post("users/set-game-result", {
-        id: user.id,
-        game,
-      });
+      saveUserGame(user, game);
     }
   }, []);
 

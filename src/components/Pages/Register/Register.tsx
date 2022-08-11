@@ -1,19 +1,18 @@
-import React, { FC, useRef, useState } from "react";
+import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { BiError, BiArrowBack } from "react-icons/bi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
-import axios from "../../../axios";
 import styles from "./register.module.scss";
 import Logo from "../../../assets/logo.svg";
 import { Button, TextField } from "../../UI";
-import { signUpEndPoint } from "../../../constants";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/user/selectors";
 import { useEffect } from "react";
 import { setUser } from "../../../redux/user/slice";
 import PasswordForm from "./PasswordForm";
+import { registerUser, updateUser } from "../../../api/requests";
 
 type FormInputs = {
   name: string;
@@ -55,13 +54,13 @@ const Register: FC = () => {
 
   const handleFormSubmit: SubmitHandler<FormInputs> = async (data) => {
     if (!isAccountPage) {
-      const { data: response } = await axios.post(signUpEndPoint, data);
+      const response = await registerUser(data);
       if (response) {
         navigate("/login");
       }
     } else {
-      const { data: response } = await axios.put(`users/${user.id}`, data);
-      dispatch(setUser(response));
+      const updatedUser = await updateUser(user, data);
+      dispatch(setUser(updatedUser));
       setIsEditable(false);
       setEditSuccess(true);
     }

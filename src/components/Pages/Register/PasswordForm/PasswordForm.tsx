@@ -1,12 +1,15 @@
 import { AxiosError } from "axios";
-import React, { FC, useState } from "react";
+import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { BiError } from "react-icons/bi";
 
 import { useAppSelector } from "../../../../redux/hooks";
 import { selectCurrentUser } from "../../../../redux/user/selectors";
 import { Button, TextField } from "../../../UI";
-import axios from "../../../../axios";
+import {
+  checkUserPassword,
+  updateUserPassword,
+} from "../../../../api/requests";
 
 type Props = {
   onSubmit?: () => void;
@@ -33,10 +36,9 @@ const PasswordForm: FC<Props> = ({ onSubmit }) => {
     const inputValue = getValues("oldPassword");
     if (inputValue && !errors.oldPassword) {
       try {
-        await axios.post("users/check-password", {
-          id: user?.id,
-          password: inputValue,
-        });
+        if (user) {
+          checkUserPassword(user, inputValue);
+        }
       } catch (err) {
         setError("oldPassword", {
           type: "oldPassword",
@@ -60,13 +62,12 @@ const PasswordForm: FC<Props> = ({ onSubmit }) => {
   const handleFormSubmit: SubmitHandler<FormInputs> = async (data) => {
     const { newPassword, newPasswordRepeat } = data;
     if (checkPasswords(newPassword, newPasswordRepeat)) {
-      const { data: response } = await axios.post("users/change-password", {
-        id: user?.id,
-        password: newPassword,
-      });
-      if (response) {
-        if (onSubmit) {
-          onSubmit();
+      if (user) {
+        const response = await updateUserPassword(user, newPassword);
+        if (response) {
+          if (onSubmit) {
+            onSubmit();
+          }
         }
       }
     }

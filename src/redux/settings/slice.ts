@@ -1,15 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import axios from "../../axios";
-import { AmountValue, SettingSliceState, Topic } from "./types";
+import { getSettings } from "../../api/requests";
+import { AmountValue, Settings, SettingSliceState, Topic } from "./types";
 
-export const initSettings = createAsyncThunk<Omit<SettingSliceState, "status">>(
+export const initSettings = createAsyncThunk<Settings>(
   "settings/initSettings",
   async () => {
-    const { data } = await axios.get<Omit<SettingSliceState, "status">>(
-      "settings"
-    );
-    return data;
+    return await getSettings();
   }
 );
 

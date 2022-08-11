@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { MdPlaylistAdd } from "react-icons/md";
 import { CSSTransition } from "react-transition-group";
-import axios from "../../../axios";
+import { updateSettings } from "../../../api/requests";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
   selectSelectedTopics,
@@ -58,7 +58,7 @@ const Settings: FC = () => {
 
   const handleSaveBtnClick = async () => {
     setThemeListOpened(false);
-    const response = await axios.put("/save-settings", {
+    const response = await updateSettings({
       topics,
       questionAmountValues,
       answerAmountValues,

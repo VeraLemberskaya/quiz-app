@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import { MdArrowBackIos, MdArrowForwardIos, MdQuiz } from "react-icons/md";
 import { AiFillTrophy } from "react-icons/ai";
@@ -7,13 +7,13 @@ import { CSSTransition } from "react-transition-group";
 
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/user/selectors";
-import axios from "../../../axios";
 import styles from "./statistics.module.scss";
 import { User } from "../../../redux/user/types";
 import { Loader, Modal, PageTitle } from "../../UI";
 import UserStatistics from "./UserStatusticts";
 import Filters from "./Filters";
 import { FilterValue } from "./Filters/Filters";
+import { getStatistics, getUserPage, getUsers } from "../../../api/requests";
 
 type Data = {
   userCount: number;
@@ -35,37 +35,25 @@ const Statistics: FC = () => {
   const currentUser = useAppSelector(selectCurrentUser);
 
   useEffect(() => {
-    axios.get("statistics").then(({ data }) => {
-      setStatisticsData(data);
-    });
+    getStatistics().then((data) => setStatisticsData(data));
   }, []);
 
   useEffect(() => {
     setCurrentUsers(null);
-    axios
-      .get<{ data: User[]; pageCount: number }>("users", {
-        params: {
-          page: currentPage,
-          orderBy: filterValue,
-        },
-      })
-      .then(({ data }) => {
-        setCurrentUsers(data.data);
-        setPageCount(data.pageCount);
-      });
+    getUsers({
+      page: currentPage,
+      orderBy: filterValue,
+    }).then((data) => {
+      setCurrentUsers(data.data);
+      setPageCount(data.pageCount);
+    });
   }, [currentPage, filterValue]);
 
   useEffect(() => {
-    if (findMeChecked) {
-      axios
-        .get<{ page: number }>(`user-page/${currentUser?.id}`, {
-          params: {
-            orderBy: filterValue,
-          },
-        })
-        .then(({ data }) => {
-          setCurrentPage(data.page);
-        });
+    if (findMeChecked && currentUser) {
+      getUserPage(currentUser, { orderBy: filterValue }).then((data) =>
+        setCurrentPage(data.page)
+      );
     } else {
       setCurrentPage(0);
     }

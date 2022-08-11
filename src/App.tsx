@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { injectStyle } from "react-toastify/dist/inject-style";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -14,11 +14,10 @@ import {
 import { Layout, Loader } from "./components/UI";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { selectCurrentUser } from "./redux/user/selectors";
-import axios from "./axios";
 import { setUser } from "./redux/user/slice";
-import { User } from "./redux/user/types";
 import { initSettings } from "./redux/settings/slice";
 import { selectCurrentSettings } from "./redux/settings/selectors";
+import { getSavedUser } from "./api/requests";
 
 if (typeof window !== "undefined") {
   injectStyle();
@@ -60,9 +59,7 @@ function App() {
     dispatch(initSettings());
     const isUserSaved = !!localStorage.getItem("rememberMe");
     if (isUserSaved) {
-      axios
-        .get<User>("users/get-saved-user")
-        .then(({ data: user }) => dispatch(setUser(user)));
+      getSavedUser().then((user) => dispatch(setUser(user)));
     }
   }, []);
 
