@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { Children, FC } from "react";
 
 import styles from "./answersContainer.module.scss";
 
@@ -7,9 +7,16 @@ type Props = {
 };
 
 const AnswersContainer: FC<Props> = ({ children }) => {
+  const childrenCount = Children.count(children);
   return (
     <div className="container">
-      <div className={`${styles.answersContainer} row`}>{children}</div>
+      <div
+        className={`${styles.answersContainer} ${
+          childrenCount === 4 ? styles.gridFourCol : ""
+        }`}
+      >
+        {children}
+      </div>
     </div>
   );
 };

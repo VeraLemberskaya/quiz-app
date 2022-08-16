@@ -1,0 +1,10 @@
+@import "../../../styles/colors";
+@import "../../../styles/media";
+
+.title {
+  font-size: 3.2rem;
+  color: $theme-color;
+  @include for-tablet-portrait {
+    text-align: center;
+  }
+}

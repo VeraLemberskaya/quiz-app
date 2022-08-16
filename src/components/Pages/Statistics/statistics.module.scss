@@ -20,13 +20,6 @@
     @include for-tablet-portrait {
       align-items: center;
     }
-    .title {
-      font-size: 3.2rem;
-      color: $theme-color;
-      @include for-tablet-portrait {
-        text-align: center;
-      }
-    }
     .subtitle {
       font-weight: 400;
       color: $silver-color;
@@ -119,6 +112,8 @@
 }
 
 .tableWrapper {
+  position: relative;
+  z-index: 1;
   margin-top: 2rem;
   .tableHeader {
     display: grid;
@@ -154,7 +149,7 @@
       transition: background-color $transition;
       background-color: $carrara-color;
       &:hover {
-        background-color: #e2e2e2;
+        background-color: $mercury-color;
       }
     }
   }
@@ -289,7 +284,6 @@
     }
   }
   .paginationContainer {
-    z-index: -1;
     position: absolute;
     width: 130%;
     left: -16%;

@@ -1,27 +1,44 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import axios from "../../axios";
-import { countriesEndPoint, QUESTIONS_NUMBER } from "../../constants";
+import { countriesEndPoint } from "../../constants";
 import { generateRandomQuestion } from "../../utils/generateRandomQuestion";
-import { Question, QuizSliceState, Game, Country } from "./types";
+import {
+  selectSelectedAnswerAmount,
+  selectSelectedQuestionAmount,
+  selectSelectedTopics,
+} from "../settings/selectors";
+import { RootState } from "../store";
+import { Question, QuizSliceState, Country } from "./types";
 
-export const initQuiz = createAsyncThunk<Question[]>(
-  "quiz/initQuiz",
-  async () => {
-    const { data: countries } = await axios.get<Country[]>(countriesEndPoint);
+export const initQuiz = createAsyncThunk<
+  Question[],
+  void,
+  { state: RootState }
+>("quiz/initQuiz", async (_, thunkApi) => {
+  const questionsNumber = selectSelectedQuestionAmount(thunkApi.getState());
+  const answersNumber = selectSelectedAnswerAmount(thunkApi.getState());
+  const selectedTopics = selectSelectedTopics(thunkApi.getState()).map(
+    (topic) => topic.name
+  );
 
-    const questions: Question[] = [];
+  const { data: countries } = await axios.get<Country[]>(countriesEndPoint);
 
-    while (questions.length !== QUESTIONS_NUMBER) {
-      const question = generateRandomQuestion(countries);
-      if (!questions.some((curr) => curr.id === question.id)) {
-        questions.push(question);
-      }
+  const questions: Question[] = [];
+
+  while (questions.length !== questionsNumber) {
+    const question = generateRandomQuestion(
+      countries,
+      answersNumber,
+      selectedTopics
+    );
+    if (!questions.some((curr) => curr.id === question.id)) {
+      questions.push(question);
     }
-
-    return questions;
   }
-);
+
+  return questions;
+});
 
 const initialState: QuizSliceState = {
   status: "loading",
@@ -53,9 +70,7 @@ const quizSlice = createSlice({
       },
     },
     increment: (state) => {
-      if (state.currentIndex !== QUESTIONS_NUMBER) {
-        state.currentIndex++;
-      }
+      state.currentIndex++;
     },
     decrement: (state) => {
       if (state.currentIndex !== 0) {

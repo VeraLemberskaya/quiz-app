@@ -13,9 +13,9 @@ import axios from "../../../../axios";
 import { User } from "../../../../redux/user/types";
 import { Button, Loader } from "../../../UI";
 import { Game } from "../../../../redux/quiz/types";
-import { useAppDispatch } from "../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setCurrentQuiz } from "../../../../redux/quiz/slice";
-import { QUESTIONS_NUMBER } from "../../../../constants";
+import { selectSelectedQuestionAmount } from "../../../../redux/settings/selectors";
 
 type Props = {
   user: User | null;
@@ -26,6 +26,7 @@ const UserStatisticsModal: FC<Props> = ({ user, onClose }) => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(0);
   const [userGames, setUserGames] = useState<Game[] | null>(null);
+  const QUESTIONS_NUMBER = useAppSelector(selectSelectedQuestionAmount);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 

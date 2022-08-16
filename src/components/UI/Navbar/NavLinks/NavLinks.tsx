@@ -8,6 +8,7 @@ import styles from "./navlinks.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { selectCurrentUser } from "../../../../redux/user/selectors";
 import Dropdown from "../../Dropdown";
+import { hasPermission } from "../../../../utils";
 
 const NavLinks: FC = () => {
   const user = useAppSelector(selectCurrentUser);
@@ -31,6 +32,11 @@ const NavLinks: FC = () => {
       <Link className={styles.navLink} to="/">
         About us
       </Link>
+      {user && hasPermission(user, "CONFIGURE_SETTINGS") && (
+        <Link className={styles.navLink} to="/settings">
+          Settings
+        </Link>
+      )}
       <Link className={styles.navLink} to="/statistics">
         Statistics
       </Link>

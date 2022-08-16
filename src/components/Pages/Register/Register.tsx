@@ -105,6 +105,7 @@ const Register: FC = () => {
                   ? "Edit your personal data."
                   : editSuccess && "Data have been successfully updated."}
                 <Button
+                  className="ms-auto"
                   buttonType="iconBtn"
                   onClick={() => {
                     setTimeout(() => setFocus("name"));

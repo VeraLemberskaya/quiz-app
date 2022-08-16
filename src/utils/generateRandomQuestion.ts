@@ -1,4 +1,3 @@
-import { ANSWERS_NUMBER } from "../constants";
 import { Question, Country } from "../redux/quiz/types";
 import { getRandomInt } from "./getRandomInt";
 import { shuffle } from "./shuffle";
@@ -11,8 +10,9 @@ const getValidCountryIndex = (countries: Country[]) => {
 };
 
 export const generateRandomCapitalQuestion: (
-  countries: Country[]
-) => Question = (countries) => {
+  countries: Country[],
+  answersNumber: number
+) => Question = (countries, answersNumber) => {
   const countryIndex = getValidCountryIndex(countries);
 
   const { name: countryName, capital } = countries[countryIndex];
@@ -21,7 +21,7 @@ export const generateRandomCapitalQuestion: (
   const answers: string[] = [capital];
   const answersIndexcountries: number[] = [countryIndex];
 
-  while (answers.length !== ANSWERS_NUMBER) {
+  while (answers.length !== answersNumber) {
     const index = getValidCountryIndex(countries);
 
     if (!answersIndexcountries.includes(index)) {
@@ -37,9 +37,10 @@ export const generateRandomCapitalQuestion: (
   return { question, answers, correctAnswer, id: countryName };
 };
 
-export const generateRandomFlagsQuestion: (countries: Country[]) => Question = (
-  countries
-) => {
+export const generateRandomFlagsQuestion: (
+  countries: Country[],
+  answersNumber: number
+) => Question = (countries, answersNumber) => {
   const countryIndex = getRandomInt(countries.length);
   const { name: countryName, flag } = countries[countryIndex];
 
@@ -47,7 +48,7 @@ export const generateRandomFlagsQuestion: (countries: Country[]) => Question = (
   const answers: string[] = [countryName];
   const answersIndexcountries: number[] = [countryIndex];
 
-  while (answers.length !== ANSWERS_NUMBER) {
+  while (answers.length !== answersNumber) {
     const index = getRandomInt(countries.length);
 
     if (!answersIndexcountries.includes(index)) {
@@ -62,14 +63,20 @@ export const generateRandomFlagsQuestion: (countries: Country[]) => Question = (
   return { question, answers, correctAnswer, id: countryName, img: flag };
 };
 
-export const generateRandomQuestion: (countries: Country[]) => Question = (
-  countries
-) => {
-  const questionType = getRandomInt(2);
-  switch (questionType) {
-    case 0:
-      return generateRandomFlagsQuestion(countries);
-    default:
-      return generateRandomCapitalQuestion(countries);
-  }
+const TOPICS: Record<
+  string,
+  (countries: Country[], answersNumber: number) => Question
+> = {
+  Flags: generateRandomFlagsQuestion,
+  Capitals: generateRandomCapitalQuestion,
+};
+
+export const generateRandomQuestion: (
+  countries: Country[],
+  answersNumber: number,
+  topics: string[]
+) => Question = (countries, answersNumber, topics) => {
+  const index = getRandomInt(topics.length);
+  const topic = topics[index];
+  return TOPICS[topic](countries, answersNumber);
 };

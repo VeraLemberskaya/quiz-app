@@ -19,9 +19,9 @@ import {
   selectQuizData,
 } from "../../../redux/quiz/selectors";
 import AnswerSelector from "./AnswerSelector";
-import { QUESTIONS_NUMBER } from "../../../constants";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import QuizModal from "./QuizModal";
+import { selectSelectedQuestionAmount } from "../../../redux/settings/selectors";
 
 type LocationState = {
   isResultPage: boolean;
@@ -34,6 +34,7 @@ const Quiz: React.FC = () => {
 
   const { status, currentIndex, answers } = useAppSelector(selectQuizData);
   const currentQuestion = useAppSelector(selectCurrentQuestion);
+  const QUESTIONS_NUMBER = useAppSelector(selectSelectedQuestionAmount);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
