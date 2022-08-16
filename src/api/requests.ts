@@ -9,24 +9,24 @@ import {
   usersEndPoint,
 } from "./constants";
 
-export const getUsers = async (params?: { page: number; orderBy: string }) => {
-  return await axios
-    .get<{ data: User[]; pageCount: number }>(usersEndPoint, {
-      params,
-    })
-    .then((response) => response.data);
-};
+// export const getUsers = (params?: { page: number; orderBy: string }) => {
+//   return axios
+//     .get<{ data: User[]; pageCount: number }>(usersEndPoint, {
+//       params,
+//     })
+//     .then((response) => response.data);
+// };
 
-export const getUserPage = async (user: User, params?: { orderBy: string }) => {
-  return await axios
+export const getUserPage = (user: User, params?: { orderBy: string }) => {
+  return axios
     .get<{ page: number }>(`${usersEndPoint}/page/${user.id}`, {
       params,
     })
     .then((response) => response.data);
 };
 
-export const getSavedUser = async () => {
-  return await axios
+export const getSavedUser = () => {
+  return axios
     .get<User>(`${usersEndPoint}/get-saved-user`)
     .then((response) => response.data);
 };
@@ -35,7 +35,7 @@ export const authenticateUser = async (credentials: {
   email: string;
   password: string;
 }) => {
-  return await axios
+  return axios
     .post<User>(`${usersEndPoint}/login`, credentials)
     .then((response) => response.data);
 };
@@ -46,12 +46,10 @@ export const registerUser = async (data: {
   email: string;
   password?: string;
 }) => {
-  return await axios
-    .post(usersEndPoint, data)
-    .then((response) => response.data);
+  return axios.post(usersEndPoint, data).then((response) => response.data);
 };
 
-export const updateUser = async (
+export const updateUser = (
   user: User,
   data: {
     name: string;
@@ -59,41 +57,41 @@ export const updateUser = async (
     email: string;
   }
 ) => {
-  return await axios
+  return axios
     .put<User>(`${usersEndPoint}/${user.id}`, data)
     .then((response) => response.data);
 };
 
-export const saveUser = async (user: User) => {
-  return await axios
+export const saveUser = (user: User) => {
+  return axios
     .post(`${usersEndPoint}/save-user`, { id: user.id })
     .then((response) => response.data);
 };
 
-export const saveUserGame = async (user: User, game: Omit<Game, "id">) => {
-  return await axios.post(`${usersEndPoint}/set-game-result`, {
+export const saveUserGame = (user: User, game: Omit<Game, "id">) => {
+  return axios.post(`${usersEndPoint}/set-game-result`, {
     id: user.id,
     game,
   });
 };
 
-export const getUserGames = async (user: User, params: { page: number }) => {
-  return await axios
-    .get<{ data: Game[]; pageCount: number }>(
-      `${usersEndPoint}/${user.id}/games`,
-      { params }
-    )
-    .then((response) => response.data);
-};
+// export const getUserGames = (user: User, params: { page: number }) => {
+//   return axios
+//     .get<{ data: Game[]; pageCount: number }>(
+//       `${usersEndPoint}/${user.id}/games`,
+//       { params }
+//     )
+//     .then((response) => response.data);
+// };
 
-export const checkUserPassword = async (user: User, password: string) => {
-  return await axios
+export const checkUserPassword = (user: User, password: string) => {
+  return axios
     .post(`${usersEndPoint}/check-password`, { id: user.id, password })
     .then((response) => response.data);
 };
 
-export const updateUserPassword = async (user: User, password: string) => {
-  return await axios
+export const updateUserPassword = (user: User, password: string) => {
+  return axios
     .post(`${usersEndPoint}/change-password`, {
       id: user.id,
       password,
@@ -101,24 +99,22 @@ export const updateUserPassword = async (user: User, password: string) => {
     .then((response) => response.data);
 };
 
-export const getSettings = async () => {
-  return await axios
+export const getSettings = () => {
+  return axios
     .get<Settings>(settingsEndPoint)
     .then((response) => response.data);
 };
 
-export const updateSettings = async (settings: Settings) => {
-  return await axios
+export const updateSettings = (settings: Settings) => {
+  return axios
     .put(settingsEndPoint, settings)
     .then((response) => response.data);
 };
 
-export const getStatistics = async () => {
-  return await axios.get(statisticsEndPoint).then((response) => response.data);
-};
+// export const getStatistics = () => {
+//   return axios.get(statisticsEndPoint).then((response) => response.data);
+// };
 
-export const getQuiz = async () => {
-  return await axios
-    .get<Question[]>(quizEndPoint)
-    .then((response) => response.data);
+export const getQuiz = () => {
+  return axios.get<Question[]>(quizEndPoint).then((response) => response.data);
 };

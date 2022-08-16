@@ -1,5 +1,4 @@
 import { FC, useEffect } from "react";
-import { Modal, Button } from "../../../UI";
 
 import styles from "./quizModal.module.scss";
 import { useAppSelector } from "../../../../redux/hooks";
@@ -12,6 +11,8 @@ import { selectCurrentUser } from "../../../../redux/user/selectors";
 import { getFormattedDate } from "../../../../utils";
 import { saveUserGame } from "../../../../api/requests";
 import { Game } from "../../../../redux/quiz/types";
+import Button from "../../../UI/Button";
+import Modal from "../../../UI/Modal";
 
 const QuizModal: FC = () => {
   const { currentQuiz, answers } = useAppSelector(selectQuizData);

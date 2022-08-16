@@ -1,0 +1,38 @@
+@import "../../../../styles/mixins";
+
+.settingWrapper {
+  min-height: 3.35rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.chipList {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2.5rem;
+}
+
+.accordionEnter {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in;
+}
+.accordionEnterActive {
+  max-height: 100vh;
+  min-height: fit-content;
+}
+.accordionExit {
+  overflow: visible;
+  max-height: 100vh;
+  min-height: 3.35rem;
+}
+.accordionExitActive {
+  max-height: 0;
+  overflow: hidden;
+  min-height: 0;
+  transition: max-height 0.15s ease-out, min-height 0.1s ease-out;
+}

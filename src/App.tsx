@@ -2,21 +2,18 @@ import { FC, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import {
-  Home,
-  Login,
-  Quiz,
-  Register,
-  Settings,
-  Statistics,
-} from "./components/Pages";
-import { Layout, Loader } from "./components/UI";
+import Layout from "./components/UI/Layout";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { selectCurrentUser } from "./redux/user/selectors";
 import { setUser } from "./redux/user/slice";
-import { initSettings } from "./redux/settings/slice";
-import { selectCurrentSettings } from "./redux/settings/selectors";
 import { getSavedUser } from "./api/requests";
+import ChangePassword from "./components/Pages/ChangePassword";
+import Home from "./components/Pages/Home";
+import Login from "./components/Pages/Login";
+import Quiz from "./components/Pages/Quiz";
+import Register from "./components/Pages/Register";
+import Settings from "./components/Pages/Settings";
+import Statistics from "./components/Pages/Statistics";
 
 type Props = {
   children: JSX.Element;
@@ -47,20 +44,16 @@ const AdminRoute: FC<Props> = ({ children }) => {
 };
 
 function App() {
-  const { status } = useAppSelector(selectCurrentSettings);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(initSettings());
     const isUserSaved = !!localStorage.getItem("rememberMe");
     if (isUserSaved) {
       getSavedUser().then((user) => dispatch(setUser(user)));
     }
   }, []);
 
-  return status === "loading" ? (
-    <Loader />
-  ) : (
+  return (
     <>
       <ToastContainer
         position="bottom-right"
@@ -108,6 +101,14 @@ function App() {
           element={
             <PrivateRoute>
               <Register />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/change-password"
+          element={
+            <PrivateRoute>
+              <ChangePassword />
             </PrivateRoute>
           }
         />

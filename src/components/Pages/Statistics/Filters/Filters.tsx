@@ -2,8 +2,10 @@ import React, { FC, useState } from "react";
 import { BsFilterRight } from "react-icons/bs";
 
 import styles from "./filters.module.scss";
-import { Button, Checkbox, Dropdown } from "../../../UI";
 import classNames from "classnames";
+import Button from "../../../UI/Button";
+import Checkbox from "../../../UI/Checkbox";
+import Dropdown from "../../../UI/Dropdown";
 
 export type FilterValue = "score" | "games";
 

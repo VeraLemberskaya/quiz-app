@@ -6,10 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./login.module.scss";
 import GraduateImg from "../../../assets/graduate-hat.svg";
 import Logo from "../../../assets/logo.svg";
-import { Button, Checkbox, TextField } from "../../UI";
 import { useAppDispatch } from "../../../redux/hooks";
 import { setUser } from "../../../redux/user/slice";
 import { authenticateUser, saveUser } from "../../../api/requests";
+import Button from "../../UI/Button";
+import Checkbox from "../../UI/Checkbox";
+import TextField from "../../UI/TextField";
 
 type FormInputs = {
   email: string;

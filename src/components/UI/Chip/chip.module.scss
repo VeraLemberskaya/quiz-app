@@ -1,0 +1,53 @@
+@import "../../../styles/colors";
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+@import "../../../styles/media";
+
+.chip {
+  padding: 0.4rem 1rem;
+  border-radius: 2rem;
+  transition: background-color $transition;
+  width: fit-content;
+  gap: 1rem;
+  font-size: 1.7rem;
+  @include flex-center;
+  svg {
+    transition: fill $transition;
+    cursor: pointer;
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+  @include for-laptop {
+    font-size: 1.6rem;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.primary {
+  background-color: $theme-color;
+  span {
+    color: $white-color;
+  }
+  svg {
+    fill: rgba(255, 255, 255, 0.7);
+    &:hover {
+      fill: $white-color;
+    }
+  }
+}
+
+.default {
+  background-color: $mercury-color;
+  span {
+    color: $dark-grey-color;
+  }
+  svg {
+    fill: $dark-grey-color;
+    &:hover {
+      fill: $grey-color;
+    }
+  }
+}

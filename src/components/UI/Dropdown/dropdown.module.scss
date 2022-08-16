@@ -3,7 +3,6 @@
 @import "../../../styles/variables";
 
 .dropdownContainer {
-  z-index: 1;
   position: relative;
   .dropdownToggle {
     @include flex-center;
@@ -41,6 +40,7 @@
   }
 
   .dropdownMenu {
+    z-index: 1;
     position: absolute;
     left: 0;
     margin-top: 0.5rem;

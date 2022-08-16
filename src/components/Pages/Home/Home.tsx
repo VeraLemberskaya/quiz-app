@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
 
-import { Button } from "../../UI";
+import Button from "../../UI/Button";
 import styles from "./home.module.scss";
 import Image from "../../../assets/people-quiz.svg";
-import { useAppDispatch } from "../../../redux/hooks";
-import { resetQuiz } from "../../../redux/quiz/slice";
 
-const Home: React.FC = () => {
+const Home: FC = () => {
   return (
     <div
       className={`${styles.homeContainer} container d-flex justify-content-between}`}
