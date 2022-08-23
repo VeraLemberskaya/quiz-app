@@ -1,0 +1,84 @@
+@import "../../../../styles/colors";
+@import "../../../../styles/media";
+
+.modalBody {
+  padding: 3rem;
+  .closeBtn {
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    right: 1rem;
+    top: 1rem;
+    cursor: pointer;
+    svg {
+      width: inherit;
+      height: inherit;
+      fill: $grey-color;
+    }
+  }
+  .backBtn {
+    margin: 0 auto;
+    margin-top: 5rem;
+  }
+  .header {
+    margin-bottom: 4rem;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-transform: uppercase;
+    color: $grey-color;
+    @include for-laptop {
+      margin-bottom: 0;
+    }
+    .title {
+      font-weight: 600;
+      letter-spacing: 0.15rem;
+      color: $theme-color;
+      font-size: 3.2rem;
+      margin-bottom: 1.5rem;
+      @include for-laptop {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+      }
+      @include for-phone-only {
+        font-size: 1.8rem;
+      }
+    }
+    .subtitle {
+      font-size: 2rem;
+      color: inherit;
+      @include for-laptop {
+        font-size: 1.8rem;
+      }
+      span {
+        margin-left: 1.25rem;
+        color: $theme-color;
+        font-weight: 600;
+      }
+    }
+  }
+  .tableWrapper {
+    position: relative;
+    width: 55%;
+    margin: 2rem auto 0 auto;
+    z-index: 1;
+    min-height: 35rem;
+    @include for-laptop {
+      width: 65%;
+    }
+    @include for-tablet-landscape {
+      width: 80%;
+    }
+    @include for-phone-only {
+      width: 100%;
+      min-height: 27rem;
+    }
+  }
+}

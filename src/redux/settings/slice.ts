@@ -1,15 +1,21 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import axios from "../../axios";
-import { AmountValue, SettingSliceState, Topic } from "./types";
+import { getSettings, updateSettings } from "../../api/requests";
+import { RootState } from "../store";
+import { Settings, SettingSliceState } from "./types";
 
-export const initSettings = createAsyncThunk<Omit<SettingSliceState, "status">>(
+export const initSettings = createAsyncThunk<Settings>(
   "settings/initSettings",
   async () => {
-    const { data } = await axios.get<Omit<SettingSliceState, "status">>(
-      "settings"
-    );
-    return data;
+    return await getSettings();
+  }
+);
+
+export const saveSettings = createAsyncThunk<void, void, { state: RootState }>(
+  "settings/saveSettings",
+  async (_, thunkApi) => {
+    const { status, ...updatedSettings } = thunkApi.getState().settings;
+    await updateSettings(updatedSettings);
   }
 );
 
@@ -24,36 +30,35 @@ const settingsSlice = createSlice({
   name: "settings",
   initialState,
   reducers: {
-    setTopic: (state, action: PayloadAction<Topic>) => {
-      const topic = state.topics.find(
-        (topic) => topic.name === action.payload.name
-      );
+    deleteTopic: (state, action: PayloadAction<string>) => {
+      const topic = state.topics.find((topic) => topic.name === action.payload);
       if (topic) {
-        if (
-          topic.selected &&
-          state.topics.filter((topic) => topic.selected).length === 1
-        )
-          return;
-        topic.selected = !topic.selected;
+        topic.selected = false;
       }
     },
-    setQuestionAmount: (state, action: PayloadAction<AmountValue>) => {
+    setTopic: (state, action: PayloadAction<string>) => {
+      const topic = state.topics.find((topic) => topic.name === action.payload);
+      if (topic) {
+        topic.selected = true;
+      }
+    },
+    setQuestionAmount: (state, action: PayloadAction<number>) => {
       const prevValue = state.questionAmountValues.find(
         (value) => value.selected
       );
       if (prevValue) prevValue.selected = false;
       const currValue = state.questionAmountValues.find(
-        (value) => value.value === action.payload.value
+        (value) => value.value === action.payload
       );
       if (currValue) currValue.selected = true;
     },
-    setAnswerAmount: (state, action: PayloadAction<AmountValue>) => {
+    setAnswerAmount: (state, action: PayloadAction<number>) => {
       const prevValue = state.answerAmountValues.find(
         (value) => value.selected
       );
       if (prevValue) prevValue.selected = false;
       const currValue = state.answerAmountValues.find(
-        (value) => value.value === action.payload.value
+        (value) => value.value === action.payload
       );
       if (currValue) currValue.selected = true;
     },
@@ -73,10 +78,19 @@ const settingsSlice = createSlice({
     builder.addCase(initSettings.rejected, (state) => {
       state.status = "error";
     });
+    builder.addCase(saveSettings.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(saveSettings.fulfilled, (state) => {
+      state.status = "success";
+    });
+    builder.addCase(saveSettings.rejected, (state) => {
+      state.status = "error";
+    });
   },
 });
 
-export const { setTopic, setQuestionAmount, setAnswerAmount } =
+export const { setTopic, setQuestionAmount, setAnswerAmount, deleteTopic } =
   settingsSlice.actions;
 
 export default settingsSlice.reducer;

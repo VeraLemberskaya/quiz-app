@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { FC } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
 
@@ -13,12 +14,13 @@ const Toggle: FC<Props> = ({ children }) => {
 
   return (
     <div
-      className={`${styles.dropdownToggle} ${isOpened ? styles.opened : ""}`}
+      className={classNames(styles.dropdownToggle, {
+        [styles.opened]: isOpened,
+      })}
       onClick={() => toggleOpened()}
     >
       {children}
       <span className={styles.icon}>
-        {" "}
         <AiFillCaretDown />
       </span>
     </div>

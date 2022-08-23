@@ -10,9 +10,12 @@ export type AmountValue = {
   selected: boolean;
 };
 
-export type SettingSliceState = {
+export type Settings = {
   topics: Topic[];
   questionAmountValues: AmountValue[];
   answerAmountValues: AmountValue[];
+};
+
+export type SettingSliceState = Settings & {
   status: Status;
 };

@@ -1,44 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import axios from "../../axios";
-import { countriesEndPoint } from "../../constants";
-import { generateRandomQuestion } from "../../utils/generateRandomQuestion";
-import {
-  selectSelectedAnswerAmount,
-  selectSelectedQuestionAmount,
-  selectSelectedTopics,
-} from "../settings/selectors";
-import { RootState } from "../store";
-import { Question, QuizSliceState, Country } from "./types";
+import { getQuiz } from "../../api/requests";
+import { Question, QuizSliceState } from "./types";
 
-export const initQuiz = createAsyncThunk<
-  Question[],
-  void,
-  { state: RootState }
->("quiz/initQuiz", async (_, thunkApi) => {
-  const questionsNumber = selectSelectedQuestionAmount(thunkApi.getState());
-  const answersNumber = selectSelectedAnswerAmount(thunkApi.getState());
-  const selectedTopics = selectSelectedTopics(thunkApi.getState()).map(
-    (topic) => topic.name
-  );
-
-  const { data: countries } = await axios.get<Country[]>(countriesEndPoint);
-
-  const questions: Question[] = [];
-
-  while (questions.length !== questionsNumber) {
-    const question = generateRandomQuestion(
-      countries,
-      answersNumber,
-      selectedTopics
-    );
-    if (!questions.some((curr) => curr.id === question.id)) {
-      questions.push(question);
-    }
+export const initQuiz = createAsyncThunk<Question[]>(
+  "quiz/initQuiz",
+  async () => {
+    return await getQuiz();
   }
-
-  return questions;
-});
+);
 
 const initialState: QuizSliceState = {
   status: "loading",

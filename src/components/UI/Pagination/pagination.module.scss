@@ -1,0 +1,91 @@
+@import "../../../styles/mixins";
+@import "../../../styles/colors";
+@import "../../../styles/variables";
+@import "../../../styles/media";
+
+@mixin page-link {
+  color: $dark-grey-color;
+  background-color: $alto-color;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  transition: color $transition, background-color $transition;
+  @include flex-center;
+}
+
+@mixin nav-link {
+  svg {
+    width: inherit;
+    height: inherit;
+    fill: $dark-grey-color;
+    transition: fill $transition;
+  }
+  &:hover {
+    svg {
+      fill: $grey-color;
+    }
+  }
+  &:is(.disabled) {
+    cursor: default;
+    svg {
+      fill: $silver-color;
+    }
+  }
+}
+
+.paginationContainer {
+  margin-top: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+  .breakLink {
+    color: $grey-color;
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+  }
+  .pageLink {
+    @include page-link;
+  }
+  .activePageLink {
+    background-color: $theme-color;
+    color: $white-color;
+  }
+  .navLink {
+    @include nav-link;
+  }
+}
+
+.arrow {
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  top: 35%;
+  margin: 0;
+  @include for-phone-only {
+    width: fit-content;
+    bottom: -4rem;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .pageLink {
+    display: none;
+  }
+  .navLink {
+    width: 5rem;
+    height: 5rem;
+    @include nav-link;
+    @include for-tablet-landscape {
+      width: 4rem;
+      height: 4rem;
+    }
+    @include for-phone-only {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+}

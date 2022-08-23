@@ -1,54 +1,36 @@
-import React, { FC, useEffect, useState } from "react";
-import { createSearchParams, useNavigate } from "react-router-dom";
-import {
-  MdArrowBackIos,
-  MdArrowForwardIos,
-  MdOutlineClose,
-} from "react-icons/md";
-import { BiMedal } from "react-icons/bi";
-import ReactPaginate from "react-paginate";
+import { FC, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { MdOutlineClose } from "react-icons/md";
 
-import styles from "../statistics.module.scss";
-import axios from "../../../../axios";
+import styles from "./userStatistics.module.scss";
 import { User } from "../../../../redux/user/types";
-import { Button, Loader } from "../../../UI";
-import { Game } from "../../../../redux/quiz/types";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { useAppDispatch } from "../../../../redux/hooks";
 import { setCurrentQuiz } from "../../../../redux/quiz/slice";
-import { selectSelectedQuestionAmount } from "../../../../redux/settings/selectors";
+import { useGetUserGamesListQuery } from "../../../../redux/apiSlice";
+import Table from "../../../UI/Table";
+import { columns } from "./columns";
+import Pagination from "../../../UI/Pagination";
+import Button from "../../../UI/Button";
+import Loader from "../../../UI/Loader";
 
 type Props = {
-  user: User | null;
+  user: User;
   onClose?: () => void;
 };
 
 const UserStatisticsModal: FC<Props> = ({ user, onClose }) => {
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const [pageCount, setPageCount] = useState<number>(0);
-  const [userGames, setUserGames] = useState<Game[] | null>(null);
-  const QUESTIONS_NUMBER = useAppSelector(selectSelectedQuestionAmount);
+  const [page, setPage] = useState<number>(0);
+  const {
+    data: userGamesList,
+    isFetching,
+    isSuccess,
+  } = useGetUserGamesListQuery({ id: user.id, page });
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    axios
-      .get<{ data: Game[]; pageCount: number }>(`users/${user?.id}/games`, {
-        params: {
-          page: currentPage,
-        },
-      })
-      .then(({ data }) => {
-        setUserGames(data.data);
-        setPageCount(data.pageCount);
-      });
-  }, [currentPage]);
-
-  const handlePageChange = ({ selected: page }: { selected: number }) => {
-    setCurrentPage(page);
-  };
-
-  const handleGameSelect = (game: Game) => {
-    if (user) {
+  const handleRowSelection = (rowIndex: number) => {
+    const game = userGamesList?.data[rowIndex];
+    if (game) {
       dispatch(setCurrentQuiz(game.quiz, game.answers));
       navigate("/results", {
         state: {
@@ -72,51 +54,22 @@ const UserStatisticsModal: FC<Props> = ({ user, onClose }) => {
           Games played: <span>{user?.totalGames}</span>
         </div>
       </div>
-      {!userGames ? (
+      {isFetching ? (
         <Loader />
-      ) : userGames.length ? (
-        <div className={styles.modalTable}>
+      ) : isSuccess && userGamesList.data.length ? (
+        <div className="position-relative">
           <div className={styles.tableWrapper}>
-            <div className={`${styles.tableHeader} ${styles.rowTwoCol}`}>
-              <div className={`${styles.cell} ${styles.textCenter}`}>Game</div>
-              <div className={`${styles.cell} ${styles.textCenter}`}>Score</div>
-            </div>
-            <div className={styles.table}>
-              {userGames.map((game) => {
-                return (
-                  <div
-                    className={`${styles.row} ${styles.rowTwoCol}`}
-                    key={game.id}
-                    onClick={() => handleGameSelect(game)}
-                  >
-                    <div className={`${styles.cell} ${styles.textCenter}`}>
-                      {game.score === QUESTIONS_NUMBER && (
-                        <span className={styles.icon}>
-                          <BiMedal />
-                        </span>
-                      )}
-                      {game.date}
-                    </div>
-                    <div className={`${styles.cell} ${styles.textCenter}`}>
-                      {game.score}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            <Table
+              columns={columns}
+              data={userGamesList.data}
+              onRowSelect={handleRowSelection}
+            />
           </div>
-          <ReactPaginate
-            pageCount={pageCount}
-            initialPage={0}
-            onPageChange={handlePageChange}
-            previousLabel={<MdArrowBackIos />}
-            nextLabel={<MdArrowForwardIos />}
-            containerClassName={styles.paginationContainer}
-            activeLinkClassName={styles.activePageLink}
-            pageLinkClassName={styles.pageLink}
-            previousLinkClassName={styles.navLink}
-            nextLinkClassName={styles.navLink}
-            disabledLinkClassName={styles.disabled}
+          <Pagination
+            type="arrow"
+            pageCount={userGamesList.totalPages}
+            forcePage={page}
+            onPageChange={(page) => setPage(page)}
           />
         </div>
       ) : (

@@ -4,6 +4,7 @@
 @import "../../../styles/mixins";
 
 .button:not(.iconBtn) {
+  border-radius: 5px;
   display: block;
   text-decoration: none;
   border: 1px solid transparent;

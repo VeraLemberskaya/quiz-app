@@ -3,7 +3,6 @@ import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { CSSTransition } from "react-transition-group";
 
 import styles from "./quiz.module.scss";
-import { Button, Loader, Stepper } from "../../UI";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
   resetQuiz,
@@ -21,7 +20,10 @@ import {
 import AnswerSelector from "./AnswerSelector";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import QuizModal from "./QuizModal";
-import { selectSelectedQuestionAmount } from "../../../redux/settings/selectors";
+import Button from "../../UI/Button";
+import Loader from "../../UI/Loader";
+import Stepper from "../../UI/Stepper";
+import { selectCurrentSettings } from "../../../redux/settings/selectors";
 
 type LocationState = {
   isResultPage: boolean;
@@ -34,7 +36,7 @@ const Quiz: React.FC = () => {
 
   const { status, currentIndex, answers } = useAppSelector(selectQuizData);
   const currentQuestion = useAppSelector(selectCurrentQuestion);
-  const QUESTIONS_NUMBER = useAppSelector(selectSelectedQuestionAmount);
+  const { questionAmount } = useAppSelector(selectCurrentSettings);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -67,7 +69,7 @@ const Quiz: React.FC = () => {
       } else {
         setBtnPreviousActive(true);
       }
-      if (currentIndex === QUESTIONS_NUMBER - 1) {
+      if (currentIndex === questionAmount - 1) {
         setBtnNextActive(false);
       } else setBtnNextActive(true);
     } else {
@@ -85,7 +87,7 @@ const Quiz: React.FC = () => {
 
   const handleAnswerSelect = (answer: number) => {
     dispatch(setAnswer(currentQuestion.id, answer));
-    if (currentIndex < QUESTIONS_NUMBER - 1) {
+    if (currentIndex < questionAmount - 1) {
       if (answer === currentQuestion.correctAnswer) {
         setTimeout(() => {
           setBtnNextActive(true);
@@ -114,7 +116,7 @@ const Quiz: React.FC = () => {
         <div className={styles.quizBody}>
           <div className="mt-5">
             <Stepper
-              stepCount={QUESTIONS_NUMBER}
+              stepCount={questionAmount}
               activeStep={currentIndex}
               onStepChange={handleStepChange}
               disabled={!isResultPage}

@@ -1,0 +1,54 @@
+@import "../../../styles/colors";
+@import "../../../styles/variables";
+@import "../../../styles/media";
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+  th {
+    font-weight: 500 !important;
+    color: $grey-color;
+  }
+
+  th,
+  td {
+    font-weight: inherit;
+    padding: 1.8rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    @include for-tablet-landscape {
+      font-size: 1.5rem;
+    }
+    @include for-tablet-portrait {
+      padding: 1.5rem;
+    }
+    @include for-phone-only {
+      padding: 1.1rem;
+    }
+  }
+
+  .tableBody {
+    position: relative;
+    overflow: hidden;
+    tr {
+      &:hover {
+        background-color: $light-grey-color;
+      }
+    }
+    & > tr:nth-child(even) {
+      transition: background-color $transition;
+      background-color: $carrara-color;
+      &:hover {
+        background-color: $mercury-color;
+      }
+    }
+  }
+  .cursorPoiner {
+    cursor: pointer;
+  }
+  .highlightedRow {
+    font-weight: 600;
+    font-size: 1.8rem;
+  }
+}

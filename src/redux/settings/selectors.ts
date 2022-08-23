@@ -1,15 +1,21 @@
 import { RootState } from "../store";
+import { AmountValue, Topic } from "./types";
 
-export const selectCurrentSettings = (state: RootState) => state.settings;
-export const selectSelectedTopics = (state: RootState) => {
-  return state.settings.topics.filter((topic) => topic.selected);
-};
-export const selectSelectedQuestionAmount = (state: RootState) => {
-  const questionAmountValues = state.settings.questionAmountValues;
-  return questionAmountValues.find((value) => value.selected)?.value ?? 0;
-};
+const getSelectedTopics = (topics: Topic[]) =>
+  topics.filter((topic) => topic.selected);
 
-export const selectSelectedAnswerAmount = (state: RootState) => {
-  const answerAmountValues = state.settings.answerAmountValues;
-  return answerAmountValues.find((value) => value.selected)?.value ?? 0;
-};
+const getSelectedQuestionAmount = (questionAmountValues: AmountValue[]) =>
+  questionAmountValues.find((value) => value.selected)?.value ?? 0;
+
+const getSelectedAnswerAmount = (answerAmountValues: AmountValue[]) =>
+  answerAmountValues.find((value) => value.selected)?.value ?? 0;
+
+export const selectSettingsValues = (state: RootState) => state.settings;
+
+export const selectCurrentSettings = (state: RootState) => ({
+  topics: getSelectedTopics(state.settings.topics),
+  questionAmount: getSelectedQuestionAmount(
+    state.settings.questionAmountValues
+  ),
+  answerAmount: getSelectedAnswerAmount(state.settings.answerAmountValues),
+});

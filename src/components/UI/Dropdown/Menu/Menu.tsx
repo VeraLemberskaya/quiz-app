@@ -3,6 +3,7 @@ import { useDropdownContext } from "../context";
 import { CSSTransition } from "react-transition-group";
 
 import styles from "../dropdown.module.scss";
+import classNames from "classnames";
 
 type Props = {
   children: React.ReactNode;
@@ -25,7 +26,9 @@ const Menu: FC<Props> = ({ children }) => {
       unmountOnExit
     >
       <div
-        className={`${styles.dropdownMenu} ${isOpened ? styles.opened : ""}`}
+        className={classNames(styles.dropdownMenu, {
+          [styles.opened]: isOpened,
+        })}
       >
         {children}
       </div>

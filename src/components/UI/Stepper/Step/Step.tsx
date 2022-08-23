@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { FC } from "react";
 
 import styles from "./step.module.scss";
@@ -19,7 +20,7 @@ const Step: FC<Props> = ({
 }) => {
   return (
     <button
-      className={`${styles.stepBody} ${isActive ? styles.active : ""}`}
+      className={classNames(styles.stepBody, { [styles.active]: isActive })}
       onClick={onSelect}
       disabled={disabled}
     >
