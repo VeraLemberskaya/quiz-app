@@ -9,6 +9,7 @@ export type Question = {
 };
 
 export interface QuizSliceState {
+  topics: string[];
   status: Status;
   currentQuiz: Question[];
   currentIndex: number;

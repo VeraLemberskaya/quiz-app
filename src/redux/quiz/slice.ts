@@ -3,14 +3,15 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getQuiz } from "../../api/requests";
 import { Question, QuizSliceState } from "./types";
 
-export const initQuiz = createAsyncThunk<Question[]>(
+export const initQuiz = createAsyncThunk<Question[], string[]>(
   "quiz/initQuiz",
-  async () => {
-    return await getQuiz();
+  async (topics) => {
+    return await getQuiz(topics);
   }
 );
 
 const initialState: QuizSliceState = {
+  topics: [],
   status: "loading",
   currentQuiz: [],
   currentIndex: 0,
@@ -21,6 +22,12 @@ const quizSlice = createSlice({
   name: "quiz",
   initialState,
   reducers: {
+    setTopic: (state, action: PayloadAction<string>) => {
+      state.topics.push(action.payload);
+    },
+    removeTopic: (state, action: PayloadAction<string>) => {
+      state.topics = state.topics.filter((topic) => topic != action.payload);
+    },
     setCurrentQuiz: {
       reducer(
         state,
@@ -71,7 +78,10 @@ const quizSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(initQuiz.pending, (state) => {
-      state = initialState;
+      state.status = "loading";
+      state.currentQuiz = [];
+      state.currentIndex = 0;
+      state.answers = {};
     });
     builder.addCase(initQuiz.fulfilled, (state, action) => {
       state.status = "success";
@@ -84,6 +94,8 @@ const quizSlice = createSlice({
 });
 
 export const {
+  setTopic,
+  removeTopic,
   setCurrentQuiz,
   increment,
   decrement,

@@ -1,0 +1,31 @@
+@import "../../../styles/colors";
+@import "../../../styles/media";
+@import "../../../styles/mixins";
+@import "../../../styles/variables";
+
+.error {
+  height: 0;
+  margin-top: 1rem;
+  visibility: hidden;
+  color: $red-color;
+  width: fit-content;
+  gap: 0.4rem;
+  font-size: 1.5rem;
+  transition: height $transition;
+  @include flex-center;
+  @include for-phone-only {
+    font-size: 1.4rem;
+  }
+  svg {
+    fill: $red-color;
+    width: 2rem;
+  }
+}
+
+.visible {
+  height: 2.2rem;
+  visibility: visible;
+  @include for-phone-only {
+    height: 3.2rem;
+  }
+}

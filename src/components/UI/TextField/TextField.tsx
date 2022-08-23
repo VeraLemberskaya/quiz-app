@@ -7,14 +7,20 @@ import React, {
   useState,
 } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useControlledInput } from "../../../hooks";
+import ErrorDisplay from "../ErrorDisplay";
 
 import styles from "./textField.module.scss";
 
-type Props = Omit<React.HTMLProps<HTMLInputElement>, "type" | "checked"> & {
+type Props = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "type" | "checked"
+> & {
   type?: "password" | "text";
   error?: string;
   errorIcon?: JSX.Element;
   focused?: boolean;
+  label?: string;
 };
 
 const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
@@ -26,9 +32,10 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
     error,
     errorIcon,
     className,
+    onChange,
     ...otherProps
   } = props;
-  const [inputValue, setInputValue] = useState(value ?? "");
+  const [inputValue, handleInputChange] = useControlledInput(value, onChange);
   const [inputFocused, setInputFocused] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -44,15 +51,6 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
   const handleTextFieldClick = () => {
     setInputFocused(true);
     inputRef.current?.focus();
-  };
-
-  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    if (props.onChange) {
-      props.onChange(event);
-    }
-    setInputValue(event.target.value);
   };
 
   const handleInputBlur: React.FocusEventHandler<HTMLInputElement> = (
@@ -109,10 +107,11 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
             </span>
           )}
         </span>
-        <span className={classNames(styles.error, { [styles.visible]: error })}>
-          {errorIcon && errorIcon}
-          {error}
-        </span>
+        <ErrorDisplay
+          message={error ?? ""}
+          icon={errorIcon}
+          visible={!!error}
+        />
       </div>
     </>
   );

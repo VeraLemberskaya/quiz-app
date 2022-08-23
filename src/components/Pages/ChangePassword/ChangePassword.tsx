@@ -113,7 +113,7 @@ const ChangePassword: FC = () => {
         />
         <TextField
           type="password"
-          label=" Re-enter your new password:"
+          label="Re-enter your new password:"
           placeholder="New password"
           {...register("newPasswordRepeat", {
             onBlur(event) {

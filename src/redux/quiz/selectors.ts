@@ -20,3 +20,5 @@ export const selectQuizScore = (state: RootState) => {
 
   return totalScore;
 };
+
+export const selectQuizTopics = (state: RootState) => state.quiz.topics;

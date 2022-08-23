@@ -1,5 +1,6 @@
 @import "../../../styles/colors";
 @import "../../../styles/media";
+@import "../../../styles/mixins";
 
 .homeContainer {
   padding-bottom: 8rem;
@@ -72,3 +73,5 @@
     }
   }
 }
+
+@include fade-transition(0.3s);

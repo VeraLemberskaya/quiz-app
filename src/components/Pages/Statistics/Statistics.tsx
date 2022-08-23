@@ -2,7 +2,6 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import { MdQuiz } from "react-icons/md";
 import { AiFillTrophy } from "react-icons/ai";
-import { CSSTransition } from "react-transition-group";
 
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/user/selectors";
@@ -23,6 +22,7 @@ import Pagination from "../../UI/Pagination";
 import Loader from "../../UI/Loader";
 import Modal from "../../UI/Modal";
 import PageTitle from "../../UI/PageTitle";
+import FadeTransition from "../../Utils/FadeTransition";
 
 const Statistics: FC = () => {
   const [page, setPage] = useState<number>(0);
@@ -148,24 +148,11 @@ const Statistics: FC = () => {
           </>
         )
       )}
-      <CSSTransition
-        in={modalOpened}
-        timeout={200}
-        classNames={{
-          enter: styles.fadeEnter,
-          enterActive: styles.fadeEnterActive,
-          exit: styles.fadeExit,
-          exitActive: styles.fadeExitActive,
-        }}
-        mountOnEnter
-        unmountOnExit
-      >
-        <Modal onOverlayClick={closeModal}>
-          {!!selectedUser && (
-            <UserStatistics onClose={closeModal} user={selectedUser} />
-          )}
+      <FadeTransition inProp={modalOpened} timeout={200} styles={styles}>
+        <Modal onClose={closeModal}>
+          {!!selectedUser && <UserStatistics user={selectedUser} />}
         </Modal>
-      </CSSTransition>
+      </FadeTransition>
     </div>
   );
 };

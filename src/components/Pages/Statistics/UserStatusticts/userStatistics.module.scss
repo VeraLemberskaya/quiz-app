@@ -3,24 +3,24 @@
 
 .modalBody {
   padding: 3rem;
-  .closeBtn {
-    padding: 0;
-    margin: 0;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    position: absolute;
-    width: 3rem;
-    height: 3rem;
-    right: 1rem;
-    top: 1rem;
-    cursor: pointer;
-    svg {
-      width: inherit;
-      height: inherit;
-      fill: $grey-color;
-    }
-  }
+  // .closeBtn {
+  //   padding: 0;
+  //   margin: 0;
+  //   border: none;
+  //   outline: none;
+  //   background-color: transparent;
+  //   position: absolute;
+  //   width: 3rem;
+  //   height: 3rem;
+  //   right: 1rem;
+  //   top: 1rem;
+  //   cursor: pointer;
+  //   svg {
+  //     width: inherit;
+  //     height: inherit;
+  //     fill: $grey-color;
+  //   }
+  // }
   .backBtn {
     margin: 0 auto;
     margin-top: 5rem;

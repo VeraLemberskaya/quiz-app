@@ -14,6 +14,8 @@ import Quiz from "./components/Pages/Quiz";
 import Register from "./components/Pages/Register";
 import Settings from "./components/Pages/Settings";
 import Statistics from "./components/Pages/Statistics";
+import { useGetSettingsQuery } from "./redux/settings/slice";
+import Loader from "./components/UI/Loader";
 
 type Props = {
   children: JSX.Element;
@@ -44,6 +46,7 @@ const AdminRoute: FC<Props> = ({ children }) => {
 };
 
 function App() {
+  const { isLoading, isSuccess } = useGetSettingsQuery();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -51,68 +54,74 @@ function App() {
     if (isUserSaved) {
       getSavedUser().then((user) => dispatch(setUser(user)));
     }
-  }, []);
+  }, [dispatch]);
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/quiz" element={<Quiz />} />
-          <Route path="/results" element={<Quiz />} />
-          <Route path="/statistics" element={<Statistics />} />
-          <Route
-            path="/settings"
-            element={
-              <AdminRoute>
-                <Settings />
-              </AdminRoute>
-            }
+      {isSuccess && (
+        <>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
           />
-        </Route>
-        <Route
-          path="/login"
-          element={
-            <NotAuthenticatedRoute>
-              <Login />
-            </NotAuthenticatedRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <NotAuthenticatedRoute>
-              <Register />
-            </NotAuthenticatedRoute>
-          }
-        />
-        <Route
-          path="/account"
-          element={
-            <PrivateRoute>
-              <Register />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/change-password"
-          element={
-            <PrivateRoute>
-              <ChangePassword />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="/quiz" element={<Quiz />} />
+              <Route path="/results" element={<Quiz />} />
+              <Route path="/statistics" element={<Statistics />} />
+              <Route
+                path="/settings"
+                element={
+                  <AdminRoute>
+                    <Settings />
+                  </AdminRoute>
+                }
+              />
+            </Route>
+            <Route
+              path="/login"
+              element={
+                <NotAuthenticatedRoute>
+                  <Login />
+                </NotAuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <NotAuthenticatedRoute>
+                  <Register />
+                </NotAuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/account"
+              element={
+                <PrivateRoute>
+                  <Register />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/change-password"
+              element={
+                <PrivateRoute>
+                  <ChangePassword />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </>
+      )}
     </>
   );
 }

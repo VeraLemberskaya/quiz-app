@@ -1,30 +1,39 @@
 import { FC } from "react";
 import Dropdown from "../../../UI/Dropdown";
+import { Control, useController } from "react-hook-form";
 
 import styles from "./settingDropdown.module.scss";
+import { FieldNames } from "../Settings";
+import { SettingsValues } from "../../../../redux/settings/types";
 
 type Props = {
   label: string;
-  currentSetting: number | string;
-  settingsValues: number[] | string[];
-  onSettingSelect: (value: any) => void;
+  defaultValue?: number;
+  options: number[];
+  name: FieldNames;
+  control: Control<SettingsValues, object>;
 };
 
 const SettingDropdown: FC<Props> = ({
   label,
-  currentSetting,
-  settingsValues,
-  onSettingSelect,
+  defaultValue,
+  options,
+  control,
+  name,
 }) => {
+  const {
+    field: { onChange, value },
+  } = useController({ name, control, defaultValue });
+
   return (
     <div className={styles.settingContainer}>
       <h6>{label}</h6>
       <Dropdown>
-        <Dropdown.Toggle>{currentSetting}</Dropdown.Toggle>
+        <Dropdown.Toggle>{value}</Dropdown.Toggle>
         <Dropdown.Menu>
-          {settingsValues.map((value) => (
-            <Dropdown.Item key={value} onClick={() => onSettingSelect(value)}>
-              {value}
+          {options.map((option) => (
+            <Dropdown.Item key={option} onClick={() => onChange(option)}>
+              {option}
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>

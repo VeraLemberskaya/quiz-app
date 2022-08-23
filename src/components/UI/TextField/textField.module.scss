@@ -121,30 +121,4 @@ $transition: 0.25s ease-in-out;
       background-color: $dark-red-color;
     }
   }
-
-  .error {
-    height: 0;
-    margin-top: 1rem;
-    visibility: hidden;
-    color: $red-color;
-    width: fit-content;
-    gap: 0.4rem;
-    font-size: 1.5rem;
-    transition: height $transition;
-    @include flex-center;
-    @include for-phone-only {
-      font-size: 1.4rem;
-    }
-    svg {
-      fill: $red-color;
-    }
-  }
-
-  .visible {
-    height: 2.2rem;
-    visibility: visible;
-    @include for-phone-only {
-      height: 3.2rem;
-    }
-  }
 }

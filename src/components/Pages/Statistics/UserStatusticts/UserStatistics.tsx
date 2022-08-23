@@ -42,9 +42,6 @@ const UserStatisticsModal: FC<Props> = ({ user, onClose }) => {
 
   return (
     <div className={styles.modalBody}>
-      <button className={styles.closeBtn} onClick={onClose}>
-        <MdOutlineClose />
-      </button>
       <div className={styles.header}>
         <div className={styles.title}> {user?.email}</div>
         <div className={styles.subtitle}>
