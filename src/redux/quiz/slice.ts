@@ -1,19 +1,24 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { getQuiz } from "../../api/requests";
-import { Question, QuizSliceState } from "./types";
+import { apiSlice } from "../apiSlice";
+import { Game, Question, QuizSliceState } from "./types";
 
-export const initQuiz = createAsyncThunk<Question[], string[]>(
-  "quiz/initQuiz",
-  async (topics) => {
-    return await getQuiz(topics);
-  }
-);
+export const quizApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getQuiz: builder.query<Question[], string[]>({
+      query: (topics) => ({
+        url: "/quiz",
+        params: { topics },
+      }),
+    }),
+    getUserGame: builder.query<Game, { userId: string; gameId: string }>({
+      query: ({ userId, gameId }) => `/users/${userId}/games/${gameId}`,
+    }),
+  }),
+});
 
 const initialState: QuizSliceState = {
   topics: [],
-  status: "loading",
-  currentQuiz: [],
   currentIndex: 0,
   answers: {},
 };
@@ -22,29 +27,14 @@ const quizSlice = createSlice({
   name: "quiz",
   initialState,
   reducers: {
+    setTopics: (state, action: PayloadAction<string[]>) => {
+      state.topics = action.payload;
+    },
     setTopic: (state, action: PayloadAction<string>) => {
       state.topics.push(action.payload);
     },
     removeTopic: (state, action: PayloadAction<string>) => {
       state.topics = state.topics.filter((topic) => topic != action.payload);
-    },
-    setCurrentQuiz: {
-      reducer(
-        state,
-        action: PayloadAction<{
-          quiz: Question[];
-          answers: Record<string, number>;
-        }>
-      ) {
-        const { quiz, answers } = action.payload;
-        state.currentQuiz = quiz;
-        state.answers = answers;
-        state.status = "success";
-        state.currentIndex = 0;
-      },
-      prepare(quiz: Question[], answers: Record<string, number>) {
-        return { payload: { quiz, answers } };
-      },
     },
     increment: (state) => {
       state.currentIndex++;
@@ -60,9 +50,9 @@ const quizSlice = createSlice({
     resetCurrentQuestion: (state) => {
       state.currentIndex = 0;
     },
-    resetQuiz: () => {
-      return initialState;
-    },
+    // resetQuiz: () => {
+    //   return initialState;
+    // },
     setAnswer: {
       reducer(state, action: PayloadAction<{ id: string; answer: number }>) {
         const { id, answer } = action.payload;
@@ -77,32 +67,26 @@ const quizSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(initQuiz.pending, (state) => {
-      state.status = "loading";
-      state.currentQuiz = [];
-      state.currentIndex = 0;
-      state.answers = {};
-    });
-    builder.addCase(initQuiz.fulfilled, (state, action) => {
-      state.status = "success";
-      state.currentQuiz = action.payload;
-    });
-    builder.addCase(initQuiz.rejected, (state) => {
-      state.status = "error";
-    });
+    builder.addMatcher(
+      quizApiSlice.endpoints.getUserGame.matchFulfilled,
+      (state, { payload }) => {
+        state.answers = payload.answers;
+      }
+    );
   },
 });
 
 export const {
+  setTopics,
   setTopic,
   removeTopic,
-  setCurrentQuiz,
   increment,
   decrement,
   setQuestionIndex,
   setAnswer,
-  resetQuiz,
   resetCurrentQuestion,
 } = quizSlice.actions;
+
+export const { useGetQuizQuery, useGetUserGameQuery } = quizApiSlice;
 
 export default quizSlice.reducer;

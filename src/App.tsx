@@ -16,6 +16,8 @@ import Settings from "./components/Pages/Settings";
 import Statistics from "./components/Pages/Statistics";
 import { useGetSettingsQuery } from "./redux/settings/slice";
 import Loader from "./components/UI/Loader";
+import QuizController from "./components/Pages/Quiz/QuizController";
+import QuizResultsController from "./components/Pages/Quiz/QuizResultsController";
 
 type Props = {
   children: JSX.Element;
@@ -75,8 +77,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
-              <Route path="/quiz" element={<Quiz />} />
-              <Route path="/results" element={<Quiz />} />
+              <Route path="/quiz" element={<QuizController />} />
+              <Route path="/results" element={<QuizController />} />
+              <Route
+                path="/results/:userId/:gameId"
+                element={<QuizResultsController />}
+              />
               <Route path="/statistics" element={<Statistics />} />
               <Route
                 path="/settings"

@@ -1,11 +1,8 @@
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MdOutlineClose } from "react-icons/md";
 
 import styles from "./userStatistics.module.scss";
 import { User } from "../../../../redux/user/types";
-import { useAppDispatch } from "../../../../redux/hooks";
-import { setCurrentQuiz } from "../../../../redux/quiz/slice";
 import { useGetUserGamesListQuery } from "../../../../redux/apiSlice";
 import Table from "../../../UI/Table";
 import { columns } from "./columns";
@@ -26,17 +23,11 @@ const UserStatisticsModal: FC<Props> = ({ user, onClose }) => {
     isSuccess,
   } = useGetUserGamesListQuery({ id: user.id, page });
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const handleRowSelection = (rowIndex: number) => {
     const game = userGamesList?.data[rowIndex];
     if (game) {
-      dispatch(setCurrentQuiz(game.quiz, game.answers));
-      navigate("/results", {
-        state: {
-          isResultPage: true,
-        },
-      });
+      navigate(`/results/${user.id}/${game.id}`);
     }
   };
 

@@ -3,27 +3,32 @@ import { FC, useEffect } from "react";
 import styles from "./quizModal.module.scss";
 import { useAppSelector } from "../../../../redux/hooks";
 import {
-  selectQuizData,
+  selectQuizAnswers,
   selectQuizScore,
+  selectQuizTopics,
 } from "../../../../redux/quiz/selectors";
 import { useNavigate } from "react-router-dom";
 import { selectCurrentUser } from "../../../../redux/user/selectors";
 import { getFormattedDate } from "../../../../utils";
 import { saveUserGame } from "../../../../api/requests";
-import { Game } from "../../../../redux/quiz/types";
+import { Game, Question } from "../../../../redux/quiz/types";
 import Button from "../../../UI/Button";
 import Modal from "../../../UI/Modal";
+import { useGetQuizQuery } from "../../../../redux/quiz/slice";
 
 const QuizModal: FC = () => {
-  const { currentQuiz, answers } = useAppSelector(selectQuizData);
-  const totalScore = useAppSelector(selectQuizScore);
+  const { data: currentQuiz } = useGetQuizQuery(
+    useAppSelector(selectQuizTopics)
+  );
+  const answers = useAppSelector(selectQuizAnswers);
+  const totalScore = useAppSelector(selectQuizScore(currentQuiz));
   const user = useAppSelector(selectCurrentUser);
   const navigate = useNavigate();
 
   useEffect(() => {
     const game: Omit<Game, "id"> = {
       date: getFormattedDate(new Date()),
-      quiz: currentQuiz,
+      quiz: currentQuiz as Question[],
       answers,
       score: totalScore,
     };
