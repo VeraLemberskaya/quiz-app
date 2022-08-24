@@ -4,6 +4,7 @@ import { CSSTransition } from "react-transition-group";
 
 import styles from "../dropdown.module.scss";
 import classNames from "classnames";
+import AccordionTransition from "../../../Utils/AccordionTransition";
 
 type Props = {
   children: React.ReactNode;
@@ -13,18 +14,7 @@ const Menu: FC<Props> = ({ children }) => {
   const { isOpened } = useDropdownContext();
 
   return (
-    <CSSTransition
-      in={isOpened}
-      timeout={200}
-      classNames={{
-        enter: styles.accordionEnter,
-        enterActive: styles.accordionEnterActive,
-        exit: styles.accordionExit,
-        exitActive: styles.accordionExitActive,
-      }}
-      mountOnEnter
-      unmountOnExit
-    >
+    <AccordionTransition inProp={isOpened} timeout={200} styles={styles}>
       <div
         className={classNames(styles.dropdownMenu, {
           [styles.opened]: isOpened,
@@ -32,7 +22,7 @@ const Menu: FC<Props> = ({ children }) => {
       >
         {children}
       </div>
-    </CSSTransition>
+    </AccordionTransition>
   );
 };
 

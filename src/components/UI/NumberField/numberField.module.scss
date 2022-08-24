@@ -1,0 +1,64 @@
+@import "../../../styles/colors";
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+%spin-button {
+  position: absolute;
+  right: 2px;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 10px;
+  pointer-events: none;
+  background: #fff;
+  color: $grey-color;
+  @include flex-center;
+}
+
+.numberFieldWrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 2px;
+  height: 4rem;
+  border: 0.5px solid $silver-color;
+  transition: $transition;
+  padding-left: 1.6rem;
+  transition: box-shadow $transition;
+  @include flex-center;
+  &::before {
+    @extend %spin-button;
+    content: "\25BC";
+    bottom: 6px;
+    padding-top: 0.5rem;
+  }
+  &::after {
+    @extend %spin-button;
+    content: "\25B2";
+    top: 6px;
+    padding-bottom: 0.5rem;
+  }
+  .input {
+    width: 100%;
+    outline: none;
+    border: none;
+    -moz-appearance: textfield;
+    appearance: textfield;
+    &::-webkit-inner-spin-button,
+    ::-webkit-outer-spin-button {
+      opacity: 0;
+      margin: 0;
+    }
+  }
+}
+
+.focused {
+  border-color: $theme-color-opacity;
+  box-shadow: 0 0 0 1px $theme-color-opacity;
+}
+
+.invalid {
+  box-shadow: 0 0 0 5px rgba(228, 33, 33, 0.5);
+  border: none;
+  .input {
+    color: $red-color !important;
+  }
+}

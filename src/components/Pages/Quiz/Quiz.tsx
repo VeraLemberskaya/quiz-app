@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
-import { CSSTransition } from "react-transition-group";
 
 import styles from "./quiz.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
@@ -18,12 +17,21 @@ import {
   selectQuizData,
 } from "../../../redux/quiz/selectors";
 import AnswerSelector from "./AnswerSelector";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import QuizModal from "./QuizModal";
 import Button from "../../UI/Button";
 import Loader from "../../UI/Loader";
 import Stepper from "../../UI/Stepper";
 import { selectCurrentSettings } from "../../../redux/settings/selectors";
+import Timer from "./Timer";
+import LoseModal from "./LoseModal";
+import { TimerHandle } from "./Timer/Timer";
+import FadeTransition from "../../Utils/FadeTransition";
 
 type LocationState = {
   isResultPage: boolean;
@@ -33,6 +41,8 @@ const Quiz: React.FC = () => {
   const [btnPreviousActive, setBtnPreviousActive] = useState<boolean>(false);
   const [btnNextActive, setBtnNextActive] = useState<boolean>(false);
   const [modalOpened, setModalOpened] = useState<boolean>(false);
+  const [loseModalOpened, setLoseModalOpened] = useState<boolean>(false);
+  const [searchParams] = useSearchParams();
 
   const { status, currentIndex, answers } = useAppSelector(selectQuizData);
   const currentQuestion = useAppSelector(selectCurrentQuestion);
@@ -40,12 +50,22 @@ const Quiz: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const timerRef = useRef<TimerHandle>(null);
+
+  const loadQuiz = () => {
+    const topics = searchParams.get("topics")?.split(",");
+    if (topics) {
+      dispatch(initQuiz(topics));
+    } else {
+      navigate("/");
+    }
+  };
+
   const isResultPage =
     (useLocation().state as LocationState)?.isResultPage ?? false;
-
   useEffect(() => {
     if (!isResultPage) {
-      dispatch(initQuiz());
+      loadQuiz();
     } else {
       if (!currentQuestion) {
         navigate("/");
@@ -79,6 +99,7 @@ const Quiz: React.FC = () => {
 
   const handleBtnNextClick = () => {
     dispatch(increment());
+    timerRef.current?.restart();
   };
 
   const handleBtnPreviousClick = () => {
@@ -86,6 +107,7 @@ const Quiz: React.FC = () => {
   };
 
   const handleAnswerSelect = (answer: number) => {
+    timerRef.current?.stop();
     dispatch(setAnswer(currentQuestion.id, answer));
     if (currentIndex < questionAmount - 1) {
       if (answer === currentQuestion.correctAnswer) {
@@ -106,6 +128,10 @@ const Quiz: React.FC = () => {
 
   const handleStepChange = (index: number) => {
     dispatch(setQuestionIndex(index));
+  };
+
+  const handleTimeExpired = () => {
+    setLoseModalOpened(true);
   };
 
   return (
@@ -140,7 +166,16 @@ const Quiz: React.FC = () => {
               </AnswerSelector.AnswersContainer>
             </AnswerSelector>
           </div>
-          <div className="container mt-5 mb-4">
+          <div className="container position-relative mt-5 mb-4">
+            {!isResultPage && (
+              <div className={styles.timerContainer}>
+                <Timer
+                  ref={timerRef}
+                  expiryTime={20}
+                  onExpire={handleTimeExpired}
+                />
+              </div>
+            )}
             <div className={styles.btnContainer}>
               <div>
                 {isResultPage && (
@@ -179,20 +214,25 @@ const Quiz: React.FC = () => {
               </div>
             </div>
           </div>
-          <CSSTransition
-            in={!isResultPage && modalOpened}
+          <FadeTransition
+            inProp={!isResultPage && modalOpened}
             timeout={300}
-            classNames={{
-              enter: styles.fadeEnter,
-              enterActive: styles.fadeEnterActive,
-              exit: styles.fadeExit,
-              exitActive: styles.fadeExitActive,
-            }}
-            mountOnEnter
-            unmountOnExit
+            styles={styles}
           >
             <QuizModal />
-          </CSSTransition>
+          </FadeTransition>
+          <FadeTransition
+            inProp={!isResultPage && loseModalOpened}
+            timeout={300}
+            styles={styles}
+          >
+            <LoseModal
+              onStartAgain={() => {
+                setLoseModalOpened(false);
+                loadQuiz();
+              }}
+            />
+          </FadeTransition>
         </div>
       )}
     </>

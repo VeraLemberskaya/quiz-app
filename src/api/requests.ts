@@ -2,20 +2,7 @@ import axios from ".";
 import { Game, Question } from "../redux/quiz/types";
 import { Settings } from "../redux/settings/types";
 import { User } from "../redux/user/types";
-import {
-  quizEndPoint,
-  settingsEndPoint,
-  statisticsEndPoint,
-  usersEndPoint,
-} from "./constants";
-
-// export const getUsers = (params?: { page: number; orderBy: string }) => {
-//   return axios
-//     .get<{ data: User[]; pageCount: number }>(usersEndPoint, {
-//       params,
-//     })
-//     .then((response) => response.data);
-// };
+import { quizEndPoint, settingsEndPoint, usersEndPoint } from "./constants";
 
 export const getUserPage = (user: User, params?: { orderBy: string }) => {
   return axios
@@ -75,15 +62,6 @@ export const saveUserGame = (user: User, game: Omit<Game, "id">) => {
   });
 };
 
-// export const getUserGames = (user: User, params: { page: number }) => {
-//   return axios
-//     .get<{ data: Game[]; pageCount: number }>(
-//       `${usersEndPoint}/${user.id}/games`,
-//       { params }
-//     )
-//     .then((response) => response.data);
-// };
-
 export const checkUserPassword = (user: User, password: string) => {
   return axios
     .post(`${usersEndPoint}/check-password`, { id: user.id, password })
@@ -99,22 +77,24 @@ export const updateUserPassword = (user: User, password: string) => {
     .then((response) => response.data);
 };
 
-export const getSettings = () => {
-  return axios
-    .get<Settings>(settingsEndPoint)
-    .then((response) => response.data);
-};
-
-export const updateSettings = (settings: Settings) => {
-  return axios
-    .put(settingsEndPoint, settings)
-    .then((response) => response.data);
-};
-
-// export const getStatistics = () => {
-//   return axios.get(statisticsEndPoint).then((response) => response.data);
+// export const getSettings = () => {
+//   return axios
+//     .get<Settings>(settingsEndPoint)
+//     .then((response) => response.data);
 // };
 
-export const getQuiz = () => {
-  return axios.get<Question[]>(quizEndPoint).then((response) => response.data);
+// export const updateSettings = (settings: Settings) => {
+//   return axios
+//     .put(settingsEndPoint, settings)
+//     .then((response) => response.data);
+// };
+
+export const getQuiz = (topics: string[]) => {
+  return axios
+    .get<Question[]>(quizEndPoint, {
+      params: {
+        topics,
+      },
+    })
+    .then((response) => response.data);
 };

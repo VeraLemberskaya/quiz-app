@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseURL } from "../api/constants";
 import { Game } from "./quiz/types";
+import { Settings } from "./settings/types";
 import { StatisticsData, ListResponse } from "./types";
 import { User } from "./user/types";
 

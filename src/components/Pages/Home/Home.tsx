@@ -1,12 +1,17 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
+import { CSSTransition } from "react-transition-group";
 
 import Button from "../../UI/Button";
 import styles from "./home.module.scss";
 import Image from "../../../assets/people-quiz.svg";
+import FadeTransition from "../../Utils/FadeTransition";
+import TopicModal from "./TopicModal";
+import Modal from "../../UI/Modal";
 
 const Home: FC = () => {
+  const [modalOpened, setModalOpened] = useState<boolean>(false);
   return (
     <div
       className={`${styles.homeContainer} container d-flex justify-content-between}`}
@@ -23,11 +28,13 @@ const Home: FC = () => {
           We help you prepare for exams and quizes
         </h3>
         <div className={`${styles.btnContainer} d-flex`}>
-          <Link to="/quiz">
-            <Button buttonType="primary" buttonSize="large">
-              Start solving
-            </Button>
-          </Link>
+          <Button
+            buttonType="primary"
+            buttonSize="large"
+            onClick={() => setModalOpened(true)}
+          >
+            Start solving
+          </Button>
           <Link to="/">
             <Button buttonSize="large" startIcon={<AiFillCaretDown />}>
               know more
@@ -38,6 +45,11 @@ const Home: FC = () => {
       <div className={styles.image}>
         <img className="w-100" src={Image} />
       </div>
+      <FadeTransition inProp={modalOpened} timeout={300} styles={styles}>
+        <Modal onClose={() => setModalOpened(false)}>
+          <TopicModal />
+        </Modal>
+      </FadeTransition>
     </div>
   );
 };

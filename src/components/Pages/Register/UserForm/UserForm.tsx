@@ -165,7 +165,10 @@ const UserForm: FC = () => {
           buttonType="primary"
           type="submit"
           buttonSize="large"
-          disabled={editStatus === "editing" && !!Object.keys(errors).length}
+          disabled={
+            editStatus === "none" ||
+            (editStatus === "editing" && !!Object.keys(errors).length)
+          }
         >
           {!!user ? "Submit" : "Sign up"}
         </Button>

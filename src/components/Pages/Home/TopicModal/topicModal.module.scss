@@ -1,0 +1,62 @@
+@import "../../../../styles/colors";
+@import "../../../../styles/media";
+
+.topicModalBody {
+  text-align: center;
+  padding: 3rem;
+  @include for-phone-only {
+    padding: 2rem;
+  }
+  .title {
+    font-size: 4.8rem;
+    margin-top: 2rem;
+    @include for-tablet-landscape {
+      font-size: 4.2rem;
+    }
+    @include for-tablet-portrait {
+      font-size: 3.6rem;
+    }
+    @include for-phone-only {
+      font-size: 2.8rem;
+    }
+  }
+  .info {
+    color: $grey-color;
+    font-weight: 400;
+    margin-top: 3rem;
+    @include for-tablet-landscape {
+      margin-top: 2rem;
+    }
+  }
+  .topicList {
+    width: 80%;
+    max-height: 27rem;
+    margin: 0 auto;
+    margin-top: 10rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+    overflow-y: auto;
+    @include for-laptop {
+      margin-top: 5rem;
+      max-height: 24rem;
+    }
+    @include for-tablet-landscape {
+      gap: 2.5rem;
+    }
+    @include for-tablet-portrait {
+      max-height: 27rem;
+      gap: 2rem;
+    }
+    @include for-phone-only {
+      max-height: 21rem;
+      width: 100%;
+    }
+  }
+  .button {
+    position: absolute;
+    right: 3rem;
+    bottom: 3rem;
+  }
+}

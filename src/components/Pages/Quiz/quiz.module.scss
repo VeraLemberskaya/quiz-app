@@ -3,6 +3,7 @@
 @import "../../../styles/colors";
 
 .quizBody {
+  position: relative;
   height: 89vh;
   display: flex;
   flex-direction: column;
@@ -28,6 +29,13 @@
       }
     }
   }
+}
+
+.timerContainer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0.1rem;
 }
 
 .btnNext {
