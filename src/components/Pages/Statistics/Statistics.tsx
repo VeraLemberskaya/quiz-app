@@ -1,36 +1,37 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import { MdQuiz } from "react-icons/md";
 import { AiFillTrophy } from "react-icons/ai";
 
-import { useAppSelector } from "../../../redux/hooks";
-import { selectCurrentUser } from "../../../redux/user/selectors";
 import styles from "./statistics.module.scss";
 import { User } from "../../../redux/user/types";
 import UserStatistics from "./UserStatusticts";
 import Filters from "./Filters";
-import { FilterValue } from "./Filters/Filters";
-import { getUserPage } from "../../../api/requests";
-import {
-  useGetStatisticsDataQuery,
-  useGetUserListQuery,
-} from "../../../redux/apiSlice";
 import Table from "../../UI/Table";
 import { columns } from "./columns";
 import InfoBlock from "../../UI/InfoBlock";
-import Pagination from "../../UI/Pagination";
 import Loader from "../../UI/Loader";
 import Modal from "../../UI/Modal";
 import PageTitle from "../../UI/PageTitle";
 import FadeTransition from "../../Utils/FadeTransition";
+import { useFilters, useUserIndex } from "./hooks";
+import {
+  useGetStatisticsDataQuery,
+  useGetUserListQuery,
+} from "../../../redux/statistics/slice";
+import { useAppSelector } from "../../../redux/hooks";
+import { selectStatistics } from "../../../redux/statistics/selectors";
+import UserListPagination from "./UserListPagination";
 
 const Statistics: FC = () => {
-  const [page, setPage] = useState<number>(0);
-  const [filterValue, setFilterValue] = useState<FilterValue>("score");
-  const [findMeChecked, setFindMeChecked] = useState<boolean>(false);
+  const {
+    usersPage: page,
+    filterValue,
+    findMe: findMeChecked,
+  } = useAppSelector(selectStatistics);
+  const { handleFilterValueChange, handleFindMeChange } = useFilters();
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const currentUser = useAppSelector(selectCurrentUser);
 
   const {
     data: statisticsData,
@@ -47,23 +48,7 @@ const Statistics: FC = () => {
     orderBy: filterValue,
   });
 
-  useEffect(() => {
-    if (findMeChecked && currentUser) {
-      getUserPage(currentUser, { orderBy: filterValue }).then((data) =>
-        setPage(data.page)
-      );
-    } else {
-      setPage(0);
-    }
-  }, [findMeChecked, filterValue]);
-
-  const handleFilterChange = (filterValue: FilterValue) => {
-    setFilterValue(filterValue);
-  };
-
-  const handleCheckboxChange = (checked: boolean) => {
-    setFindMeChecked(checked);
-  };
+  const userIndex = useUserIndex(userList?.data);
 
   const closeModal = () => {
     setModalOpened(false);
@@ -76,14 +61,6 @@ const Statistics: FC = () => {
       setSelectedUser(user);
     }
   };
-
-  const getUserIndex = useCallback(() => {
-    const user = userList?.data.find((u) => u.id === currentUser?.id);
-    if (user) {
-      return userList?.data.indexOf(user) ?? -1;
-    }
-    return -1;
-  }, [userList, currentUser]);
 
   return (
     <div className={`${styles.statisticsBody} container`}>
@@ -119,8 +96,8 @@ const Statistics: FC = () => {
                 <Filters
                   filterValue={filterValue}
                   checked={findMeChecked}
-                  onFilterChange={handleFilterChange}
-                  onCheckboxChange={handleCheckboxChange}
+                  onFilterChange={handleFilterValueChange}
+                  onCheckboxChange={handleFindMeChange}
                 />
               </div>
             </>
@@ -136,15 +113,11 @@ const Statistics: FC = () => {
               <Table
                 columns={columns}
                 data={userList.data}
-                highlightedRows={[getUserIndex()]}
+                highlightedRows={[userIndex]}
                 onRowSelect={handleRowSelection}
               />
             </div>
-            <Pagination
-              pageCount={userList.totalPages}
-              forcePage={page}
-              onPageChange={(page) => setPage(page)}
-            />
+            <UserListPagination pageCount={userList.totalPages} />
           </>
         )
       )}

@@ -1,14 +1,16 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./userStatistics.module.scss";
+import { useAppSelector } from "../../../../redux/hooks";
 import { User } from "../../../../redux/user/types";
-import { useGetUserGamesListQuery } from "../../../../redux/apiSlice";
 import Table from "../../../UI/Table";
 import { columns } from "./columns";
-import Pagination from "../../../UI/Pagination";
 import Button from "../../../UI/Button";
 import Loader from "../../../UI/Loader";
+import { useGetUserGamesListQuery } from "../../../../redux/statistics/slice";
+import UserStatisticsPagination from "./UserStatisticsPagination";
+import { selectUserGamesPage } from "../../../../redux/statistics/selectors";
 
 type Props = {
   user: User;
@@ -16,7 +18,7 @@ type Props = {
 };
 
 const UserStatisticsModal: FC<Props> = ({ user, onClose }) => {
-  const [page, setPage] = useState<number>(0);
+  const page = useAppSelector(selectUserGamesPage);
   const {
     data: userGamesList,
     isFetching,
@@ -53,12 +55,7 @@ const UserStatisticsModal: FC<Props> = ({ user, onClose }) => {
               onRowSelect={handleRowSelection}
             />
           </div>
-          <Pagination
-            type="arrow"
-            pageCount={userGamesList.totalPages}
-            forcePage={page}
-            onPageChange={(page) => setPage(page)}
-          />
+          <UserStatisticsPagination pageCount={userGamesList.totalPages} />
         </div>
       ) : (
         <>

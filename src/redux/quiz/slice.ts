@@ -50,9 +50,6 @@ const quizSlice = createSlice({
     resetCurrentQuestion: (state) => {
       state.currentIndex = 0;
     },
-    // resetQuiz: () => {
-    //   return initialState;
-    // },
     setAnswer: {
       reducer(state, action: PayloadAction<{ id: string; answer: number }>) {
         const { id, answer } = action.payload;

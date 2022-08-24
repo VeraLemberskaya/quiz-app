@@ -6,8 +6,7 @@ import classNames from "classnames";
 import Button from "../../../UI/Button";
 import Checkbox from "../../../UI/Checkbox";
 import Dropdown from "../../../UI/Dropdown";
-
-export type FilterValue = "score" | "games";
+import { FilterValue } from "../../../../redux/statistics/types";
 
 type Props = {
   checked: boolean;
