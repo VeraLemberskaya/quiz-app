@@ -29,16 +29,6 @@ export const useFilters = () => {
       dispatch(setUsersPage(0));
     }
   }, [findMeChecked, filterValue]);
-
-  const handleFilterValueChange = (filterValue: FilterValue) => {
-    dispatch(setFilterValue(filterValue));
-  };
-
-  const handleFindMeChange = (checked: boolean) => {
-    dispatch(setFindMe(checked));
-  };
-
-  return { handleFilterValueChange, handleFindMeChange };
 };
 
 export const useUserIndex = (userList: User[] | undefined) => {

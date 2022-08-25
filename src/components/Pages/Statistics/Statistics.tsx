@@ -29,7 +29,7 @@ const Statistics: FC = () => {
     filterValue,
     findMe: findMeChecked,
   } = useAppSelector(selectStatistics);
-  const { handleFilterValueChange, handleFindMeChange } = useFilters();
+  useFilters();
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
@@ -93,12 +93,7 @@ const Statistics: FC = () => {
                   Winner:
                   <span>{statisticsData.winner.email}</span>
                 </div>
-                <Filters
-                  filterValue={filterValue}
-                  checked={findMeChecked}
-                  onFilterChange={handleFilterValueChange}
-                  onCheckboxChange={handleFindMeChange}
-                />
+                <Filters />
               </div>
             </>
           )

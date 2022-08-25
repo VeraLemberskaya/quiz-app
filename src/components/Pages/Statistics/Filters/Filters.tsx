@@ -1,39 +1,34 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { BsFilterRight } from "react-icons/bs";
 
 import styles from "./filters.module.scss";
 import classNames from "classnames";
 import Button from "../../../UI/Button";
 import Checkbox from "../../../UI/Checkbox";
-import Dropdown from "../../../UI/Dropdown";
 import { FilterValue } from "../../../../redux/statistics/types";
-
-type Props = {
-  checked: boolean;
-  filterValue: FilterValue;
-  onFilterChange: (filterValue: FilterValue) => void;
-  onCheckboxChange: (checked: boolean) => void;
-};
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { selectStatistics } from "../../../../redux/statistics/selectors";
+import { setFilterValue, setFindMe } from "../../../../redux/statistics/slice";
+import Dropdown from "../../../UI/Dropdown";
 
 const FILTER_VALUES: { [key in FilterValue]: string } = {
   score: "Score",
   games: "Games",
 };
 
-const Filters: FC<Props> = ({
-  checked,
-  filterValue,
-  onFilterChange,
-  onCheckboxChange,
-}) => {
+const filterValues: { value: FilterValue; label: string }[] = [
+  { value: "score", label: FILTER_VALUES.score },
+  { value: "games", label: FILTER_VALUES.games },
+];
+
+const Filters: FC = () => {
   const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
+  const { filterValue, findMe } = useAppSelector(selectStatistics);
+
+  const dispatch = useAppDispatch();
 
   const handleFilterToggle = () => {
     setFiltersOpened((prevState) => !prevState);
-  };
-
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onCheckboxChange(event.target.checked);
   };
 
   return (
@@ -50,20 +45,23 @@ const Filters: FC<Props> = ({
       >
         <Checkbox
           label="Find me"
-          checked={checked}
-          onChange={handleCheckboxChange}
+          checked={findMe}
+          onChange={(event) => {
+            dispatch(setFindMe(event.target.checked));
+          }}
         />
-        <div className={styles.dropdownWrapper}>
+        <div className={styles.selectWrapper}>
           Sort by:
           <Dropdown>
             <Dropdown.Toggle>{FILTER_VALUES[filterValue]}</Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => onFilterChange("score")}>
-                {FILTER_VALUES.score}
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => onFilterChange("games")}>
-                {FILTER_VALUES.games}
-              </Dropdown.Item>
+              {filterValues.map((option) => (
+                <Dropdown.Item
+                  onClick={() => dispatch(setFilterValue(option.value))}
+                >
+                  {option.label}
+                </Dropdown.Item>
+              ))}
             </Dropdown.Menu>
           </Dropdown>
         </div>
