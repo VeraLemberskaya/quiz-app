@@ -1,0 +1,56 @@
+@import "../../../../assets/styles/mixins";
+@import "../../../../assets/styles/colors";
+@import "../../../../assets/styles/media";
+
+.imageContainer {
+  width: 60rem;
+  height: 50rem;
+  background-image: url(../../../../assets/images/modal-bg.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  @include absolute-center;
+  @include for-tablet-portrait {
+    width: 50rem;
+    height: 45rem;
+  }
+  @include for-phone-only {
+    width: 32rem;
+    height: 32rem;
+  }
+  .text {
+    color: $white-color;
+    text-align: center;
+    @include absolute-center;
+    .subtitle {
+      color: inherit;
+      font-size: 4.5rem;
+      font-weight: 500;
+      @include for-tablet-portrait {
+        font-size: 3rem;
+      }
+      @include for-phone-only {
+        font-size: 2rem;
+      }
+    }
+    .title {
+      color: inherit;
+      font-size: 20rem;
+      font-weight: bold;
+      @include for-tablet-portrait {
+        font-size: 16rem;
+      }
+      @include for-phone-only {
+        font-size: 12rem;
+      }
+    }
+  }
+}
+
+.btnContainer {
+  position: absolute;
+  bottom: 3rem;
+  width: 100%;
+  display: flex;
+  padding: 0 3rem;
+  justify-content: space-between;
+}

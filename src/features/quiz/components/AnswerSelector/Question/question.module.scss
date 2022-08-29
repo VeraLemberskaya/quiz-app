@@ -1,0 +1,53 @@
+@import "../../../../../assets/styles/colors";
+@import "../../../../../assets/styles/media";
+@import "../../../../../assets/styles/mixins";
+
+.questionContainer {
+  margin-top: 3.5rem;
+  margin-bottom: 6rem;
+  width: 100%;
+  background-color: $theme-color;
+  padding: 4.5rem 2.7rem;
+  &:is(.small) {
+    padding: 2rem 2.7rem;
+  }
+  flex-direction: column;
+  gap: 2rem;
+  @include flex-center;
+  @include for-laptop {
+    padding: 4rem 2rem;
+  }
+  @include for-tablet-landscape {
+    padding: 3rem 1.5rem;
+  }
+  @include for-phone-only {
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  .imgContainer {
+    height: 17rem;
+    padding: 0.5rem;
+    background-color: $white-color;
+    @include for-phone-only {
+      height: 14rem;
+    }
+    img {
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  .questionTitle {
+    text-align: center;
+    width: fit-content;
+    height: fit-content;
+    margin: 0 auto;
+    color: $white-color;
+    font-size: 2.7rem;
+    @include for-laptop {
+      font-size: 2.4rem;
+    }
+    @include for-tablet-landscape {
+      font-size: 2rem;
+    }
+  }
+}

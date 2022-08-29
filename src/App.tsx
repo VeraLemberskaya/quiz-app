@@ -1,23 +1,22 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import Layout from "./components/UI/Layout";
-import { useAppDispatch, useAppSelector } from "./redux/hooks";
-import { selectCurrentUser } from "./redux/user/selectors";
-import { setUser } from "./redux/user/slice";
-import { getSavedUser } from "./api/requests";
-import ChangePassword from "./components/Pages/ChangePassword";
-import Home from "./components/Pages/Home";
-import Login from "./components/Pages/Login";
-import Quiz from "./components/Pages/Quiz";
-import Register from "./components/Pages/Register";
-import Settings from "./components/Pages/Settings";
-import Statistics from "./components/Pages/Statistics";
-import { useGetSettingsQuery } from "./redux/settings/slice";
+import { useAppSelector } from "./services/hooks";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Settings from "./pages/Settings";
+import Statistics from "./pages/Statistics";
 import Loader from "./components/UI/Loader";
-import QuizController from "./components/Pages/Quiz/QuizController";
-import QuizResultsController from "./components/Pages/Quiz/QuizResultsController";
+import { useGetSettingsQuery } from "./features/settings/services/slice";
+import { useGetSavedUserQuery } from "./features/user/services/slice";
+import { selectCurrentUser } from "./features/user/services/selectors";
+import Account from "./pages/Account";
+import ChangePassword from "./pages/ChangePassword";
+import Home from "./pages/Home";
+import QuizController from "./features/quiz/components/QuizController";
+import QuizResultsController from "./features/quiz/components/QuizResultsController";
 
 type Props = {
   children: JSX.Element;
@@ -48,15 +47,11 @@ const AdminRoute: FC<Props> = ({ children }) => {
 };
 
 function App() {
-  const { isLoading, isSuccess } = useGetSettingsQuery();
-  const dispatch = useAppDispatch();
+  useGetSavedUserQuery(undefined, {
+    skip: !Boolean(localStorage.getItem("rememberMe")),
+  });
 
-  useEffect(() => {
-    const isUserSaved = !!localStorage.getItem("rememberMe");
-    if (isUserSaved) {
-      getSavedUser().then((user) => dispatch(setUser(user)));
-    }
-  }, [dispatch]);
+  const { isLoading, isSuccess } = useGetSettingsQuery();
 
   return isLoading ? (
     <Loader />
@@ -113,7 +108,7 @@ function App() {
               path="/account"
               element={
                 <PrivateRoute>
-                  <Register />
+                  <Account />
                 </PrivateRoute>
               }
             />

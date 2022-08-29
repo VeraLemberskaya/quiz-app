@@ -10,7 +10,7 @@ export const useOutsideClickEffect = (callback: () => void, deps: any[]) => {
 };
 
 export const useControlledInput = (
-  value?: number | string | readonly string[] | undefined,
+  value?: number | string | readonly string[],
   onChange?: React.ChangeEventHandler<HTMLInputElement>
 ) => {
   const [inputValue, setInputValue] = useState<

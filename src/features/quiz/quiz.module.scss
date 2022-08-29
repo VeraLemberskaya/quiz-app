@@ -1,0 +1,63 @@
+@import "../../assets/styles/media";
+@import "../../assets/styles/mixins";
+@import "../../assets/styles/colors";
+
+.quizBody {
+  position: relative;
+  height: 89vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @include for-tablet-landscape {
+    height: fit-content;
+  }
+  .btnContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    @include for-tablet-landscape {
+      width: 65%;
+      margin: 0 auto;
+    }
+    @include for-tablet-portrait {
+      width: 80%;
+    }
+    @include for-phone-only {
+      width: 100%;
+    }
+    .backToMenuBtn {
+      @include for-tablet-landscape {
+        display: none;
+      }
+    }
+  }
+}
+
+.stopWatch {
+  position: absolute;
+  top: 2.5rem;
+  right: 2rem;
+  @include for-tablet-landscape {
+    top: 3rem;
+  }
+  @include for-tablet-portrait {
+    bottom: 2rem;
+    left: 3rem;
+    top: auto;
+    right: auto;
+  }
+}
+
+.timerContainer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0.1rem;
+}
+
+.btnNext {
+  position: relative;
+  float: right;
+}
+
+@include fade-transition(0.3s);

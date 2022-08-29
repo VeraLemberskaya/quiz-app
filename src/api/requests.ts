@@ -1,7 +1,7 @@
 import axios from ".";
-import { Game, Question } from "../redux/quiz/types";
-import { Settings } from "../redux/settings/types";
-import { User } from "../redux/user/types";
+import { Game, Question } from "../features/quiz/services/types";
+import { Settings } from "../features/settings/services/types";
+import { User } from "../features/user/services/types";
 import { quizEndPoint, settingsEndPoint, usersEndPoint } from "./constants";
 
 export const getUserPage = (user: User, params?: { orderBy: string }) => {
@@ -18,20 +18,20 @@ export const getSavedUser = () => {
     .then((response) => response.data);
 };
 
-export const authenticateUser = async (credentials: {
-  email: string;
-  password: string;
-}) => {
-  return axios
-    .post<User>(`${usersEndPoint}/login`, credentials)
-    .then((response) => response.data);
-};
+// export const authenticateUser = async (credentials: {
+//   email: string;
+//   password: string;
+// }) => {
+//   return axios
+//     .post<User>(`${usersEndPoint}/login`, credentials)
+//     .then((response) => response.data);
+// };
 
 export const registerUser = async (data: {
   name: string;
   surname: string;
   email: string;
-  password?: string;
+  password: string;
 }) => {
   return axios.post(usersEndPoint, data).then((response) => response.data);
 };
@@ -49,11 +49,11 @@ export const updateUser = (
     .then((response) => response.data);
 };
 
-export const saveUser = (user: User) => {
-  return axios
-    .post(`${usersEndPoint}/save-user`, { id: user.id })
-    .then((response) => response.data);
-};
+// export const saveUser = (user: User) => {
+//   return axios
+//     .post(`${usersEndPoint}/save-user`, { id: user.id })
+//     .then((response) => response.data);
+// };
 
 export const saveUserGame = (user: User, game: Omit<Game, "id">) => {
   return axios.post(`${usersEndPoint}/set-game-result`, {

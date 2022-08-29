@@ -1,14 +1,14 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiUser, BiExit } from "react-icons/bi";
-import { resetUser } from "../../../../redux/user/slice";
 
 import Button from "../../Button";
 import styles from "./navlinks.module.scss";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { selectCurrentUser } from "../../../../redux/user/selectors";
+import { useAppDispatch, useAppSelector } from "../../../../services/hooks";
 import Dropdown from "../../Dropdown";
-import { hasPermission } from "../../../../utils";
+import { hasPermission } from "../../../../utils/hasPermission";
+import { selectCurrentUser } from "../../../../features/user/services/selectors";
+import { resetUser } from "../../../../features/user/services/slice";
 
 const NavLinks: FC = () => {
   const user = useAppSelector(selectCurrentUser);

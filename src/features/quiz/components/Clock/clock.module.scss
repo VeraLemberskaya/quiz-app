@@ -1,0 +1,18 @@
+@import "../../../../assets/styles/colors";
+@import "../../../../assets/styles/media";
+
+.clockContainer {
+  margin: 0 auto;
+  width: fit-content;
+  color: $dark-grey-color;
+  font-size: 2rem;
+  span {
+    font-weight: 600;
+    font-size: inherit;
+    font-family: "Rajdhani";
+    color: inherit;
+  }
+  @include for-tablet-landscape {
+    font-size: 1.8rem;
+  }
+}

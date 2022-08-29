@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import Step from "./Step";
 
 import styles from "./stepper.module.scss";

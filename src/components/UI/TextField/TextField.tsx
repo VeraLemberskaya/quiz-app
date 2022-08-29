@@ -26,7 +26,7 @@ type Props = Omit<
 const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
   const {
     placeholder,
-    value,
+    defaultValue = "",
     label,
     type = "text",
     error,
@@ -35,7 +35,10 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
     onChange,
     ...otherProps
   } = props;
-  const [inputValue, handleInputChange] = useControlledInput(value, onChange);
+  const [inputValue, handleInputChange] = useControlledInput(
+    defaultValue,
+    onChange
+  );
   const [inputFocused, setInputFocused] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
