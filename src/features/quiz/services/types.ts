@@ -1,10 +1,5 @@
 export type Status = "loading" | "success" | "error";
 
-export type Time = {
-  seconds: number;
-  minutes: number;
-};
-
 export type Question = {
   id: string;
   question: string;
@@ -14,17 +9,15 @@ export type Question = {
 };
 
 export interface QuizSliceState {
-  time: Time;
   topics: string[];
   currentIndex: number;
-  answers: Record<string, { index: number; time: Time }>;
+  answers: Record<string, number>;
 }
 
 export type Game = {
-  time: Time;
   date: string;
   quiz: Question[];
-  answers: Record<string, { index: number; time: Time }>;
+  answers: Record<string, number>;
   score: number;
   id: string;
 };

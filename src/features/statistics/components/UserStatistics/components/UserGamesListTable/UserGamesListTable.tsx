@@ -9,7 +9,7 @@ import {
   selectUserGamesList,
 } from "../../../../services/selectors";
 
-import { useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { User } from "../../../../../user/services/types";
 import { Game } from "../../../../../quiz/services/types";
 
@@ -43,7 +43,13 @@ const UserGamesListTable: FC = () => {
   const handleRowSelection = (rowIndex: number) => {
     const game = userGamesList?.[rowIndex];
     if (game) {
-      navigate(`/results/${user.id}/${game.id}`);
+      navigate({
+        pathname: "/results",
+        search: `?${createSearchParams({
+          userId: user.id,
+          gameId: game.id,
+        })}`,
+      });
     }
   };
 

@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import styles from "./loseModal.module.scss";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../../components/UI/Button";
 import Modal from "../../../../components/UI/Modal";
 
@@ -11,19 +11,15 @@ type Props = {
 };
 
 const LoseModal: FC<Props> = ({ onStartAgain }) => {
-  const navigate = useNavigate();
-
   return (
     <Modal>
       <div className={styles.imageContainer} />
       <div className={styles.btnContainer}>
-        <Button
-          buttonSize="large"
-          className={styles.backBtn}
-          onClick={() => navigate("/")}
-        >
-          Go to menu
-        </Button>
+        <Link to="/">
+          <Button buttonSize="large" className={styles.backBtn}>
+            Go to menu
+          </Button>
+        </Link>
         <h4 className={styles.text}>Time is over</h4>
         <Button
           buttonSize="large"

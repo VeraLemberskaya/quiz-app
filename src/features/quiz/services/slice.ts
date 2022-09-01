@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { apiSlice } from "../../../services/apiSlice";
 
-import { Game, Question, QuizSliceState, Time } from "./types";
+import { Game, Question, QuizSliceState } from "./types";
 
 export const quizApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,7 +18,6 @@ export const quizApiSlice = apiSlice.injectEndpoints({
 });
 
 const initialState: QuizSliceState = {
-  time: { seconds: 0, minutes: 0 },
   topics: [],
   currentIndex: 0,
   answers: {},
@@ -28,9 +27,6 @@ const quizSlice = createSlice({
   name: "quiz",
   initialState,
   reducers: {
-    setTime: (state, action: PayloadAction<Time>) => {
-      state.time = action.payload;
-    },
     setTopics: (state, action: PayloadAction<string[]>) => {
       state.topics = action.payload;
     },
@@ -59,7 +55,7 @@ const quizSlice = createSlice({
         state,
         action: PayloadAction<{
           id: string;
-          answer: { index: number; time: Time };
+          answer: number;
         }>
       ) {
         const { id, answer } = action.payload;
@@ -68,7 +64,7 @@ const quizSlice = createSlice({
           [id]: answer,
         };
       },
-      prepare(id: string, answer: { index: number; time: Time }) {
+      prepare(id: string, answer: number) {
         return { payload: { id, answer } };
       },
     },
@@ -79,7 +75,6 @@ const quizSlice = createSlice({
       (state) => {
         state.currentIndex = 0;
         state.answers = {};
-        state.time = { seconds: 0, minutes: 0 };
       }
     );
     builder.addMatcher(
@@ -87,14 +82,12 @@ const quizSlice = createSlice({
       (state, { payload }) => {
         state.currentIndex = 0;
         state.answers = payload.answers;
-        state.time = payload.time;
       }
     );
   },
 });
 
 export const {
-  setTime,
   setTopics,
   setTopic,
   removeTopic,
@@ -106,5 +99,10 @@ export const {
 } = quizSlice.actions;
 
 export const { useGetQuizQuery, useGetUserGameQuery } = quizApiSlice;
+
+export const selectQuizQueryResult = quizApiSlice.endpoints.getQuiz.select;
+
+export const selectUserGameQueryResult =
+  quizApiSlice.endpoints.getUserGame.select;
 
 export default quizSlice.reducer;

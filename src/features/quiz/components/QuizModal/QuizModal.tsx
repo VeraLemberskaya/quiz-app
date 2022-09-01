@@ -2,12 +2,7 @@ import { FC, useEffect } from "react";
 
 import styles from "./quizModal.module.scss";
 import { useAppSelector } from "../../../../services/hooks";
-import {
-  selectQuizData,
-  selectQuizScore,
-  selectQuizTopics,
-} from "../../services/selectors";
-import { useNavigate } from "react-router-dom";
+import { selectQuizData, selectQuizScore } from "../../services/selectors";
 import { saveUserGame } from "../../../../api/requests";
 
 import { getFormattedDate } from "../../../../utils/getFormattedDate";
@@ -16,15 +11,19 @@ import Button from "../../../../components/UI/Button";
 import Modal from "../../../../components/UI/Modal";
 import { useGetQuizQuery } from "../../services/slice";
 import { Game, Question } from "../../services/types";
+import { selectTopicsSearchParams } from "../../../../services/router/selectors";
+import { useQuizContext } from "../../contexts/QuizContext";
+import { Link } from "react-router-dom";
 
 const QuizModal: FC = () => {
   const { data: currentQuiz } = useGetQuizQuery(
-    useAppSelector(selectQuizTopics)
+    useAppSelector(selectTopicsSearchParams) ?? []
   );
-  const { answers, time } = useAppSelector(selectQuizData);
+  const { answers } = useAppSelector(selectQuizData);
   const totalScore = useAppSelector(selectQuizScore(currentQuiz));
   const user = useAppSelector(selectCurrentUser);
-  const navigate = useNavigate();
+
+  const { setResultsViewMode } = useQuizContext();
 
   useEffect(() => {
     const game: Omit<Game, "id"> = {
@@ -32,7 +31,6 @@ const QuizModal: FC = () => {
       quiz: currentQuiz as Question[],
       answers,
       score: totalScore,
-      time,
     };
     if (user) {
       saveUserGame(user, game);
@@ -51,25 +49,15 @@ const QuizModal: FC = () => {
         <Button
           buttonType="outlined"
           buttonSize="large"
-          onClick={() => {
-            navigate("/results", {
-              state: {
-                isResultPage: true,
-              },
-            });
-          }}
+          onClick={() => setResultsViewMode(true)}
         >
           Check results
         </Button>
-        <Button
-          buttonType="primary"
-          buttonSize="large"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Complete
-        </Button>
+        <Link to="/">
+          <Button buttonType="primary" buttonSize="large">
+            Complete
+          </Button>
+        </Link>
       </div>
     </Modal>
   );
