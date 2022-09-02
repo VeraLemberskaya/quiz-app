@@ -26,6 +26,15 @@ export const statisticsApiSlice = apiSlice.injectEndpoints({
     >({
       query: ({ id, page }) => `/users/${id}/games?page=${page}`,
     }),
+    getUserPage: builder.query<
+      { page: number },
+      { id: string; orderBy: string }
+    >({
+      query: ({ id, orderBy }) => ({
+        url: `users/page/${id}`,
+        params: { orderBy },
+      }),
+    }),
   }),
 });
 
@@ -71,6 +80,7 @@ export const {
   useGetStatisticsDataQuery,
   useGetUserListQuery,
   useGetUserGamesListQuery,
+  useGetUserPageQuery,
 } = statisticsApiSlice;
 
 export const selectUserListQueryResult =

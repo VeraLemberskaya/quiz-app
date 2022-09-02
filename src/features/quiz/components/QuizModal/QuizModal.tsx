@@ -2,25 +2,27 @@ import { FC, useEffect } from "react";
 
 import styles from "./quizModal.module.scss";
 import { useAppSelector } from "../../../../services/hooks";
-import { selectQuizData, selectQuizScore } from "../../services/selectors";
-import { saveUserGame } from "../../../../api/requests";
+import {
+  selectQuiz,
+  selectQuizAnswers,
+  selectQuizScore,
+} from "../../services/selectors";
 
 import { getFormattedDate } from "../../../../utils/getFormattedDate";
 import { selectCurrentUser } from "../../../../features/user/services/selectors";
 import Button from "../../../../components/UI/Button";
 import Modal from "../../../../components/UI/Modal";
-import { useGetQuizQuery } from "../../services/slice";
 import { Game, Question } from "../../services/types";
-import { selectTopicsSearchParams } from "../../../../services/router/selectors";
 import { useQuizContext } from "../../contexts/QuizContext";
 import { Link } from "react-router-dom";
+import { useSaveGameResultMutation } from "../../services/slice";
 
 const QuizModal: FC = () => {
-  const { data: currentQuiz } = useGetQuizQuery(
-    useAppSelector(selectTopicsSearchParams) ?? []
-  );
-  const { answers } = useAppSelector(selectQuizData);
-  const totalScore = useAppSelector(selectQuizScore(currentQuiz));
+  const [saveUserGame] = useSaveGameResultMutation();
+
+  const quiz = useAppSelector(selectQuiz) as Question[];
+  const answers = useAppSelector(selectQuizAnswers);
+  const score = useAppSelector(selectQuizScore);
   const user = useAppSelector(selectCurrentUser);
 
   const { setResultsViewMode } = useQuizContext();
@@ -28,12 +30,12 @@ const QuizModal: FC = () => {
   useEffect(() => {
     const game: Omit<Game, "id"> = {
       date: getFormattedDate(new Date()),
-      quiz: currentQuiz as Question[],
+      quiz,
       answers,
-      score: totalScore,
+      score,
     };
     if (user) {
-      saveUserGame(user, game);
+      saveUserGame({ id: user.id, game });
     }
   }, []);
 
@@ -42,7 +44,7 @@ const QuizModal: FC = () => {
       <div className={styles.imageContainer}>
         <div className={styles.text}>
           <h3 className={styles.subtitle}>Your score</h3>
-          <h1 className={styles.title}>{totalScore}</h1>
+          <h1 className={styles.title}>{score}</h1>
         </div>
       </div>
       <div className={styles.btnContainer}>

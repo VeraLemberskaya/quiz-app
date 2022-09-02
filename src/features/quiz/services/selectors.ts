@@ -2,7 +2,6 @@ import { createSelector } from "@reduxjs/toolkit";
 
 import { RootState } from "../../../services/store";
 import { selectQuizQueryResult, selectUserGameQueryResult } from "./slice";
-import { Question } from "./types";
 import {
   selectTopicsSearchParams,
   selectUserGameSearchParams,
@@ -18,34 +17,10 @@ export const selectQuizAnswers = createSelector(
   (answers) => answers
 );
 
-export const selectQuizData = createSelector(
-  (state: RootState) => state.quiz,
-  (quiz) => quiz
-);
-
 export const selectCurrentIndex = createSelector(
   (state: RootState) => state.quiz.currentIndex,
   (index) => index
 );
-
-type Selector<S> = (state: RootState) => S;
-
-export const selectQuizScore = (
-  questions: Question[] | undefined
-): Selector<number> =>
-  createSelector(selectQuizAnswers, (answers) => {
-    let totalScore = 0;
-    for (let id in answers) {
-      const question = questions?.find((q) => q.id === id);
-      if (question) {
-        if (answers[id] === question.correctAnswer) {
-          totalScore++;
-        }
-      }
-    }
-
-    return totalScore;
-  });
 
 export const selectQuiz = (state: RootState) => {
   const topics = selectTopicsSearchParams(state);
@@ -73,4 +48,22 @@ export const selectCurrentQuestion = createSelector(
   selectUserGameQuiz,
   (params, index, quiz, gameQuiz) =>
     params ? gameQuiz?.[index] : quiz?.[index]
+);
+
+export const selectQuizScore = createSelector(
+  selectQuiz,
+  selectQuizAnswers,
+  (quiz, answers) => {
+    let totalScore = 0;
+    for (let id in answers) {
+      const question = quiz?.find((q) => q.id === id);
+      if (question) {
+        if (answers[id] === question.correctAnswer) {
+          totalScore++;
+        }
+      }
+    }
+
+    return totalScore;
+  }
 );

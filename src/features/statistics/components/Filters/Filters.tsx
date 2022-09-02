@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../../services/hooks";
 import { selectStatistics } from "../../services/selectors";
 import { setFilterValue, setFindMe } from "../../services/slice";
 import Dropdown from "../../../../components/UI/Dropdown";
+import { selectCurrentUser } from "../../../user/services/selectors";
 
 const FILTER_VALUES: { [key in FilterValue]: string } = {
   score: "Score",
@@ -22,6 +23,8 @@ const filterValues: { value: FilterValue; label: string }[] = [
 ];
 
 const Filters: FC = () => {
+  const user = useAppSelector(selectCurrentUser);
+
   const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
   const { filterValue, findMe } = useAppSelector(selectStatistics);
 
@@ -43,13 +46,15 @@ const Filters: FC = () => {
           [styles.opened]: filtersOpened,
         })}
       >
-        <Checkbox
-          label="Find me"
-          checked={findMe}
-          onChange={(event) => {
-            dispatch(setFindMe(event.target.checked));
-          }}
-        />
+        {user && (
+          <Checkbox
+            label="Find me"
+            checked={findMe}
+            onChange={(event) => {
+              dispatch(setFindMe(event.target.checked));
+            }}
+          />
+        )}
         <div className={styles.selectWrapper}>
           Sort by:
           <Dropdown>

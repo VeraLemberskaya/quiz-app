@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useControlledInput } from "../../../hooks";
+import { useControlledInput } from "../../../hooks/useControlledInput";
 import ErrorDisplay from "../ErrorDisplay";
 
 import styles from "./textField.module.scss";
@@ -35,7 +35,7 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
     onChange,
     ...otherProps
   } = props;
-  const [inputValue, handleInputChange] = useControlledInput(
+  const { inputValue, handleInputChange } = useControlledInput(
     defaultValue,
     onChange
   );

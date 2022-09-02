@@ -15,7 +15,11 @@ export const useQuizTimer = ({
     onExpire,
   });
 
-  const { restart, pause } = timerResult;
+  const { seconds, restart, pause } = timerResult;
+
+  useEffect(() => {
+    console.log(seconds);
+  }, [seconds]);
 
   const {
     resultsViewMode,

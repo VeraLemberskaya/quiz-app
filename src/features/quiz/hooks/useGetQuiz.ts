@@ -9,7 +9,7 @@ export const useGetQuiz = () => {
   const topicsParams = useAppSelector(selectTopicsSearchParams);
   const userGameParams = useAppSelector(selectUserGameSearchParams);
 
-  const isUserGamePage = userGameParams ? true : false;
+  const isUserGamePage = !!userGameParams;
 
   const quizResult = useGetQuizQuery(topicsParams ?? [], {
     skip: isUserGamePage || !topicsParams,

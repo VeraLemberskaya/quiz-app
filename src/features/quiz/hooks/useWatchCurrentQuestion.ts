@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useAppSelector } from "../../../services/hooks";
 import { selectCurrentSettings } from "../../settings/services/selectors";
-import { selectFindMe } from "../../statistics/services/selectors";
 import { CurrentQuestionState } from "../contexts/QuizContext";
 import {
   selectCurrentIndex,

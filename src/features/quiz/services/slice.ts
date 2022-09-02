@@ -14,6 +14,16 @@ export const quizApiSlice = apiSlice.injectEndpoints({
     getUserGame: builder.query<Game, { userId: string; gameId: string }>({
       query: ({ userId, gameId }) => `/users/${userId}/games/${gameId}`,
     }),
+    saveGameResult: builder.mutation<
+      string,
+      { id: string; game: Omit<Game, "id"> }
+    >({
+      query: (data) => ({
+        url: "/users/set-game-result",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -98,7 +108,11 @@ export const {
   resetCurrentQuestion,
 } = quizSlice.actions;
 
-export const { useGetQuizQuery, useGetUserGameQuery } = quizApiSlice;
+export const {
+  useGetQuizQuery,
+  useGetUserGameQuery,
+  useSaveGameResultMutation,
+} = quizApiSlice;
 
 export const selectQuizQueryResult = quizApiSlice.endpoints.getQuiz.select;
 

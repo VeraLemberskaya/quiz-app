@@ -5,7 +5,7 @@ import { BrowserRouter, useLocation } from "react-router-dom";
 import { Provider, ProviderProps } from "react-redux";
 
 import App from "./App";
-import "./index.scss";
+import "./assets/styles/index.scss";
 import { store } from "./services/store";
 import { useEffect } from "react";
 import { Action } from "@reduxjs/toolkit";

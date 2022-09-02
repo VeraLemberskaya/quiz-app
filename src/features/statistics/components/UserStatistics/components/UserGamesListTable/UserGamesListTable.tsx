@@ -24,15 +24,6 @@ export const columns = [
     accessor: "score",
     className: "text-center",
   },
-  {
-    Header: "Time",
-    accessor: "time",
-    Cell: (data: any) => {
-      return `${getFormattedTime(data.value.minutes)} : ${getFormattedTime(
-        data.value.seconds
-      )}` as any;
-    },
-  },
 ];
 
 const UserGamesListTable: FC = () => {
