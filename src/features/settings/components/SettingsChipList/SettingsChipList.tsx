@@ -7,6 +7,7 @@ import { SettingsValues } from "../../services/types";
 import Chip from "../../../../components/UI/Chip";
 import { useOptions } from "../../hooks/useOptions";
 import { FieldNames } from "../SettingsForm/SettingsForm";
+import SettingsController from "../SettingsController";
 
 type Props = {
   label: string;
@@ -40,9 +41,9 @@ const SettingsChipList: FC<Props> = ({
 
   return (
     <div>
-      <div className={styles.settingWrapper}>
-        <h6>{label}</h6>
-        {selectedOptions?.map((option) => (
+      <SettingsController
+        label={label}
+        control={selectedOptions?.map((option) => (
           <Chip
             key={option}
             label={option}
@@ -50,7 +51,7 @@ const SettingsChipList: FC<Props> = ({
             onDelete={() => handleOptionDelete(option)}
           />
         ))}
-      </div>
+      />
       <CSSTransition
         in={!!unselectedOptions.length}
         timeout={100}

@@ -17,10 +17,6 @@ export const useQuizTimer = ({
 
   const { seconds, restart, pause } = timerResult;
 
-  useEffect(() => {
-    console.log(seconds);
-  }, [seconds]);
-
   const {
     resultsViewMode,
     currentQuestionState: { isAnswered },

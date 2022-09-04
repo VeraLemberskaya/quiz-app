@@ -10,14 +10,6 @@
     font-weight: 400;
     color: $silver-color;
   }
-  h6 {
-    color: $grey-color;
-    font-size: 1.8rem;
-    font-weight: 400;
-    @include for-phone-only {
-      font-size: 1.6rem;
-    }
-  }
   .settingsPanel {
     display: flex;
     flex-direction: column;
