@@ -9,18 +9,13 @@ import { FilterValue } from "../../services/types";
 import { useAppDispatch, useAppSelector } from "../../../../services/hooks";
 import { selectStatistics } from "../../services/selectors";
 import { setFilterValue, setFindMe } from "../../services/slice";
-import Dropdown from "../../../../components/UI/Dropdown";
 import { selectCurrentUser } from "../../../user/services/selectors";
+import Select from "../../../../components/UI/Select";
 
 const FILTER_VALUES: { [key in FilterValue]: string } = {
-  score: "Score",
-  games: "Games",
+  score: "score",
+  games: "games",
 };
-
-const filterValues: { value: FilterValue; label: string }[] = [
-  { value: "score", label: FILTER_VALUES.score },
-  { value: "games", label: FILTER_VALUES.games },
-];
 
 const Filters: FC = () => {
   const user = useAppSelector(selectCurrentUser);
@@ -55,22 +50,12 @@ const Filters: FC = () => {
             }}
           />
         )}
-        <div className={styles.selectWrapper}>
-          Sort by:
-          <Dropdown>
-            <Dropdown.Toggle>{FILTER_VALUES[filterValue]}</Dropdown.Toggle>
-            <Dropdown.Menu>
-              {filterValues.map((option) => (
-                <Dropdown.Item
-                  key={option.value}
-                  onClick={() => dispatch(setFilterValue(option.value))}
-                >
-                  {option.label}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
+        <Select
+          label="Sort by:"
+          options={Object.keys(FILTER_VALUES)}
+          defaultValue={filterValue}
+          onSelect={(value) => dispatch(setFilterValue(value as FilterValue))}
+        />
       </div>
     </div>
   );

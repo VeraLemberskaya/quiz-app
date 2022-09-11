@@ -7,6 +7,7 @@
   .dropdownToggle {
     @include flex-center;
     min-width: 11rem;
+    width: fit-content;
     cursor: pointer;
     gap: 0.3rem;
     color: $theme-color;

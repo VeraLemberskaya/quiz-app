@@ -2,7 +2,6 @@ import { FC } from "react";
 import Table from "../../../../../../components/UI/Table";
 
 import styles from "./userGamesListTable.module.scss";
-import { getFormattedTime } from "../../../../../../utils/getFormattedTime";
 import { useAppSelector } from "../../../../../../services/hooks";
 import {
   selectSelectedUser,

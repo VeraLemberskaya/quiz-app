@@ -1,0 +1,30 @@
+@import "../../../../assets/styles/mixins";
+@import "../../../../assets/styles/colors";
+@import "../../../../assets/styles/media";
+
+.statisticsChartsBody {
+  height: 100%;
+  padding: 4rem;
+  @include for-tablet-landscape {
+    padding: 2rem;
+  }
+  @include for-phone-only {
+    padding: 2rem 0.5rem;
+    gap: 0;
+  }
+  .chartsGridContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: end;
+    column-gap: 4rem;
+    justify-items: stretch;
+  }
+  .modeButton {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    @include for-laptop {
+      display: none;
+    }
+  }
+}

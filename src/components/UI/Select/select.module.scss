@@ -1,0 +1,12 @@
+@import "../../../assets/styles/colors";
+
+.selectWrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-left: 2rem;
+  .label {
+    color: $grey-color;
+    font-size: 1.5rem;
+  }
+}

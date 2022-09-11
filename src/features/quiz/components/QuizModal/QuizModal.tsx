@@ -7,8 +7,8 @@ import {
   selectQuizAnswers,
   selectQuizScore,
 } from "../../services/selectors";
+import moment from "moment";
 
-import { getFormattedDate } from "../../../../utils/getFormattedDate";
 import { selectCurrentUser } from "../../../../features/user/services/selectors";
 import Button from "../../../../components/UI/Button";
 import Modal from "../../../../components/UI/Modal";
@@ -29,7 +29,7 @@ const QuizModal: FC = () => {
 
   useEffect(() => {
     const game: Omit<Game, "id"> = {
-      date: getFormattedDate(new Date()),
+      date: moment().format("YYYY/MM/DD"),
       quiz,
       answers,
       score,
