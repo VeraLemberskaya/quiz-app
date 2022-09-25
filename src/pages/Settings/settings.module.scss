@@ -1,0 +1,31 @@
+@import "../../assets/styles/colors";
+@import "../../assets/styles/media";
+
+.settingsBody {
+  padding-top: 3rem;
+  @include for-phone-only {
+    padding: 2rem;
+  }
+  .subtitle {
+    font-weight: 400;
+    color: $silver-color;
+  }
+  h6 {
+    color: $grey-color;
+    font-size: 1.8rem;
+    font-weight: 400;
+    @include for-phone-only {
+      font-size: 1.6rem;
+    }
+  }
+  .settingsPanel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 50rem;
+    margin-top: 4rem;
+    @include for-tablet-portrait {
+      align-items: center;
+    }
+  }
+}

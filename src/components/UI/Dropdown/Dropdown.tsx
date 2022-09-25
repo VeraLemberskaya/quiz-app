@@ -1,12 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import styles from "./dropdown.module.scss";
 import { DropdownContext, DropdownContextType } from "./context";
 import Item from "./Item";
 import Menu from "./Menu";
 import Toggle from "./Toggle";
-import { useOutsideClickEffect } from "../../../hooks";
 import classNames from "classnames";
+import { useOutsideClickEffect } from "../../../hooks/useOutsideClickEffect";
 
 type Props = {
   children: React.ReactNode;

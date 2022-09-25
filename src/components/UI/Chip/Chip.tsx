@@ -35,14 +35,20 @@ const Chip: FC<Props> = ({
   };
   return (
     <div
-      className={classNames(styles.chip, CHIP_TYPES[color], {
-        [styles.pointer]: onClick,
+      className={classNames(styles.chipWrapper, {
         [styles.large]: size === "large",
       })}
-      onClick={onClick}
     >
-      <span className={styles.label}>{label}</span>
-      {onDelete && <IoMdCloseCircle onClick={handleDelete} />}
+      <div
+        className={classNames(styles.chip, CHIP_TYPES[color], {
+          [styles.pointer]: onClick,
+          [styles.deletable]: onDelete,
+        })}
+        onClick={onClick}
+      >
+        <span className={styles.label}>{label}</span>
+        {onDelete && <IoMdCloseCircle onClick={handleDelete} />}
+      </div>
     </div>
   );
 };

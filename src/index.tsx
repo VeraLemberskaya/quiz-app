@@ -1,16 +1,32 @@
 import { injectStyle } from "react-toastify/dist/inject-style";
 import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
+import { BrowserRouter, useLocation } from "react-router-dom";
+import { Provider, ProviderProps } from "react-redux";
 
 import App from "./App";
-import "./index.scss";
-import { store } from "./redux/store";
+import "./assets/styles/index.scss";
+import { store } from "./services/store";
+import { useEffect } from "react";
+import { Action } from "@reduxjs/toolkit";
+import { setLocation } from "./services/router/slice";
 
 if (typeof window !== "undefined") {
   injectStyle();
 }
+
+const withRouter =
+  (Provider: (props: ProviderProps<Action<any>>) => JSX.Element) =>
+  ({ children, store }: ProviderProps<Action<any>>) => {
+    const location = useLocation();
+
+    useEffect(() => {
+      store.dispatch(setLocation(location));
+    }, [location]);
+    return <Provider store={store}>{children}</Provider>;
+  };
+
+const ProviderWithRouter = withRouter(Provider);
 
 const rootElement = document.getElementById("root");
 
@@ -19,9 +35,9 @@ if (rootElement) {
 
   root.render(
     <BrowserRouter>
-      <Provider store={store}>
+      <ProviderWithRouter store={store}>
         <App />
-      </Provider>
+      </ProviderWithRouter>
     </BrowserRouter>
   );
 }

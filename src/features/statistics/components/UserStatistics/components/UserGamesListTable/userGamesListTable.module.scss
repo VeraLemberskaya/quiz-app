@@ -1,0 +1,19 @@
+@import "../../../../../../assets/styles/media";
+
+.tableWrapper {
+  position: relative;
+  width: 55%;
+  margin: 2rem auto 0 auto;
+  z-index: 1;
+  min-height: 35rem;
+  @include for-laptop {
+    width: 65%;
+  }
+  @include for-tablet-landscape {
+    width: 80%;
+  }
+  @include for-phone-only {
+    width: 100%;
+    min-height: 27rem;
+  }
+}

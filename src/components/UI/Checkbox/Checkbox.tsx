@@ -4,7 +4,7 @@ import { HiCheck } from "react-icons/hi";
 
 import styles from "./checkbox.module.scss";
 
-type Props = Omit<React.HTMLProps<HTMLInputElement>, "type"> & {
+type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> & {
   label?: string;
 };
 

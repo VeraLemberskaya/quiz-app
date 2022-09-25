@@ -1,0 +1,19 @@
+@import "../../../../assets/styles/media";
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  @include for-phone-only {
+    gap: 2rem;
+  }
+
+  .btnContainer {
+    @include for-tablet-portrait {
+      justify-content: center;
+    }
+    button {
+      flex-basis: 12rem;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-@import "../../../styles/media";
+@import "../../../assets/styles/media";
 
 .layout {
   min-height: 100vh;
@@ -12,7 +12,7 @@
   left: 0;
   width: 16rem;
   height: 13rem;
-  background-image: url("../../../assets/bottom-bg.svg");
+  background-image: url("../../../assets/images/bottom-bg.svg");
   background-repeat: no-repeat;
   background-position: 0% 100%;
   background-size: contain;
