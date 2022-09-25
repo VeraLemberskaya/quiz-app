@@ -1,0 +1,21 @@
+@import "../../../../../../assets/styles/media";
+
+.chartContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 2rem;
+  .chartHeader {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .chart {
+    width: 80%;
+    margin: 0 auto;
+    @include for-phone-only {
+      width: 95%;
+    }
+  }
+}

@@ -21,11 +21,14 @@ import {
   useGetUserListQuery,
 } from "../../features/statistics/services/slice";
 import { useAppSelector } from "../../services/hooks";
+import Button from "../../components/UI/Button";
+import StatisticsCharts from "../../features/statistics/components/StatisticsCharts";
 
 const Statistics: FC = () => {
   const { usersPage: page, filterValue } = useAppSelector(selectStatistics);
   usePageReset();
   const [modalOpened, setModalOpened] = useState<boolean>(false);
+  const [chartsModalOpened, setChartsModalOpened] = useState<boolean>(false);
 
   const {
     data: statisticsData,
@@ -96,6 +99,12 @@ const Statistics: FC = () => {
           <UserStatistics onClose={closeModal} />
         </Modal>
       </FadeTransition>
+      <FadeTransition inProp={chartsModalOpened} timeout={200} styles={styles}>
+        <Modal onClose={() => setChartsModalOpened(false)}>
+          <StatisticsCharts />
+        </Modal>
+      </FadeTransition>
+      <Button onClick={() => setChartsModalOpened(true)}>View charts</Button>
     </div>
   );
 };

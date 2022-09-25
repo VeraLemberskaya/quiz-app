@@ -7,12 +7,17 @@ import {
   ListResponse,
   StatisticsData,
   StatisticsSliceState,
+  ScoreStatisticsData,
+  UserStatisticsResponse,
 } from "./types";
 
 export const statisticsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getStatisticsData: builder.query<StatisticsData, void>({
       query: () => "/statistics",
+    }),
+    getUsersStatistics: builder.query<UserStatisticsResponse, void>({
+      query: () => "/statistics/users",
     }),
     getUserList: builder.query<
       ListResponse<User>,
@@ -34,6 +39,15 @@ export const statisticsApiSlice = apiSlice.injectEndpoints({
         url: `users/page/${id}`,
         params: { orderBy },
       }),
+    }),
+    getScoreStatistics: builder.query<ScoreStatisticsData, void>({
+      query: () => "/statistics/score",
+    }),
+    getGamesStatistics: builder.query<
+      { date: string; gameCount: number }[],
+      void
+    >({
+      query: () => "/statistics/games",
     }),
   }),
 });
@@ -81,6 +95,9 @@ export const {
   useGetUserListQuery,
   useGetUserGamesListQuery,
   useGetUserPageQuery,
+  useGetScoreStatisticsQuery,
+  useGetUsersStatisticsQuery,
+  useGetGamesStatisticsQuery,
 } = statisticsApiSlice;
 
 export const selectUserListQueryResult =

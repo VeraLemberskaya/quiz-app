@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Control } from "react-hook-form";
+
 import { useAppSelector } from "../../../services/hooks";
 import {
   selectAnswerAmountValues,
@@ -7,6 +8,7 @@ import {
 } from "../services/selectors";
 import { SettingsValues } from "../services/types";
 import SettingDropdown from "./SettingDropdown";
+import SettingsController from "./SettingsController";
 
 type Props = {
   control: Control<SettingsValues, object>;
@@ -18,12 +20,16 @@ const AnswerAmountField: FC<Props> = ({ control }) => {
     selectCurrentSettings
   );
   return (
-    <SettingDropdown
+    <SettingsController
       label="Answers amount:"
-      defaultValue={currentAnswerAmount}
-      options={answerAmountValues.map((val) => val.value)}
-      control={control}
-      name="answerAmount"
+      control={
+        <SettingDropdown
+          defaultValue={currentAnswerAmount}
+          options={answerAmountValues.map((val) => val.value)}
+          control={control}
+          name="answerAmount"
+        />
+      }
     />
   );
 };

@@ -22,7 +22,7 @@ const Modal: FC<Props> = ({ children, onClose }) => {
       </div>
       <div className={styles.overlay} onClick={onClose} />
     </>,
-    document.body
+    document.getElementById("root") ?? document.body
   );
 };
 

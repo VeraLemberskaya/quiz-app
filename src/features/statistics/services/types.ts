@@ -21,3 +21,19 @@ export type StatisticsSliceState = {
   findMe: boolean;
   selectedUser: User | null;
 };
+
+type ScoreCategory = {
+  category: string;
+  count: number;
+};
+
+export type ScoreStatisticsData = {
+  users: ScoreCategory[];
+  games: ScoreCategory[];
+};
+
+export type UserStatisticsResponse = {
+  score: number;
+  totalGames: number;
+  users: string[];
+}[];

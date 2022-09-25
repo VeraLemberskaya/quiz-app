@@ -7,6 +7,7 @@ import {
 } from "../services/selectors";
 import { SettingsValues } from "../services/types";
 import SettingDropdown from "./SettingDropdown";
+import SettingsController from "./SettingsController";
 
 type Props = {
   control: Control<SettingsValues, object>;
@@ -18,12 +19,16 @@ const QuestionAmountField: FC<Props> = ({ control }) => {
     selectCurrentSettings
   );
   return (
-    <SettingDropdown
+    <SettingsController
       label="Question amount:"
-      defaultValue={currentQuestionAmount}
-      options={questionAmountValues.map((val) => val.value)}
-      control={control}
-      name="questionAmount"
+      control={
+        <SettingDropdown
+          defaultValue={currentQuestionAmount}
+          options={questionAmountValues.map((val) => val.value)}
+          control={control}
+          name="questionAmount"
+        />
+      }
     />
   );
 };

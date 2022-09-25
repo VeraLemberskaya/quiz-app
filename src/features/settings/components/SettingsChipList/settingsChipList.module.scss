@@ -1,16 +1,11 @@
 @import "../../../../assets/styles/mixins";
 
-.settingWrapper,
 .chipList {
   margin-top: 2rem;
   display: flex;
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
-}
-
-.settingWrapper {
-  min-height: 3.35rem;
 }
 
 .accordionEnter {

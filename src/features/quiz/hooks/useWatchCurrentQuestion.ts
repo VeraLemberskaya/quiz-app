@@ -30,7 +30,8 @@ export const useWatchCurrentQuestion = (): CurrentQuestionState => {
   );
 
   const isAnswered = useMemo(
-    () => (currentQuestion ? !!answers[currentQuestion?.id] : false),
+    () =>
+      currentQuestion ? answers[currentQuestion?.id] !== undefined : false,
     [answers, currentQuestion]
   );
 
