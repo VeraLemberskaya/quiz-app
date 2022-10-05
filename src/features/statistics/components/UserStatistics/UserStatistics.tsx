@@ -1,8 +1,7 @@
 import { FC } from "react";
 
 import styles from "./userStatistics.module.scss";
-import { useAppSelector } from "../../../../services/hooks";
-import { User } from "../../../user/services/types";
+import { useAppSelector } from "../../../../store/hooks";
 import { useGetUserGamesListQuery } from "../../services/slice";
 import UserGamesPagination from "./components/UserGamesPagination";
 import {
@@ -12,6 +11,7 @@ import {
 import Button from "../../../../components/UI/Button";
 import Loader from "../../../../components/UI/Loader";
 import UserGamesListTable from "./components/UserGamesListTable";
+import { User } from "../../../../types/types";
 
 type Props = {
   onClose: () => void;
@@ -31,12 +31,12 @@ const UserStatisticsModal: FC<Props> = ({ onClose }) => {
     <div className={styles.modalBody}>
       <div className={styles.header}>
         <div className={styles.title}> {user?.email}</div>
-        <div className={styles.subtitle}>
+        {/* <div className={styles.subtitle}>
           Total score: <span>{user?.score}</span>
         </div>
         <div className={styles.subtitle}>
           Games played: <span>{user?.totalGames}</span>
-        </div>
+        </div> */}
       </div>
       {isFetching ? (
         <Loader />

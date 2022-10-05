@@ -1,0 +1,42 @@
+@import "../../../../assets/styles/media";
+@import "../../../../assets/styles/colors";
+@import "../../../../assets/styles/variables";
+
+.formContainer {
+  margin: 5rem 0;
+  width: 70%;
+  @include for-laptop {
+    width: 85%;
+  }
+  @include for-tablet-landscape {
+    width: 95%;
+  }
+  @include for-phone-only {
+    width: 100%;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .link {
+      font-size: 1.7rem;
+      color: $grey-color;
+      font-family: Roboto, Helvetica, Arial, sans-serif;
+      text-decoration: none;
+      transition: color $transition;
+      &:hover {
+        color: $dark-grey-color;
+      }
+    }
+    .btnContainer {
+      margin-top: 4.5rem;
+      display: flex;
+      gap: 3.5rem;
+      @include for-phone-only {
+        padding: 0 0.5rem;
+        justify-content: space-between;
+      }
+    }
+  }
+}

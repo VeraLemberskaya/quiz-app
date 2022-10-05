@@ -3,7 +3,7 @@ import { FC } from "react";
 import styles from "./quizTimer.module.scss";
 import { useQuizContext } from "../../contexts/QuizContext";
 
-import { useAppSelector } from "../../../../services/hooks";
+import { useAppSelector } from "../../../../store/hooks";
 import { selectQuestionTime } from "../../../settings/services/selectors";
 import Alarm from "../../../../assets/images/alarm.svg";
 import classNames from "classnames";

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { apiSlice } from "../../../services/apiSlice";
+import { apiSlice } from "../../../api/apiSlice";
 
 import { Game, Question, QuizSliceState } from "./types";
 

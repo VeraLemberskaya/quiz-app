@@ -6,7 +6,7 @@ export const useControlledInput = (
 ) => {
   const [inputValue, setInputValue] = useState<
     number | string | readonly string[] | undefined
-  >(value);
+  >(value ?? "");
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
@@ -18,7 +18,7 @@ export const useControlledInput = (
   };
 
   return {
-    inputValue,
-    handleInputChange,
+    value: inputValue,
+    onChange: handleInputChange,
   };
 };

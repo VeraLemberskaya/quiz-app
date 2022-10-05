@@ -1,0 +1,18 @@
+@import "../../.././assets/styles/colors";
+
+.messageWrapper {
+  width: 100%;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.success {
+  background-color: $msg-success-bg;
+  color: $msg-success;
+}
+
+.error {
+  background-color: $msg-error-bg;
+  color: $msg-error;
+}

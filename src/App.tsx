@@ -1,36 +1,27 @@
 import { ToastContainer } from "react-toastify";
 
 import Loader from "./components/UI/Loader";
-import { useGetSettingsQuery } from "./features/settings/services/slice";
-import { useGetSavedUserQuery } from "./features/user/services/slice";
-import Routes from "./routes";
+import Routes from "./router/AppRoutes";
+import { useAppSelector } from "./store/hooks";
+import { selectIsLoading } from "./store/loader/selectors";
 
 function App() {
-  useGetSavedUserQuery(undefined, {
-    skip: !Boolean(localStorage.getItem("rememberMe")),
-  });
+  const isLoading = useAppSelector(selectIsLoading);
 
-  const { isLoading, isSuccess } = useGetSettingsQuery();
-
-  return isLoading ? (
-    <Loader />
-  ) : (
+  return (
     <>
-      {isSuccess && (
-        <>
-          <ToastContainer
-            position="bottom-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={true}
-            closeOnClick
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
-          <Routes />
-        </>
-      )}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <Routes />
+      {isLoading && <Loader />}
     </>
   );
 }

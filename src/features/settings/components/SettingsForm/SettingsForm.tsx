@@ -2,7 +2,7 @@ import { isEmpty, isEqual } from "lodash";
 import { FC } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../../../components/UI/Button";
-import { useAppSelector } from "../../../../services/hooks";
+import { useAppSelector } from "../../../../store/hooks";
 import { selectCurrentSettings } from "../../services/selectors";
 import { useSaveSettingsMutation } from "../../services/slice";
 import { SettingsValues } from "../../services/types";

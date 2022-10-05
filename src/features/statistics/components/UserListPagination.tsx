@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useAppDispatch, useAppSelector } from "../../../services/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   selectUserListTotalPages,
   selectUsersPage,

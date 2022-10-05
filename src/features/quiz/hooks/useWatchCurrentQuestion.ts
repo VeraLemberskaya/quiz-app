@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useAppSelector } from "../../../services/hooks";
+import { useAppSelector } from "../../../store/hooks";
 import { selectCurrentSettings } from "../../settings/services/selectors";
 import { CurrentQuestionState } from "../contexts/QuizContext";
 import {

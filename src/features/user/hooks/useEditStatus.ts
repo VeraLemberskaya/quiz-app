@@ -1,10 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 
 type EditStatus = "editing" | "success" | "none";
 
 const STATUS_MESSAGES: { [key in EditStatus]: string } = {
   none: "",
-  editing: "Edit your personal data.",
+  editing: "Edit your account data.",
   success: "Data have been successfully updated.",
 };
 
@@ -15,8 +15,17 @@ export const useEditStatus = () => {
 
   const isEditing = useMemo(() => editStatus === "editing", [editStatus]);
 
+  const setEditing = useCallback(() => {
+    setEditStatus("editing");
+  }, [setEditStatus]);
+
+  const setSuccess = useCallback(() => {
+    setEditStatus("success");
+  }, [setEditStatus]);
+
   return {
-    setEditStatus,
+    setSuccess,
+    setEditing,
     message,
     isEditing,
   };

@@ -19,7 +19,7 @@ const NumberField = (
   ref: Ref<HTMLInputElement | null>
 ) => {
   const [inputFocused, setInputFocused] = useState<boolean>(false);
-  const { inputValue, handleInputChange } = useControlledInput(value, onChange);
+  const inputProps = useControlledInput(value, onChange);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useImperativeHandle(ref, () => inputRef.current, [inputRef.current]);
@@ -46,11 +46,10 @@ const NumberField = (
         onClick={handleNumberFieldClick}
       >
         <input
-          type="number"
-          value={inputValue}
-          ref={inputRef}
           className={styles.input}
-          onChange={handleInputChange}
+          type="number"
+          ref={inputRef}
+          {...inputProps}
           {...otherProps}
         />
       </div>

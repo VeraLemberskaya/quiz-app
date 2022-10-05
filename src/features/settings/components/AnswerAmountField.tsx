@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Control } from "react-hook-form";
 
-import { useAppSelector } from "../../../services/hooks";
+import { useAppSelector } from "../../../store/hooks";
 import {
   selectAnswerAmountValues,
   selectCurrentSettings,

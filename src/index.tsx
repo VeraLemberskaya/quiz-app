@@ -6,10 +6,10 @@ import { Provider, ProviderProps } from "react-redux";
 
 import App from "./App";
 import "./assets/styles/index.scss";
-import { store } from "./services/store";
+import { store } from "./store/store";
 import { useEffect } from "react";
 import { Action } from "@reduxjs/toolkit";
-import { setLocation } from "./services/router/slice";
+import { setLocation } from "./store/router/reducer";
 
 if (typeof window !== "undefined") {
   injectStyle();

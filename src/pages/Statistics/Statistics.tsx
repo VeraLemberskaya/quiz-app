@@ -20,7 +20,7 @@ import {
   useGetStatisticsDataQuery,
   useGetUserListQuery,
 } from "../../features/statistics/services/slice";
-import { useAppSelector } from "../../services/hooks";
+import { useAppSelector } from "../../store/hooks";
 import Button from "../../components/UI/Button";
 import StatisticsCharts from "../../features/statistics/components/StatisticsCharts";
 

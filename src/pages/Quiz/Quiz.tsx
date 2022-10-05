@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Loader from "../../components/UI/Loader";
 import FadeTransition from "../../components/Utils/FadeTransition";
-import { useAppDispatch } from "../../services/hooks";
+import { useAppDispatch } from "../../store/hooks";
 import QuizAnswerSelector from "../../features/quiz/components/QuizAnswerSelector";
 import LoseModal from "../../features/quiz/components/LoseModal";
 import NavigateButtons from "../../features/quiz/components/NavigateButtons";

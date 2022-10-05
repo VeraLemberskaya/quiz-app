@@ -1,11 +1,11 @@
 import { createSelector } from "@reduxjs/toolkit";
 
-import { RootState } from "../../../services/store";
+import { RootState } from "../../../store/store";
 import { selectQuizQueryResult, selectUserGameQueryResult } from "./slice";
 import {
   selectTopicsSearchParams,
   selectUserGameSearchParams,
-} from "../../../services/router/selectors";
+} from "../../../store/router/selectors";
 
 export const selectQuizTopics = createSelector(
   (state: RootState) => state.quiz.topics,

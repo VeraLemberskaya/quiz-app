@@ -1,6 +1,6 @@
 import { FC } from "react";
 import Pagination from "../../../../../components/UI/Pagination";
-import { useAppDispatch, useAppSelector } from "../../../../../services/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../../store/hooks";
 import {
   selectUserGamesListTotalPages,
   selectUserGamesPage,

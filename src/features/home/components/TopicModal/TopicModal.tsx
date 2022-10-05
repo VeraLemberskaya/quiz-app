@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { selectCurrentSettings } from "../../../settings/services/selectors";
-import { useAppDispatch, useAppSelector } from "../../../../services/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { selectQuizTopics } from "../../../quiz/services/selectors";
 import Button from "../../../../components/UI/Button";
 import Chip from "../../../../components/UI/Chip";

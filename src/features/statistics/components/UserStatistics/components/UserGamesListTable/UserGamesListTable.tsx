@@ -2,15 +2,15 @@ import { FC } from "react";
 import Table from "../../../../../../components/UI/Table";
 
 import styles from "./userGamesListTable.module.scss";
-import { useAppSelector } from "../../../../../../services/hooks";
+import { useAppSelector } from "../../../../../../store/hooks";
 import {
   selectSelectedUser,
   selectUserGamesList,
 } from "../../../../services/selectors";
 
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { User } from "../../../../../user/services/types";
 import { Game } from "../../../../../quiz/services/types";
+import { User } from "../../../../../../types/types";
 
 export const columns = [
   {

@@ -2,11 +2,11 @@ import { FC } from "react";
 import Table from "../../../../components/UI/Table";
 
 import styles from "./userListTable.module.scss";
-import { useAppDispatch, useAppSelector } from "../../../../services/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { selectUserList } from "../../services/selectors";
-import { User } from "../../../user/services/types";
 import { setSelectedUser } from "../../services/slice";
 import { useUserIndex } from "../../hooks/useUserIndex";
+import { User } from "../../../../types/types";
 
 export const columns = [
   {
