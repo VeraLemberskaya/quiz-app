@@ -1,0 +1,47 @@
+@import "../../../assets/styles/colors";
+
+.icon {
+  &:is(.small) {
+    svg {
+      width: 1.9rem;
+      height: 1.9rem;
+    }
+  }
+  &:is(.medium) {
+    svg {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+  &:is(.large) {
+    svg {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+  &:is(.default) {
+    svg {
+      fill: $dark-grey-color;
+    }
+  }
+  &:is(.primary) {
+    svg {
+      fill: $theme-color;
+    }
+  }
+  &:is(.secondary) {
+    svg {
+      fill: $secondary-color;
+    }
+  }
+  :is(.error) {
+    svg {
+      fill: $red-color;
+    }
+  }
+  :is(.success) {
+    svg {
+      fill: $green-color;
+    }
+  }
+}

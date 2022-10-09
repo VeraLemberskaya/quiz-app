@@ -12,6 +12,7 @@ import { VALIDATION_MSG } from "../../../../constants/constants";
 import InputControl from "../../../../components/InputControl";
 import { useUpdateUserMutation } from "../../userService";
 import { changePasswordLink } from "../../../../router/UserRouter/routes";
+import EmailTooltip from "./EmailTooltip";
 
 type FormInputs = {
   name: string;
@@ -87,12 +88,15 @@ const UserForm: FC<Props> = ({ disabled, onSubmitSuccess }) => {
         placeholder="Surname"
         disabled={disabled}
       />
-      <InputControl
-        control={control}
-        name="email"
-        placeholder="Email"
-        disabled={disabled}
-      />
+      <div className="position-relative">
+        <EmailTooltip />
+        <InputControl
+          control={control}
+          name="email"
+          placeholder="Email"
+          disabled
+        />
+      </div>
       <span>
         <Button className="ps-0" type="button">
           <Link to={changePasswordLink()}>Change password?</Link>
