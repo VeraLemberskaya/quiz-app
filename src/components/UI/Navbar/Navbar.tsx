@@ -1,8 +1,9 @@
 import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 
-import styles from "./navbar.module.scss";
 import Logo from "../../../assets/images/logo.svg";
+
+import styles from "./navbar.module.scss";
 import NavLinks from "./NavLinks";
 import Sidebar from "./Sidebar";
 

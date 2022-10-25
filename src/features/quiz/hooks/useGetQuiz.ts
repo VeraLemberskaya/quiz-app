@@ -2,7 +2,7 @@ import { useAppSelector } from "../../../store/hooks";
 import {
   selectTopicsSearchParams,
   selectUserGameSearchParams,
-} from "../../../store/router/selectors";
+} from "../../../store/selectors/routerSelectors";
 import { useGetQuizQuery, useGetUserGameQuery } from "../services/slice";
 
 export const useGetQuiz = () => {

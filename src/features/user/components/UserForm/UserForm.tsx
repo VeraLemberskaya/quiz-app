@@ -5,24 +5,22 @@ import { isEqual } from "lodash";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { changePasswordLink } from "../../../../router/UserRouter/routes";
 import Button from "../../../../components/UI/Button";
 import { useAuth } from "../../../../hooks/useAuth";
 import { User } from "../../../../types/types";
 import { VALIDATION_MSG } from "../../../../constants/constants";
 import InputControl from "../../../../components/InputControl";
+
 import { useUpdateUserMutation } from "../../userService";
-import { changePasswordLink } from "../../../../router/UserRouter/routes";
+import { useEditStatus } from "../../hooks/useEditStatus";
+
 import EmailTooltip from "./EmailTooltip";
 
 type FormInputs = {
   name: string;
   surname: string;
   email: string;
-};
-
-type Props = {
-  disabled: boolean;
-  onSubmitSuccess: () => void;
 };
 
 const schema = yup.object().shape({
@@ -34,45 +32,43 @@ const schema = yup.object().shape({
     .email(VALIDATION_MSG.email),
 });
 
-const UserForm: FC<Props> = ({ disabled, onSubmitSuccess }) => {
+const UserForm: FC = () => {
   const [updateUser, { isSuccess }] = useUpdateUserMutation();
 
   const user = useAuth().user as User;
+  const { isEditing, setSuccess } = useEditStatus();
 
-  const { handleSubmit, control, setFocus, watch } = useForm<FormInputs>({
-    defaultValues: {
+  const initialState = useMemo(
+    () => ({
       name: user.name,
       surname: user.surname,
       email: user.email,
-    },
+    }),
+    [user.name, user.surname, user.email]
+  );
+
+  const { handleSubmit, control, setFocus, watch } = useForm<FormInputs>({
+    defaultValues: initialState,
     resolver: yupResolver(schema),
   });
 
   const watchFormValue = watch();
 
   useEffect(() => {
-    if (!disabled) {
+    if (isEditing) {
       setFocus("name");
     }
-  }, [disabled]);
+  }, [isEditing, setFocus]);
 
   useEffect(() => {
     if (isSuccess) {
-      onSubmitSuccess();
+      setSuccess();
     }
-  }, [isSuccess]);
+  }, [isSuccess, setSuccess]);
 
   const handleFormSubmit: SubmitHandler<FormInputs> = async (data) => {
     await updateUser({ id: user.id, ...data });
   };
-
-  const submitDisabled = useMemo(() => {
-    const { id, ...userData } = user;
-    if (disabled || isEqual(watchFormValue, userData)) {
-      return true;
-    }
-    return false;
-  }, [disabled, user, watchFormValue]);
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -80,13 +76,13 @@ const UserForm: FC<Props> = ({ disabled, onSubmitSuccess }) => {
         control={control}
         name="name"
         placeholder="Name"
-        disabled={disabled}
+        disabled={!isEditing}
       />
       <InputControl
         control={control}
         name="surname"
         placeholder="Surname"
-        disabled={disabled}
+        disabled={!isEditing}
       />
       <div className="position-relative">
         <EmailTooltip />
@@ -106,7 +102,7 @@ const UserForm: FC<Props> = ({ disabled, onSubmitSuccess }) => {
         buttonType="primary"
         type="submit"
         buttonSize="large"
-        disabled={submitDisabled}
+        disabled={!isEditing || isEqual(watchFormValue, initialState)}
       >
         Submit
       </Button>

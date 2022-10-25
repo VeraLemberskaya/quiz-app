@@ -1,17 +1,20 @@
 import { FC } from "react";
 
-import styles from "./userStatistics.module.scss";
 import { useAppSelector } from "../../../../store/hooks";
 import { useGetUserGamesListQuery } from "../../services/slice";
-import UserGamesPagination from "./components/UserGamesPagination";
+
 import {
   selectSelectedUser,
   selectUserGamesPage,
 } from "../../services/selectors";
 import Button from "../../../../components/UI/Button";
 import Loader from "../../../../components/UI/Loader";
-import UserGamesListTable from "./components/UserGamesListTable";
+
 import { User } from "../../../../types/types";
+
+import UserGamesListTable from "./components/UserGamesListTable";
+import UserGamesPagination from "./components/UserGamesPagination";
+import styles from "./userStatistics.module.scss";
 
 type Props = {
   onClose: () => void;

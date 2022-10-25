@@ -1,29 +1,21 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
-import { usePersist } from "../../../../hooks/usePersist";
-import { useAppSelector } from "../../../../store/hooks";
-import { useRefreshMutation } from "../../authService";
-import { selectToken } from "../../store/authSelectors";
+import { useAuth } from "../../../../hooks/useAuth";
+import { useVerifyTokenMutation } from "../../authService";
 
 const PersistLogin: FC = () => {
-  const { persist } = usePersist();
-  const token = useAppSelector(selectToken);
+  const { isAuth } = useAuth();
 
-  const [authFinished, setAuthFinished] = useState<boolean>(false);
-
-  const [refresh] = useRefreshMutation();
+  const [verifyToken, { isLoading }] = useVerifyTokenMutation();
 
   useEffect(() => {
-    const verifyRefreshToken = async () => {
-      await refresh();
-      setAuthFinished(true);
-    };
-
-    if (!token && persist) verifyRefreshToken();
+    if (isAuth) {
+      verifyToken();
+    }
   }, []);
 
-  if (!persist || authFinished) {
+  if (!isAuth || !isLoading) {
     return <Outlet />;
   }
 

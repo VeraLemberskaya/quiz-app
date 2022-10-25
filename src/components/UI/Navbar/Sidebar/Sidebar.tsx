@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import React, { FC } from "react";
+
 import NavLinks from "../NavLinks";
 
 import styles from "./sidebar.module.scss";

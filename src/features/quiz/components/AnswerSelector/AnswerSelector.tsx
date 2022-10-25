@@ -36,13 +36,13 @@ const AnswerSelector = ({
     } else {
       setAnswer(null);
     }
-  }, [id]);
+  }, [id, answerIndex, mode]);
 
   useEffect(() => {
     if (mode === "selection" && answer !== null) {
       onSelect(answer);
     }
-  }, [answer]);
+  }, [answer, mode, onSelect]);
 
   const value: AnswerSelectorContextType = useMemo(
     () => ({

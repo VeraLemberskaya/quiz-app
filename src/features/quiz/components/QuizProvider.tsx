@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+
 import { QuizContext, QuizContextType } from "../contexts/QuizContext";
 
 type Props = {

@@ -10,6 +10,10 @@ export type AuthResponse = {
   accessToken: string;
 };
 
+export type RefreshResponse = {
+  accessToken: string;
+};
+
 export type RegisterRequest = {
   name: string;
   surname: string;
@@ -26,4 +30,5 @@ export type ActivateRequest = {
 export type LoginRequest = {
   email: string;
   password: string;
+  persist: boolean;
 };

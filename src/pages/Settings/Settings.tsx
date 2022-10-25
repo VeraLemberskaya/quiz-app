@@ -1,6 +1,5 @@
 import { FC } from "react";
 
-import styles from "./settings.module.scss";
 import Loader from "../../components/UI/Loader";
 import PageTitle from "../../components/UI/PageTitle";
 import SettingsForm from "../../features/settings/components/SettingsForm";
@@ -9,9 +8,11 @@ import {
   useSaveSettingsMutation,
 } from "../../features/settings/services/slice";
 
+import styles from "./settings.module.scss";
+
 const Settings: FC = () => {
   const { isLoading } = useGetSettingsQuery();
-  const [_, { isLoading: isUpdating }] = useSaveSettingsMutation();
+  const [, { isLoading: isUpdating }] = useSaveSettingsMutation();
 
   return isLoading || isUpdating ? (
     <Loader />

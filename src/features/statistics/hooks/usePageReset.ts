@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import { useAuth } from "../../../hooks/useAuth";
 
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
@@ -23,11 +24,11 @@ export const usePageReset = () => {
     if (data) {
       dispatch(setUsersPage(data.page));
     }
-  }, [data]);
+  }, [data, dispatch]);
 
   useEffect(() => {
     if (findMeChecked) {
       refetch();
     }
-  }, [findMeChecked]);
+  }, [findMeChecked, refetch]);
 };

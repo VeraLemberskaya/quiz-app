@@ -1,10 +1,12 @@
 import { FC } from "react";
 import { BiArrowBack } from "react-icons/bi";
 
-import styles from "./formTitle.module.scss";
-import Logo from "../../assets/images/logo.svg";
 import { useNavigate } from "react-router-dom";
+
+import Logo from "../../assets/images/logo.svg";
 import Button from "../UI/Button";
+
+import styles from "./formTitle.module.scss";
 
 type Props = {
   children: string;

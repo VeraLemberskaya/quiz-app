@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { AiFillCaretDown } from "react-icons/ai";
 
 import Image from "../../assets/images/people-quiz.svg";
-import styles from "./home.module.scss";
+
 import Button from "../../components/UI/Button";
 import Modal from "../../components/UI/Modal";
 import FadeTransition from "../../components/Utils/FadeTransition";
 import TopicModal from "../../features/home/components/TopicModal";
+
+import styles from "./home.module.scss";
 
 const Home: FC = () => {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
@@ -43,7 +45,7 @@ const Home: FC = () => {
         </div>
       </div>
       <div className={styles.image}>
-        <img className="w-100" src={Image} />
+        <img className="w-100" src={Image} alt="quiz" />
       </div>
       <FadeTransition inProp={modalOpened} timeout={300} styles={styles}>
         <Modal onClose={() => setModalOpened(false)}>

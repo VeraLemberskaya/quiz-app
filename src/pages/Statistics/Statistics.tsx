@@ -3,7 +3,6 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { MdQuiz } from "react-icons/md";
 import { AiFillTrophy } from "react-icons/ai";
 
-import styles from "./statistics.module.scss";
 
 import InfoBlock from "../../components/UI/InfoBlock";
 import Loader from "../../components/UI/Loader";
@@ -23,6 +22,8 @@ import {
 import { useAppSelector } from "../../store/hooks";
 import Button from "../../components/UI/Button";
 import StatisticsCharts from "../../features/statistics/components/StatisticsCharts";
+
+import styles from "./statistics.module.scss";
 
 const Statistics: FC = () => {
   const { usersPage: page, filterValue } = useAppSelector(selectStatistics);

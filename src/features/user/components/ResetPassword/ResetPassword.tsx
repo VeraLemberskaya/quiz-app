@@ -4,7 +4,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import styles from "./resetPassword.module.scss";
 import Button from "../../../../components/UI/Button";
 import Error from "../../../../components/Animated/Error";
 import Message from "../../../../components/UI/Message";
@@ -18,6 +17,8 @@ import InputControl from "../../../../components/InputControl";
 import { VALIDATION_MSG } from "../../../../constants/constants";
 import Verify from "../../../../components/Animated/Verify";
 import { loginLink } from "../../../../router/AuthRouter/routes";
+
+import styles from "./resetPassword.module.scss";
 
 type FormInputs = {
   password: string;
@@ -59,6 +60,10 @@ const ResetPassword: FC = () => {
     await resetPassword({ userId, token, ...data });
   };
 
+  if (isLoading) {
+    return null;
+  }
+
   if (notVerified) {
     return (
       <div className={styles.container}>
@@ -87,32 +92,28 @@ const ResetPassword: FC = () => {
     );
   }
 
-  if (!isLoading) {
-    return (
-      <>
-        <FormTitle>Create a new password</FormTitle>
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <InputControl
-            control={control}
-            type="password"
-            name="password"
-            placeholder="Password"
-          />
-          <InputControl
-            control={control}
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm password"
-          />
-          <Button type="submit" buttonSize="large" buttonType="primary">
-            Submit
-          </Button>
-        </form>
-      </>
-    );
-  }
-
-  return null;
+  return (
+    <>
+      <FormTitle>Create a new password</FormTitle>
+      <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <InputControl
+          control={control}
+          type="password"
+          name="password"
+          placeholder="Password"
+        />
+        <InputControl
+          control={control}
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm password"
+        />
+        <Button type="submit" buttonSize="large" buttonType="primary">
+          Submit
+        </Button>
+      </form>
+    </>
+  );
 };
 
 export default ResetPassword;

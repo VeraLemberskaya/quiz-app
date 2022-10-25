@@ -1,8 +1,11 @@
 import { FC } from "react";
-import Dropdown from "../../../components/UI/Dropdown";
+
 import { Control, useController } from "react-hook-form";
 
+import Dropdown from "../../../components/UI/Dropdown";
+
 import { SettingsValues } from "../services/types";
+
 import { FieldNames } from "./SettingsForm/SettingsForm";
 
 type Props = {

@@ -1,22 +1,25 @@
 import { FC, useEffect } from "react";
 
-import styles from "./quizModal.module.scss";
+import moment from "moment";
+
+import { Link } from "react-router-dom";
+
 import { useAppSelector } from "../../../../store/hooks";
 import {
   selectQuiz,
   selectQuizAnswers,
   selectQuizScore,
 } from "../../services/selectors";
-import moment from "moment";
 
 import Button from "../../../../components/UI/Button";
 import Modal from "../../../../components/UI/Modal";
 import { Game, Question } from "../../services/types";
 import { useQuizContext } from "../../contexts/QuizContext";
-import { Link } from "react-router-dom";
+
 import { useSaveGameResultMutation } from "../../services/slice";
 import { useAuth } from "../../../../hooks/useAuth";
-import { User } from "../../../../types/types";
+
+import styles from "./quizModal.module.scss";
 
 const QuizModal: FC = () => {
   const [saveUserGame] = useSaveGameResultMutation();
@@ -38,7 +41,7 @@ const QuizModal: FC = () => {
     if (user) {
       saveUserGame({ id: user.id, game });
     }
-  }, []);
+  }, [answers, quiz, saveUserGame, score, user]);
 
   return (
     <Modal>

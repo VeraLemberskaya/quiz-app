@@ -2,8 +2,10 @@ import { FC, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import FormLayout from "../../components/Layouts/FormLayout";
-import { userRoutes } from "./routes";
+
 import AuthGuard from "../guards/AuthGuard";
+
+import { userRoutes } from "./routes";
 const Account = lazy(() => import("../../features/user/components/Account"));
 const ChangePassword = lazy(
   () => import("../../features/user/components/ChangePassword")

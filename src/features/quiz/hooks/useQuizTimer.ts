@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
+
 import { getExpiryTimestamp } from "../../../utils/getExpiryTimestamp";
 import { useQuizContext } from "../contexts/QuizContext";
 
@@ -15,7 +16,7 @@ export const useQuizTimer = ({
     onExpire,
   });
 
-  const { seconds, restart, pause } = timerResult;
+  const { restart, pause } = timerResult;
 
   const {
     resultsViewMode,
@@ -30,7 +31,7 @@ export const useQuizTimer = ({
         restart(getExpiryTimestamp(expiryTime));
       }
     }
-  }, [isAnswered]);
+  }, [isAnswered, expiryTime, pause, restart, resultsViewMode]);
 
   return timerResult;
 };

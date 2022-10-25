@@ -8,6 +8,7 @@ import React, {
   useState,
 } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
 import { useControlledInput } from "../../../hooks/useControlledInput";
 
 import styles from "./textField.module.scss";
@@ -38,16 +39,16 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const inputType = useMemo(
     () => (type === "text" ? type : passwordVisible ? "text" : type),
-    [passwordVisible]
+    [passwordVisible, type]
   );
 
   useEffect(() => {
     if (inputRef.current === document.activeElement) {
       setInputFocused(true);
     }
-  }, [document.activeElement]);
+  }, []);
 
-  useImperativeHandle(ref, () => inputRef.current, [inputRef.current]);
+  useImperativeHandle(ref, () => inputRef.current, []);
 
   const handleTextFieldClick = () => {
     setInputFocused(true);
@@ -60,7 +61,6 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
     if (props.onBlur) {
       props.onBlur(event);
     }
-    console.log("here");
 
     setInputFocused(false);
   };

@@ -2,8 +2,9 @@ import { FC } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { VALIDATION_MSG } from "../../../../constants/constants";
 import { useForm, SubmitHandler } from "react-hook-form";
+
+import { VALIDATION_MSG } from "../../../../constants/constants";
 import InputControl from "../../../../components/InputControl";
 import Button from "../../../../components/UI/Button";
 import { useUpdatePasswordMutation } from "../../userService";

@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "../components/Layouts/Layout";
 import Loader from "../components/UI/Loader";
 import PersistLogin from "../features/auth/components/PersistLogin";
+
 import { authModulePath } from "./AuthRouter/routes";
 import { userModulePath } from "./UserRouter/routes";
 import UserRouter from "./UserRouter/UserRouter";

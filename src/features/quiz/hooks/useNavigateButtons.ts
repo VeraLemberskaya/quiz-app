@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import { useQuizContext } from "../contexts/QuizContext";
 
 const ANIMATION_TIME = {
@@ -34,7 +35,7 @@ export const useNavigateButtons = () => {
         setBtnNextActive(false);
       }
     }
-  }, [isAnswered]);
+  }, [isAnswered, isCorrect, isLast, resultsViewMode]);
 
   return {
     btnPreviousActive,

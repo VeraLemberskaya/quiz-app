@@ -3,6 +3,7 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 
 import Tooltip from "../../../../../components/UI/Tooltip";
 import Icon from "../../../../../components/UI/Icon";
+
 import styles from "./emailTooltip.module.scss";
 
 const EmailTooltip: FC = () => {

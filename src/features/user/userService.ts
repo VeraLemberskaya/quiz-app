@@ -1,3 +1,7 @@
+import { setUser } from "../auth/store/authReducer";
+
+import { apiSlice } from "../../api/apiSlice";
+
 import { MessageResponse, User } from "./../../types/types";
 import {
   ForgotPasswordRequest,
@@ -5,8 +9,6 @@ import {
   UpdatePasswordRequest,
   VerifyRequest,
 } from "./types";
-import { setUser } from "../auth/store/authReducer";
-import { apiSlice } from "../../api/apiSlice";
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

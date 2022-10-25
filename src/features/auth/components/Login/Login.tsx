@@ -1,10 +1,13 @@
 import { FC } from "react";
 
-import styles from "./login.module.scss";
+import classNames from "classnames";
+
 import GraduateImg from "../../../../assets/images/graduate-hat.svg";
+
 import Logo from "../../../../assets/images/logo.svg";
 import LoginForm from "../LoginForm";
-import classNames from "classnames";
+
+import styles from "./login.module.scss";
 
 const Login: FC = () => {
   return (
@@ -21,7 +24,7 @@ const Login: FC = () => {
         <LoginForm />
       </div>
       <div className={styles.rightSide}>
-        <img className={styles.image} src={GraduateImg} />
+        <img className={styles.image} src={GraduateImg} alt="graduate" />
       </div>
     </div>
   );

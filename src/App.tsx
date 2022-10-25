@@ -3,7 +3,7 @@ import { ToastContainer } from "react-toastify";
 import Loader from "./components/UI/Loader";
 import Routes from "./router/AppRoutes";
 import { useAppSelector } from "./store/hooks";
-import { selectIsLoading } from "./store/loader/selectors";
+import { selectIsLoading } from "./store/selectors/loaderSelectors";
 
 function App() {
   const isLoading = useAppSelector(selectIsLoading);

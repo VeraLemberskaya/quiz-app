@@ -1,6 +1,7 @@
 import { apiSlice } from "../../api/apiSlice";
-import { MessageResponse, User } from "../../types/types";
-import { logout, setCredentials, setUser } from "./store/authReducer";
+import { MessageResponse } from "../../types/types";
+
+import { logout, setAuth } from "./store/authReducer";
 import {
   ActivateRequest,
   LoginRequest,
@@ -28,9 +29,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         const { data } = await queryFulfilled;
-        const { accessToken, user } = data;
+        const { accessToken: token, user } = data;
 
-        dispatch(setCredentials(accessToken, user));
+        dispatch(setAuth({ token, user }));
       },
     }),
     logout: builder.mutation<MessageResponse, void>({
@@ -44,17 +45,11 @@ export const authApiSlice = apiSlice.injectEndpoints({
         dispatch(logout());
       },
     }),
-    refresh: builder.mutation<AuthResponse, void>({
+    verifyToken: builder.mutation<MessageResponse, void>({
       query: () => ({
-        url: "/auth/refresh",
+        url: "auth/verify-token",
         method: "GET",
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        const { data } = await queryFulfilled;
-        const { accessToken, user } = data;
-
-        dispatch(setCredentials(accessToken, user));
-      },
     }),
   }),
 });
@@ -64,5 +59,5 @@ export const {
   useLoginMutation,
   useVerifyQuery,
   useLogoutMutation,
-  useRefreshMutation,
+  useVerifyTokenMutation,
 } = authApiSlice;

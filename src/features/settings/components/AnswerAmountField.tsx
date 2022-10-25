@@ -7,6 +7,7 @@ import {
   selectCurrentSettings,
 } from "../services/selectors";
 import { SettingsValues } from "../services/types";
+
 import SettingDropdown from "./SettingDropdown";
 import SettingsController from "./SettingsController";
 

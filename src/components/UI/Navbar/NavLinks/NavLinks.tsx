@@ -3,19 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiUser, BiExit } from "react-icons/bi";
 
 import Button from "../../Button";
-import styles from "./navlinks.module.scss";
+
 import Dropdown from "../../Dropdown";
 import { useAuth } from "../../../../hooks/useAuth";
 import PermissionGate from "../../../../features/auth/components/PermissionGate";
 import { useLogoutMutation } from "../../../../features/auth/authService";
-import { usePersist } from "../../../../hooks/usePersist";
 import { PERMISSIONS } from "../../../../config/permissions";
 import { accountLink } from "../../../../router/UserRouter/routes";
 import { loginLink } from "../../../../router/AuthRouter/routes";
 
+import styles from "./navlinks.module.scss";
+
 const NavLinks: FC = () => {
   const { isAuth, user } = useAuth();
-  const { clearPersist } = usePersist();
 
   const navigate = useNavigate();
 
@@ -23,7 +23,6 @@ const NavLinks: FC = () => {
 
   const handleLogOut = async () => {
     await logout();
-    clearPersist();
     navigate(loginLink());
   };
 

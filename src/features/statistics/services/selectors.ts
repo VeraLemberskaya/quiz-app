@@ -1,6 +1,8 @@
 import { createSelector } from "@reduxjs/toolkit";
+
 import { RootState } from "../../../store/store";
 import { User } from "../../../types/types";
+
 import {
   selectUserGamesListQueryResult,
   selectUserListQueryResult,

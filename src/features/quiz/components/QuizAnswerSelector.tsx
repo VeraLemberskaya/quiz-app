@@ -7,6 +7,7 @@ import {
 } from "../services/selectors";
 import { setAnswer } from "../services/slice";
 import { Question } from "../services/types";
+
 import AnswerSelector from "./AnswerSelector/AnswerSelector";
 
 const QuizAnswerSelector = () => {

@@ -6,10 +6,10 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { toast } from "react-toastify";
 
-import { logout, setCredentials } from "../features/auth/store/authReducer";
-import { AuthResponse } from "../features/auth/types";
-import { toggleLoader } from "../store/loader/reducer";
 import { RootState } from "../store/store";
+import { logout, setToken } from "../features/auth/store/authReducer";
+import { RefreshResponse } from "../features/auth/types";
+import { toggleLoader } from "../store/reducers/loaderReducer";
 
 export type FetchError = {
   data: {
@@ -46,8 +46,6 @@ const baseQueryWithErrorInterceptor =
   async (args, api, extraOptions) => {
     const result = await baseQuery(args, api, extraOptions);
     if (result.error && result.error.status !== 401) {
-      console.log(result.error);
-
       toast.error(`${result.error.data.message}`);
     }
     return result;
@@ -62,9 +60,9 @@ const baseQueryWithReauthInterceptor =
       const refreshResult = await baseQuery("/auth/refresh", api, extraOptions);
 
       if (refreshResult?.data) {
-        const { accessToken, user } = refreshResult.data as AuthResponse;
+        const { accessToken } = refreshResult.data as RefreshResponse;
 
-        api.dispatch(setCredentials(accessToken, user));
+        api.dispatch(setToken(accessToken));
 
         result = await baseQuery(args, api, extraOptions);
       } else {
@@ -81,7 +79,7 @@ const baseQueryWithLoadingInterceptor =
   async (args, api, extraOptions) => {
     api.dispatch(toggleLoader(true));
 
-    let result = await baseQuery(args, api, extraOptions);
+    const result = await baseQuery(args, api, extraOptions);
 
     api.dispatch(toggleLoader(false));
 

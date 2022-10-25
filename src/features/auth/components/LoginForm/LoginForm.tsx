@@ -8,14 +8,14 @@ import Button from "../../../../components/UI/Button";
 import Message from "../../../../components/UI/Message";
 import { useLoginMutation } from "../../authService";
 
-import styles from "./loginForm.module.scss";
 import { VALIDATION_MSG } from "../../../../constants/constants";
 import InputControl from "../../../../components/InputControl";
 import CheckboxControl from "../../../../components/CheckboxControl/CheckboxControl";
-import { usePersist } from "../../../../hooks/usePersist";
 import { FetchError } from "../../../../api/apiSlice";
 import { forgotPasswordLink } from "../../../../router/UserRouter/routes";
 import { registerLink } from "../../../../router/AuthRouter/routes";
+
+import styles from "./loginForm.module.scss";
 
 type FormInputs = {
   email: string;
@@ -35,24 +35,21 @@ const schema = yup.object().shape({
 });
 
 const LoginForm: FC = () => {
-  const { persist, setPersist } = usePersist();
   const [login, { error, isError }] = useLoginMutation();
 
   const navigate = useNavigate();
 
   const { handleSubmit, control } = useForm<FormInputs>({
     defaultValues: {
-      persist: persist,
+      persist: false,
     },
     resolver: yupResolver(schema),
   });
 
   const handleFormSubmit: SubmitHandler<FormInputs> = async (data) => {
-    const { email, password, persist } = data;
-    const response = await login({ email, password }).unwrap();
+    const response = await login(data).unwrap();
 
     if (response) {
-      setPersist(persist);
       navigate("/");
     }
   };

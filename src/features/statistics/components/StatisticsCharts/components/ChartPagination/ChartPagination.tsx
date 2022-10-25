@@ -1,8 +1,10 @@
 import { FC, useState } from "react";
 
 import { charts } from "../../charts";
-import styles from "./chartPagination.module.scss";
+
 import Pagination from "../../../../../../components/UI/Pagination";
+
+import styles from "./chartPagination.module.scss";
 
 const ChartPagination: FC = () => {
   const [selectedChartIndex, setSelectedChartIndex] = useState<number>(0);

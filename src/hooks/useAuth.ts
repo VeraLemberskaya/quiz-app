@@ -1,8 +1,9 @@
 import jwtDecode from "jwt-decode";
 
 import { Role } from "../config/permissions";
+import { logout } from "../features/auth/store/authReducer";
 import { selectToken, selectUser } from "../features/auth/store/authSelectors";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 type UserData = {
   id: string;
@@ -10,18 +11,23 @@ type UserData = {
 };
 
 export const useAuth = () => {
-  const token = useAppSelector(selectToken);
   const user = useAppSelector(selectUser);
+  const token = useAppSelector(selectToken);
   let role: string = "";
   let permissions: string[] = [];
   let isAuth: boolean = false;
 
-  if (token) {
-    const { role: roleInfo }: UserData = jwtDecode(token);
+  const dispatch = useAppDispatch();
 
-    role = roleInfo.name;
-    permissions = roleInfo.permissions;
-    isAuth = true;
+  if (token) {
+    try {
+      const { role: roleInfo }: UserData = jwtDecode(token);
+      role = roleInfo.name;
+      permissions = roleInfo.permissions;
+      isAuth = true;
+    } catch {
+      dispatch(logout());
+    }
   }
 
   return { user, role, permissions, isAuth };

@@ -1,4 +1,5 @@
 import { FC } from "react";
+
 import TooltipWrapper from "./TooltipWrapper";
 
 const GamesStatisticsTooltip: FC<any> = (props) => {

@@ -2,6 +2,7 @@ import { FC, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import FormLayout from "../../components/Layouts/FormLayout";
+
 import { authRoutes } from "./routes";
 
 const EmailVerify = lazy(

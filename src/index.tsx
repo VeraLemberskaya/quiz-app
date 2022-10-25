@@ -1,19 +1,17 @@
-import { injectStyle } from "react-toastify/dist/inject-style";
+import { useEffect } from "react";
+import { Action } from "@reduxjs/toolkit";
+
 import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, useLocation } from "react-router-dom";
 import { Provider, ProviderProps } from "react-redux";
 
 import App from "./App";
 import "./assets/styles/index.scss";
 import { store } from "./store/store";
-import { useEffect } from "react";
-import { Action } from "@reduxjs/toolkit";
-import { setLocation } from "./store/router/reducer";
 
-if (typeof window !== "undefined") {
-  injectStyle();
-}
+import { setLocation } from "./store/reducers/routerReducer";
 
 const withRouter =
   (Provider: (props: ProviderProps<Action<any>>) => JSX.Element) =>
@@ -22,7 +20,7 @@ const withRouter =
 
     useEffect(() => {
       store.dispatch(setLocation(location));
-    }, [location]);
+    }, [location, store]);
     return <Provider store={store}>{children}</Provider>;
   };
 

@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
 import { BsFilterRight } from "react-icons/bs";
 
-import styles from "./filters.module.scss";
 import classNames from "classnames";
+
 import Button from "../../../../components/UI/Button";
 import Checkbox from "../../../../components/UI/Checkbox";
 import { FilterValue } from "../../services/types";
@@ -11,6 +11,8 @@ import { selectStatistics } from "../../services/selectors";
 import { setFilterValue, setFindMe } from "../../services/slice";
 import Select from "../../../../components/UI/Select";
 import { useAuth } from "../../../../hooks/useAuth";
+
+import styles from "./filters.module.scss";
 
 const FILTER_VALUES: { [key in FilterValue]: string } = {
   score: "score",
