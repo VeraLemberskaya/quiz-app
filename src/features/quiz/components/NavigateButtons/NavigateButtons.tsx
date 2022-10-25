@@ -2,7 +2,7 @@ import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 import Button from "../../../../components/UI/Button";
-import { useAppDispatch } from "../../../../services/hooks";
+import { useAppDispatch } from "../../../../store/hooks";
 import { useQuizContext } from "../../contexts/QuizContext";
 import { useNavigateButtons } from "../../hooks/useNavigateButtons";
 import { decrement, increment } from "../../services/slice";

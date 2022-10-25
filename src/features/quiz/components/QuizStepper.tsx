@@ -1,6 +1,7 @@
 import { FC } from "react";
+
 import Stepper from "../../../components/UI/Stepper";
-import { useAppDispatch, useAppSelector } from "../../../services/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { selectCurrentSettings } from "../../settings/services/selectors";
 import { useQuizContext } from "../contexts/QuizContext";
 import { selectCurrentIndex } from "../services/selectors";

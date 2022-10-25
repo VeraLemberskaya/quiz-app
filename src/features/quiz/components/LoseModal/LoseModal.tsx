@@ -1,10 +1,11 @@
 import { FC } from "react";
 
-import styles from "./loseModal.module.scss";
+import { Link } from "react-router-dom";
 
-import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../../components/UI/Button";
 import Modal from "../../../../components/UI/Modal";
+
+import styles from "./loseModal.module.scss";
 
 type Props = {
   onStartAgain: () => void;

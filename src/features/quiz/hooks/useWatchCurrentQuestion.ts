@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { useAppSelector } from "../../../services/hooks";
+
+import { useAppSelector } from "../../../store/hooks";
 import { selectCurrentSettings } from "../../settings/services/selectors";
 import { CurrentQuestionState } from "../contexts/QuizContext";
 import {
@@ -16,7 +17,7 @@ export const useWatchCurrentQuestion = (): CurrentQuestionState => {
 
   const isLast = useMemo(
     () => currentIndex === questionAmount - 1,
-    [currentIndex]
+    [currentIndex, questionAmount]
   );
 
   const isFirst = useMemo(() => currentIndex === 0, [currentIndex]);

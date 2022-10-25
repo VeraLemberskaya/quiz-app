@@ -1,8 +1,8 @@
-import { useAppSelector } from "../../../services/hooks";
+import { useAppSelector } from "../../../store/hooks";
 import {
   selectTopicsSearchParams,
   selectUserGameSearchParams,
-} from "../../../services/router/selectors";
+} from "../../../store/selectors/routerSelectors";
 import { useGetQuizQuery, useGetUserGameQuery } from "../services/slice";
 
 export const useGetQuiz = () => {

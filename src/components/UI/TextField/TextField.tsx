@@ -3,12 +3,13 @@ import React, {
   Ref,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useRef,
   useState,
 } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
 import { useControlledInput } from "../../../hooks/useControlledInput";
-import ErrorDisplay from "../ErrorDisplay";
 
 import styles from "./textField.module.scss";
 
@@ -17,39 +18,37 @@ type Props = Omit<
   "type" | "checked"
 > & {
   type?: "password" | "text";
-  error?: string;
-  errorIcon?: JSX.Element;
-  focused?: boolean;
+  error?: boolean;
   label?: string;
 };
 
 const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
   const {
-    placeholder,
-    defaultValue = "",
-    label,
     type = "text",
+    value = "",
+    placeholder,
+    label,
     error,
-    errorIcon,
     className,
     onChange,
     ...otherProps
   } = props;
-  const { inputValue, handleInputChange } = useControlledInput(
-    defaultValue,
-    onChange
-  );
   const [inputFocused, setInputFocused] = useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const inputProps = useControlledInput(value, onChange);
   const inputRef = useRef<HTMLInputElement>(null);
+  const inputType = useMemo(
+    () => (type === "text" ? type : passwordVisible ? "text" : type),
+    [passwordVisible, type]
+  );
 
   useEffect(() => {
     if (inputRef.current === document.activeElement) {
       setInputFocused(true);
     }
-  }, [document.activeElement]);
+  }, []);
 
-  useImperativeHandle(ref, () => inputRef.current, [inputRef.current]);
+  useImperativeHandle(ref, () => inputRef.current, []);
 
   const handleTextFieldClick = () => {
     setInputFocused(true);
@@ -62,6 +61,7 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
     if (props.onBlur) {
       props.onBlur(event);
     }
+
     setInputFocused(false);
   };
 
@@ -95,13 +95,12 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
           <div className={styles.inputContainer}>
             <input
               ref={inputRef}
-              value={inputValue}
-              type={type === "text" ? type : passwordVisible ? "text" : type}
               className={styles.input}
-              {...otherProps}
-              onChange={handleInputChange}
+              type={inputType}
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
+              {...inputProps}
+              {...otherProps}
             />
           </div>
           {type === "password" && (
@@ -110,11 +109,6 @@ const TextField = (props: Props, ref: Ref<HTMLInputElement | null>) => {
             </span>
           )}
         </span>
-        <ErrorDisplay
-          message={error ?? ""}
-          icon={errorIcon}
-          visible={!!error}
-        />
       </div>
     </>
   );

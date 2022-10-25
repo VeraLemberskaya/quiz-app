@@ -1,4 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
+
 import { selectSettingsResult } from "./slice";
 import { AmountValue, Settings, SettingsValues, Topic } from "./types";
 

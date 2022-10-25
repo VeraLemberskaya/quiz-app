@@ -4,7 +4,7 @@ import classNames from "classnames";
 import styles from "./errorDisplay.module.scss";
 
 type Props = {
-  message: string;
+  message?: string;
   icon?: JSX.Element;
   visible: boolean;
 };

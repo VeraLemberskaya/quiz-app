@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { Control } from "react-hook-form";
 
-import { useAppSelector } from "../../../services/hooks";
+import { useAppSelector } from "../../../store/hooks";
 import {
   selectAnswerAmountValues,
   selectCurrentSettings,
 } from "../services/selectors";
 import { SettingsValues } from "../services/types";
+
 import SettingDropdown from "./SettingDropdown";
 import SettingsController from "./SettingsController";
 

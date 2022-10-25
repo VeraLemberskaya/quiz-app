@@ -1,11 +1,13 @@
 import { useState, useRef, Ref, useImperativeHandle } from "react";
 import classNames from "classnames";
 
-import styles from "./numberField.module.scss";
 import React from "react";
+
 import ErrorDisplay from "../ErrorDisplay";
 import { useControlledInput } from "../../../hooks/useControlledInput";
 import { useOutsideClickEffect } from "../../../hooks/useOutsideClickEffect";
+
+import styles from "./numberField.module.scss";
 
 type Props = {
   value?: number;
@@ -19,10 +21,10 @@ const NumberField = (
   ref: Ref<HTMLInputElement | null>
 ) => {
   const [inputFocused, setInputFocused] = useState<boolean>(false);
-  const { inputValue, handleInputChange } = useControlledInput(value, onChange);
+  const inputProps = useControlledInput(value, onChange);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useImperativeHandle(ref, () => inputRef.current, [inputRef.current]);
+  useImperativeHandle(ref, () => inputRef.current, []);
 
   useOutsideClickEffect(() => {
     setInputFocused(false);
@@ -46,11 +48,10 @@ const NumberField = (
         onClick={handleNumberFieldClick}
       >
         <input
-          type="number"
-          value={inputValue}
-          ref={inputRef}
           className={styles.input}
-          onChange={handleInputChange}
+          type="number"
+          ref={inputRef}
+          {...inputProps}
           {...otherProps}
         />
       </div>

@@ -3,10 +3,11 @@ import { Control, Controller } from "react-hook-form";
 import { BiError } from "react-icons/bi";
 
 import NumberField from "../../../components/UI/NumberField";
-import { useAppSelector } from "../../../services/hooks";
+import { useAppSelector } from "../../../store/hooks";
 import { useQuestionTimeFieldValidation } from "../hooks/useQuestionTimeFieldValidation";
 import { selectQuestionTime } from "../services/selectors";
 import { SettingsValues } from "../services/types";
+
 import SettingsController from "./SettingsController";
 
 type Props = {

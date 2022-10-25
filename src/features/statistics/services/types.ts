@@ -1,5 +1,4 @@
-import { User } from "../../user/services/types";
-
+import { User } from "../../../types/types";
 export type FilterValue = "score" | "games";
 
 export interface ListResponse<T> {

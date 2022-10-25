@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { apiSlice } from "../../../services/apiSlice";
+
+import { apiSlice } from "../../../api/apiSlice";
+import { User } from "../../../types/types";
 import { Game } from "../../quiz/services/types";
-import { User } from "../../user/services/types";
+
 import {
   FilterValue,
   ListResponse,

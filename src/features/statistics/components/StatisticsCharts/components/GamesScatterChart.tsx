@@ -13,6 +13,7 @@ import {
 
 import { COLORS, labelColor } from "../colors";
 import { useGetUsersStatisticsQuery } from "../../../services/slice";
+
 import UserStatisticsTooltip from "./CustomTooltip/UserStatisticsTooltip";
 
 const GamesScatterChart: FC = () => {

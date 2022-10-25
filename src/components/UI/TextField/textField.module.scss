@@ -49,6 +49,7 @@ $transition: 0.25s ease-in-out;
         color: $theme-color;
         font-size: 1.7rem;
         font-family: Roboto, Helvetica, Arial, sans-serif;
+        transition: color $transition;
         @include for-phone-only {
           font-size: 1.6rem;
         }
@@ -60,6 +61,7 @@ $transition: 0.25s ease-in-out;
           box-shadow: inset 0 0 0 1000px $white-color !important;
         }
         &:disabled {
+          color: $grey-color;
           background-color: $white-color;
         }
       }

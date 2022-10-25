@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from "react";
+
 import Dropdown from "../Dropdown";
 
 import styles from "./select.module.scss";
@@ -17,7 +18,7 @@ const Select: FC<Props> = ({ label, defaultValue, options, onSelect }) => {
     if (value) {
       onSelect(value);
     }
-  }, [value]);
+  }, [value, onSelect]);
 
   return (
     <div className={styles.selectWrapper}>

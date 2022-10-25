@@ -1,23 +1,5 @@
-import { useState, useMemo } from "react";
+import { useContext } from "react";
 
-type EditStatus = "editing" | "success" | "none";
+import EditStatusContext from "../contexts/EditStatusContext";
 
-const STATUS_MESSAGES: { [key in EditStatus]: string } = {
-  none: "",
-  editing: "Edit your personal data.",
-  success: "Data have been successfully updated.",
-};
-
-export const useEditStatus = () => {
-  const [editStatus, setEditStatus] = useState<EditStatus>("none");
-
-  const message = useMemo(() => STATUS_MESSAGES[editStatus], [editStatus]);
-
-  const isEditing = useMemo(() => editStatus === "editing", [editStatus]);
-
-  return {
-    setEditStatus,
-    message,
-    isEditing,
-  };
-};
+export const useEditStatus = () => useContext(EditStatusContext);

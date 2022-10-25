@@ -3,22 +3,27 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiUser, BiExit } from "react-icons/bi";
 
 import Button from "../../Button";
-import styles from "./navlinks.module.scss";
-import { useAppDispatch, useAppSelector } from "../../../../services/hooks";
+
 import Dropdown from "../../Dropdown";
-import { hasPermission } from "../../../../utils/hasPermission";
-import { selectCurrentUser } from "../../../../features/user/services/selectors";
-import { resetUser } from "../../../../features/user/services/slice";
+import { useAuth } from "../../../../hooks/useAuth";
+import PermissionGate from "../../../../features/auth/components/PermissionGate";
+import { useLogoutMutation } from "../../../../features/auth/authService";
+import { PERMISSIONS } from "../../../../config/permissions";
+import { accountLink } from "../../../../router/UserRouter/routes";
+import { loginLink } from "../../../../router/AuthRouter/routes";
+
+import styles from "./navlinks.module.scss";
 
 const NavLinks: FC = () => {
-  const user = useAppSelector(selectCurrentUser);
-  const dispatch = useAppDispatch();
+  const { isAuth, user } = useAuth();
+
   const navigate = useNavigate();
 
-  const handleLogOut = () => {
-    localStorage.removeItem("rememberMe");
-    dispatch(resetUser());
-    navigate("/login");
+  const [logout] = useLogoutMutation();
+
+  const handleLogOut = async () => {
+    await logout();
+    navigate(loginLink());
   };
 
   return (
@@ -32,19 +37,19 @@ const NavLinks: FC = () => {
       <Link className={styles.navLink} to="/">
         About us
       </Link>
-      {user && hasPermission(user, "CONFIGURE_SETTINGS") && (
+      <PermissionGate permissions={[PERMISSIONS.updateSettings]}>
         <Link className={styles.navLink} to="/settings">
           Settings
         </Link>
-      )}
+      </PermissionGate>
       <Link className={styles.navLink} to="/statistics">
         Statistics
       </Link>
-      {user ? (
+      {isAuth ? (
         <>
           <Link
             className={`${styles.navLink} ${styles.phoneOnly}`}
-            to="/account"
+            to={accountLink()}
           >
             Account
           </Link>
@@ -58,10 +63,10 @@ const NavLinks: FC = () => {
           <Dropdown className={styles.dropdown}>
             <Dropdown.Toggle>
               <BiUser />
-              {user.name}
+              {user?.name}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Link to="/account">
+              <Link to={accountLink()}>
                 <Dropdown.Item>Account</Dropdown.Item>
               </Link>
               <Dropdown.Item onClick={handleLogOut}>Log out</Dropdown.Item>
@@ -69,7 +74,7 @@ const NavLinks: FC = () => {
           </Dropdown>
         </>
       ) : (
-        <Link className={styles.navLink} to="/login">
+        <Link className={styles.navLink} to={loginLink()}>
           <Button buttonType="outlined">Login</Button>
         </Link>
       )}

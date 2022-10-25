@@ -13,6 +13,7 @@ import {
 
 import { COLORS, labelColor } from "../colors";
 import { useGetScoreStatistics } from "../../../hooks/useGetScoreStatistics";
+
 import ScoreTooltip from "./CustomTooltip/ScoreTooltip";
 
 export type Props = {

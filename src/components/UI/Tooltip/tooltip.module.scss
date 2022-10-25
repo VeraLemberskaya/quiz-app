@@ -1,0 +1,17 @@
+@import "../../../assets/styles/colors";
+@import "../../../assets/styles/media";
+
+.tooltip {
+  background-color: rgba($white-color, 0.8) !important;
+  box-shadow: 0 3px 6px 3px $silver-color;
+  color: $font-color !important;
+  font-size: 1.6rem !important;
+
+  @include for-phone-only {
+    font-size: 1.4rem !important;
+  }
+
+  &:after {
+    border-left-color: $white-color !important;
+  }
+}

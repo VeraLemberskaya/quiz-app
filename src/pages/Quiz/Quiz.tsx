@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Loader from "../../components/UI/Loader";
 import FadeTransition from "../../components/Utils/FadeTransition";
-import { useAppDispatch } from "../../services/hooks";
+import { useAppDispatch } from "../../store/hooks";
 import QuizAnswerSelector from "../../features/quiz/components/QuizAnswerSelector";
 import LoseModal from "../../features/quiz/components/LoseModal";
 import NavigateButtons from "../../features/quiz/components/NavigateButtons";
@@ -11,8 +11,10 @@ import QuizProvider from "../../features/quiz/components/QuizProvider";
 import QuizStepper from "../../features/quiz/components/QuizStepper";
 import QuizTimer from "../../features/quiz/components/QuizTimer";
 import { useQuiz } from "../../features/quiz/hooks/useQuiz";
-import styles from "./quiz.module.scss";
+
 import { resetCurrentQuestion } from "../../features/quiz/services/slice";
+
+import styles from "./quiz.module.scss";
 
 type Props = {
   isResultPage?: boolean;
@@ -30,7 +32,7 @@ const Quiz: React.FC<Props> = ({ isResultPage = false }) => {
 
   useEffect(() => {
     dispatch(resetCurrentQuestion());
-  }, [resultsViewMode]);
+  }, [resultsViewMode, dispatch]);
 
   useEffect(() => {
     if (isCompleted) {

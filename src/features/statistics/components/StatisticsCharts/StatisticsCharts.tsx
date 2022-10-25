@@ -3,10 +3,13 @@ import { BsGrid } from "react-icons/bs";
 
 import { MdOutlineInsertChartOutlined } from "react-icons/md";
 
+import Button from "../../../../components/UI/Button";
+
+import { useMediaQuery } from "../../../../hooks/useMediaQuery";
+
 import styles from "./statisticsCharts.module.scss";
 import { charts } from "./charts";
-import Button from "../../../../components/UI/Button";
-import { useMediaQuery } from "../../../../hooks/useMediaQuery";
+
 import ChartPagination from "./components/ChartPagination";
 
 type DisplayMode = "grid" | "page";

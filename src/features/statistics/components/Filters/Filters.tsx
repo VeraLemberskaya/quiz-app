@@ -1,16 +1,18 @@
 import { FC, useState } from "react";
 import { BsFilterRight } from "react-icons/bs";
 
-import styles from "./filters.module.scss";
 import classNames from "classnames";
+
 import Button from "../../../../components/UI/Button";
 import Checkbox from "../../../../components/UI/Checkbox";
 import { FilterValue } from "../../services/types";
-import { useAppDispatch, useAppSelector } from "../../../../services/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { selectStatistics } from "../../services/selectors";
 import { setFilterValue, setFindMe } from "../../services/slice";
-import { selectCurrentUser } from "../../../user/services/selectors";
 import Select from "../../../../components/UI/Select";
+import { useAuth } from "../../../../hooks/useAuth";
+
+import styles from "./filters.module.scss";
 
 const FILTER_VALUES: { [key in FilterValue]: string } = {
   score: "score",
@@ -18,7 +20,7 @@ const FILTER_VALUES: { [key in FilterValue]: string } = {
 };
 
 const Filters: FC = () => {
-  const user = useAppSelector(selectCurrentUser);
+  const { user } = useAuth();
 
   const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
   const { filterValue, findMe } = useAppSelector(selectStatistics);

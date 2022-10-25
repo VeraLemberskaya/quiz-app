@@ -2,12 +2,13 @@ import { FC, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 import { Control, useController } from "react-hook-form";
 
-import styles from "./settingsChipList.module.scss";
 import { SettingsValues } from "../../services/types";
 import Chip from "../../../../components/UI/Chip";
 import { useOptions } from "../../hooks/useOptions";
 import { FieldNames } from "../SettingsForm/SettingsForm";
 import SettingsController from "../SettingsController";
+
+import styles from "./settingsChipList.module.scss";
 
 type Props = {
   label: string;
@@ -37,7 +38,7 @@ const SettingsChipList: FC<Props> = ({
 
   useEffect(() => {
     onChange(selectedOptions);
-  }, [selectedOptions]);
+  }, [selectedOptions, onChange]);
 
   return (
     <div>

@@ -1,21 +1,25 @@
 import { FC, useEffect } from "react";
 
-import styles from "./quizModal.module.scss";
-import { useAppSelector } from "../../../../services/hooks";
+import moment from "moment";
+
+import { Link } from "react-router-dom";
+
+import { useAppSelector } from "../../../../store/hooks";
 import {
   selectQuiz,
   selectQuizAnswers,
   selectQuizScore,
 } from "../../services/selectors";
-import moment from "moment";
 
-import { selectCurrentUser } from "../../../../features/user/services/selectors";
 import Button from "../../../../components/UI/Button";
 import Modal from "../../../../components/UI/Modal";
 import { Game, Question } from "../../services/types";
 import { useQuizContext } from "../../contexts/QuizContext";
-import { Link } from "react-router-dom";
+
 import { useSaveGameResultMutation } from "../../services/slice";
+import { useAuth } from "../../../../hooks/useAuth";
+
+import styles from "./quizModal.module.scss";
 
 const QuizModal: FC = () => {
   const [saveUserGame] = useSaveGameResultMutation();
@@ -23,7 +27,7 @@ const QuizModal: FC = () => {
   const quiz = useAppSelector(selectQuiz) as Question[];
   const answers = useAppSelector(selectQuizAnswers);
   const score = useAppSelector(selectQuizScore);
-  const user = useAppSelector(selectCurrentUser);
+  const { user } = useAuth();
 
   const { setResultsViewMode } = useQuizContext();
 
@@ -37,7 +41,7 @@ const QuizModal: FC = () => {
     if (user) {
       saveUserGame({ id: user.id, game });
     }
-  }, []);
+  }, [answers, quiz, saveUserGame, score, user]);
 
   return (
     <Modal>

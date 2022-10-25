@@ -1,19 +1,20 @@
 import { useEffect } from "react";
 
-import { useAppSelector, useAppDispatch } from "../../../services/hooks";
-import { selectCurrentUser } from "../../user/services/selectors";
+import { useAuth } from "../../../hooks/useAuth";
+
+import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { selectFindMe, selectFilterValue } from "../services/selectors";
 import { setUsersPage, useGetUserPageQuery } from "../services/slice";
 
 export const usePageReset = () => {
   const findMeChecked = useAppSelector(selectFindMe);
   const filterValue = useAppSelector(selectFilterValue);
-  const currentUser = useAppSelector(selectCurrentUser);
+  const { user } = useAuth();
 
   const { data, refetch } = useGetUserPageQuery(
-    { id: currentUser?.id ?? "", orderBy: filterValue },
+    { id: user?.id ?? "", orderBy: filterValue },
     {
-      skip: !currentUser,
+      skip: !user,
     }
   );
 
@@ -23,11 +24,11 @@ export const usePageReset = () => {
     if (data) {
       dispatch(setUsersPage(data.page));
     }
-  }, [data]);
+  }, [data, dispatch]);
 
   useEffect(() => {
     if (findMeChecked) {
       refetch();
     }
-  }, [findMeChecked]);
+  }, [findMeChecked, refetch]);
 };

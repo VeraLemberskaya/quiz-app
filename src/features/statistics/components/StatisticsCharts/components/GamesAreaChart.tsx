@@ -13,6 +13,7 @@ import moment from "moment";
 
 import { COLORS, labelColor } from "../colors";
 import { useGetGamesStatisticsQuery } from "../../../services/slice";
+
 import GamesStatisticsTooltip from "./CustomTooltip/GamesStatisticsTooltip";
 
 const DateFormatter = (date: number) => {

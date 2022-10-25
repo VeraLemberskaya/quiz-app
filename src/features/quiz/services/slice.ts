@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { apiSlice } from "../../../services/apiSlice";
+
+import { apiSlice } from "../../../api/apiSlice";
 
 import { Game, Question, QuizSliceState } from "./types";
 
@@ -44,7 +45,7 @@ const quizSlice = createSlice({
       state.topics.push(action.payload);
     },
     removeTopic: (state, action: PayloadAction<string>) => {
-      state.topics = state.topics.filter((topic) => topic != action.payload);
+      state.topics = state.topics.filter((topic) => topic !== action.payload);
     },
     increment: (state) => {
       state.currentIndex++;
