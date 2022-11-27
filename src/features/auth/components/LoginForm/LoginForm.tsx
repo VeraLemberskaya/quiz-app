@@ -66,8 +66,8 @@ const LoginForm: FC = () => {
         />
         <div className="d-flex justify-content-between my-4">
           <CheckboxControl
-            name="persist"
             control={control}
+            name="persist"
             label="Remember me"
           />
           <Link className={styles.link} to={forgotPasswordLink()}>

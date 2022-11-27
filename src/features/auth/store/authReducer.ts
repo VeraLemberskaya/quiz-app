@@ -4,7 +4,6 @@ import { AuthState } from "../types";
 
 import { User } from "../../../types/types";
 import { loadAuth } from "../../../services/localStorageService";
-import { getActionsTypes } from "../../../utils/getActionsTypes";
 
 const initialState: AuthState = loadAuth() ?? {
   user: null,
@@ -35,6 +34,6 @@ const authSlice = createSlice({
 
 export const { setAuth, setUser, setToken, logout } = authSlice.actions;
 
-export const actionsTypes = getActionsTypes(Object.values(authSlice.actions));
+export const { actions } = authSlice;
 
 export default authSlice.reducer;

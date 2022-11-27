@@ -1,6 +1,5 @@
 import { FC } from "react";
 
-
 import { createSearchParams, useNavigate } from "react-router-dom";
 
 import { useAppSelector } from "../../../../../../store/hooks";
@@ -10,7 +9,7 @@ import {
 } from "../../../../services/selectors";
 
 import Table from "../../../../../../components/UI/Table";
-import { Game } from "../../../../../quiz/services/types";
+// import { Game } from "../../../../../quiz/services/types";
 import { User } from "../../../../../../types/types";
 
 import styles from "./userGamesListTable.module.scss";
@@ -50,7 +49,7 @@ const UserGamesListTable: FC = () => {
     <div className={styles.tableWrapper}>
       <Table
         columns={columns}
-        data={userGamesList as Game[]}
+        data={userGamesList as []}
         onRowSelect={handleRowSelection}
       />
     </div>

@@ -8,9 +8,10 @@
   width: 100%;
   background-color: $theme-color;
   padding: 4.5rem 2.7rem;
-  &:is(.small) {
+  &:has(.imgContainer) {
     padding: 2rem 2.7rem;
   }
+
   flex-direction: column;
   gap: 2rem;
   @include flex-center;

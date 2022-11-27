@@ -2,14 +2,13 @@ import { FC } from "react";
 
 import classNames from "classnames";
 
-import { useQuizContext } from "../../contexts/QuizContext";
-
 import { useAppSelector } from "../../../../store/hooks";
 import { selectQuestionTime } from "../../../settings/services/selectors";
 import Alarm from "../../../../assets/images/alarm.svg";
 import { useQuizTimer } from "../../hooks/useQuizTimer";
 
 import styles from "./quizTimer.module.scss";
+import { useQuiz } from "../../hooks/useQuiz";
 
 //useNavigateButtons и useQuizTimer следят за изменениями isAnswered
 
@@ -22,9 +21,11 @@ const QuizTimer: FC<Props> = ({ onExpire }) => {
 
   const { seconds } = useQuizTimer({ expiryTime: questionTime, onExpire });
 
-  const { resultsViewMode } = useQuizContext();
+  const { isResultsMode } = useQuiz();
 
-  if (resultsViewMode) return null;
+  if (isResultsMode) {
+    return null;
+  }
 
   return (
     <div className={styles.timerContainer}>

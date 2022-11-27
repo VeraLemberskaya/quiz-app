@@ -1,27 +1,16 @@
-import { useState } from "react";
+import { useMemo } from "react";
 
-import { QuizContextType } from "../contexts/QuizContext";
+import { useAppSelector } from "../../../store/hooks";
+import { selectQuiz, selectIsResultsMode } from "../store/quizSelectors";
 
-import { useGetQuiz } from "./useGetQuiz";
-import { useWatchCurrentQuestion } from "./useWatchCurrentQuestion";
+export const useQuiz = () => {
+  const quiz = useAppSelector(selectQuiz);
+  const isResultsMode = useAppSelector(selectIsResultsMode);
 
-export const useQuiz = ({
-  resultsViewMode: resultsMode,
-}: {
-  resultsViewMode: boolean;
-}): QuizContextType => {
-  const [resultsViewMode, setResultsViewMode] = useState<boolean>(resultsMode);
-
-  const result = useGetQuiz();
-
-  const currentQuestionState = useWatchCurrentQuestion();
+  const questionCount = useMemo(() => quiz.length, [quiz]);
 
   return {
-    resultsViewMode,
-    setResultsViewMode,
-    reload: result.refetch,
-    isLoading: result.isFetching,
-    currentQuestionState,
-    isCompleted: currentQuestionState.isLast && currentQuestionState.isAnswered,
+    isResultsMode,
+    questionCount,
   };
 };

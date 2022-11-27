@@ -48,7 +48,7 @@
   }
 }
 
-.wrong {
+.wrongAnimation {
   animation: 0.75s wrong;
   animation-fill-mode: forwards;
   @keyframes wrong {
@@ -78,7 +78,7 @@
     }
   }
 }
-.correct {
+.correctAnimation {
   animation: 1.5s correct;
   animation-fill-mode: forwards;
   @keyframes correct {
@@ -117,17 +117,17 @@
 }
 
 .correctDelay {
-  @extend .correct;
+  @extend .correctAnimation;
   animation-delay: 1.2s;
 }
 
-.answeredCorrect {
+.correct {
   background-color: $green-color;
   color: $white-color;
   box-shadow: 0 0 25px $green-color;
 }
 
-.answeredWrong {
+.wrong {
   background-color: $red-color;
   color: $white-color;
 }

@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { apiSlice } from "../../../api/apiSlice";
 import { User } from "../../../types/types";
-import { Game } from "../../quiz/services/types";
 
 import {
   FilterValue,
@@ -28,7 +27,7 @@ export const statisticsApiSlice = apiSlice.injectEndpoints({
       query: ({ page, orderBy }) => `/users?page=${page}&orderBy=${orderBy}`,
     }),
     getUserGamesList: builder.query<
-      ListResponse<Game>,
+      ListResponse<any>,
       { id: string; page: number }
     >({
       query: ({ id, page }) => `/users/${id}/games?page=${page}`,

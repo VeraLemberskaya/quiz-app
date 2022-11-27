@@ -1,20 +1,17 @@
 import { useState, useEffect } from "react";
 
-import { useQuizContext } from "../contexts/QuizContext";
-
-const ANIMATION_TIME = {
-  success: 1200,
-  error: 2500,
-};
+import { useQuiz } from "./useQuiz";
+import { useQuizQuestion } from "./useQuizQuestion";
 
 export const useNavigateButtons = () => {
   const [btnPreviousActive, setBtnPreviousActive] = useState<boolean>(true);
   const [btnNextActive, setBtnNextActive] = useState<boolean>(true);
 
+  const { isResultsMode } = useQuiz();
+
   const {
-    resultsViewMode,
-    currentQuestionState: { isLast, isFirst, isAnswered, isCorrect },
-  } = useQuizContext();
+    questionState: { isLast, isFirst, isAnswered },
+  } = useQuizQuestion();
 
   useEffect(() => {
     setBtnNextActive(!isLast);
@@ -25,17 +22,14 @@ export const useNavigateButtons = () => {
   }, [isFirst]);
 
   useEffect(() => {
-    if (!resultsViewMode) {
+    if (!isResultsMode) {
       if (isAnswered && !isLast) {
-        setTimeout(
-          () => setBtnNextActive(true),
-          isCorrect ? ANIMATION_TIME.success : ANIMATION_TIME.error
-        );
+        setBtnNextActive(true);
       } else {
         setBtnNextActive(false);
       }
     }
-  }, [isAnswered, isCorrect, isLast, resultsViewMode]);
+  }, [isAnswered, isLast, isResultsMode]);
 
   return {
     btnPreviousActive,

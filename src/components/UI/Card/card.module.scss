@@ -1,0 +1,55 @@
+@import "../../../assets/styles/colors";
+@import "../../../assets/styles/media";
+
+$card-border-radius: 0.5rem;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: $white-color;
+  box-shadow: 0 2px 4px 1px $silver-color;
+  border-radius: $card-border-radius;
+  text-align: left;
+
+  .cardImage {
+    width: 100%;
+    height: 18rem;
+    object-fit: contain;
+    :is(.cardImageTop) {
+      border-top-left-radius: $card-border-radius;
+      border-top-right-radius: $card-border-radius;
+    }
+    :is(.cardImageBottom) {
+      border-bottom-left-radius: $card-border-radius;
+      border-bottom-right-radius: $card-border-radius;
+    }
+  }
+
+  .cardBody {
+    flex: 1 1;
+    height: 50%;
+    padding: 1rem;
+    @include for-laptop {
+      padding-bottom: 0;
+    }
+  }
+
+  .cardTitle {
+    margin-top: 1rem;
+  }
+
+  .cardText {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .cardActions {
+    padding: 1rem;
+    padding-top: 2rem;
+    display: flex;
+    gap: 2rem;
+    @include for-laptop {
+      padding-top: 1rem;
+    }
+  }
+}

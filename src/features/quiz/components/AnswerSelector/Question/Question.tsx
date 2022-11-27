@@ -1,26 +1,21 @@
-import classNames from "classnames";
 import React from "react";
 
 import styles from "./question.module.scss";
 
-type QuestionProps = {
+type Props = {
+  title: string;
   img?: string;
-  children: React.ReactNode;
 };
 
-const Question: React.FC<QuestionProps> = ({ children, img }) => {
+const Question: React.FC<Props> = ({ title, img }) => {
   return (
-    <div
-      className={classNames(styles.questionContainer, {
-        [styles.small]: img,
-      })}
-    >
+    <div className={styles.questionContainer}>
       {img && (
         <div className={styles.imgContainer}>
-          <img src={img} alt="flag" />
+          <img src={img} alt={img} />
         </div>
       )}
-      <p className={styles.questionTitle}>{children}</p>
+      <p className={styles.questionTitle}>{title}</p>
     </div>
   );
 };

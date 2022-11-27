@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 
 import Answer from "./Answer/Answer";
 import AnswersContainer from "./AnswersContainer";
@@ -6,54 +6,54 @@ import Question from "./Question";
 import {
   AnswerSelectorContext,
   AnswerSelectorContextType,
-  AnswerSelectorModeType,
-} from "./context";
+} from "./AnswerSelectorContext";
+import { useAnswer } from "./useAnswer";
 
 type Props = {
-  id: string;
-  onSelect: (answer: number) => void;
-  answer: number;
-  correctAnswer: number;
+  questionId: string;
+  onAnswerSelect: (answer: string) => void;
+  //answer: number;
+  correctAnswer: string;
   children: React.ReactNode;
-  mode: AnswerSelectorModeType;
+  disabled?: boolean;
 };
 
 const AnswerSelector = ({
-  id,
-  onSelect,
-  answer: answerIndex,
+  questionId,
+  onAnswerSelect,
+  //answer: answerIndex,
   correctAnswer,
   children,
-  mode,
+  disabled = false,
 }: Props) => {
-  const [answer, setAnswer] = useState<number | null>(
-    mode === "selection" ? null : answerIndex
+  const { answer, isAnswered, setAnswer, resetAnswer, completeAnswer } =
+    useAnswer(disabled);
+
+  useEffect(() => {
+    resetAnswer();
+  }, [questionId, resetAnswer]);
+
+  useEffect(() => {
+    if (isAnswered) {
+      onAnswerSelect(answer);
+    }
+  }, [isAnswered, answer, onAnswerSelect]);
+
+  const checkAnswer = useCallback(
+    (id: string) => id === correctAnswer,
+    [correctAnswer]
   );
-
-  useEffect(() => {
-    if (mode === "review") {
-      setAnswer(answerIndex);
-    } else {
-      setAnswer(null);
-    }
-  }, [id, answerIndex, mode]);
-
-  useEffect(() => {
-    if (mode === "selection" && answer !== null) {
-      onSelect(answer);
-    }
-  }, [answer, mode, onSelect]);
 
   const value: AnswerSelectorContextType = useMemo(
     () => ({
-      mode,
+      disabled,
+      isAnswered,
       answer,
-      correctAnswer,
-      setAnswer: (answer: number) => {
-        setAnswer(answer);
-      },
+      setAnswer,
+      completeAnswer,
+      checkAnswer,
     }),
-    [answer, setAnswer, mode, correctAnswer]
+    [disabled, isAnswered, answer, setAnswer, checkAnswer, completeAnswer]
   );
 
   return (

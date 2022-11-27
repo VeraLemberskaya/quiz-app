@@ -2,31 +2,29 @@ import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 import Button from "../../../../components/UI/Button";
-import { useAppDispatch } from "../../../../store/hooks";
-import { useQuizContext } from "../../contexts/QuizContext";
 import { useNavigateButtons } from "../../hooks/useNavigateButtons";
-import { decrement, increment } from "../../services/slice";
+import { useQuestionIndex } from "../../hooks/useQuestionIndex";
+import { useQuiz } from "../../hooks/useQuiz";
 
 import styles from "./navigateButtons.module.scss";
 
 const NavigateButtons = () => {
   const { btnNextActive, btnPreviousActive } = useNavigateButtons();
-  const { resultsViewMode } = useQuizContext();
-
-  const dispatch = useAppDispatch();
+  const { incrementIndex, decrementIndex } = useQuestionIndex();
+  const { isResultsMode } = useQuiz();
 
   const handleBtnNextClick = () => {
-    dispatch(increment());
+    incrementIndex();
   };
 
   const handleBtnPreviousClick = () => {
-    dispatch(decrement());
+    decrementIndex();
   };
 
   return (
     <div className={styles.btnContainer}>
       <div>
-        {resultsViewMode && (
+        {isResultsMode && (
           <Button
             onClick={handleBtnPreviousClick}
             buttonType="outlined"
@@ -39,7 +37,7 @@ const NavigateButtons = () => {
         )}
       </div>
       <div className="d-flex">
-        {resultsViewMode && (
+        {isResultsMode && (
           <Link to="/" className={`${styles.backToMenuBtn} me-5`}>
             <Button buttonSize="large">Back to menu</Button>
           </Link>

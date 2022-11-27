@@ -1,8 +1,9 @@
+import { useQuiz } from "./useQuiz";
 import { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 
 import { getExpiryTimestamp } from "../../../utils/getExpiryTimestamp";
-import { useQuizContext } from "../contexts/QuizContext";
+import { useQuizQuestion } from "./useQuizQuestion";
 
 export const useQuizTimer = ({
   expiryTime,
@@ -18,20 +19,21 @@ export const useQuizTimer = ({
 
   const { restart, pause } = timerResult;
 
+  const { isResultsMode } = useQuiz();
+
   const {
-    resultsViewMode,
-    currentQuestionState: { isAnswered },
-  } = useQuizContext();
+    questionState: { isAnswered },
+  } = useQuizQuestion();
 
   useEffect(() => {
-    if (!resultsViewMode) {
+    if (!isResultsMode) {
       if (isAnswered) {
         pause();
       } else {
         restart(getExpiryTimestamp(expiryTime));
       }
     }
-  }, [isAnswered, expiryTime, pause, restart, resultsViewMode]);
+  }, [isAnswered, expiryTime, pause, restart, isResultsMode]);
 
   return timerResult;
 };

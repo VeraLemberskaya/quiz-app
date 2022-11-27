@@ -25,6 +25,23 @@
   @include for-phone-only {
     width: 95%;
   }
+
+  .modalTitle {
+    color: $dark-grey-color;
+    font-size: 4rem;
+    margin-top: 2rem;
+    text-align: center;
+    @include for-laptop {
+      font-size: 3.5rem;
+    }
+    @include for-tablet-portrait {
+      font-size: 3rem;
+    }
+    @include for-phone-only {
+      font-size: 2.8rem;
+    }
+  }
+
   .closeBtn {
     padding: 0;
     margin: 0;
@@ -37,11 +54,7 @@
     right: 1rem;
     top: 1rem;
     cursor: pointer;
-    svg {
-      width: inherit;
-      height: inherit;
-      fill: $grey-color;
-    }
+    fill: $grey-color;
   }
 }
 

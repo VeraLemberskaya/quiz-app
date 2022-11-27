@@ -1,5 +1,5 @@
-import classNames from "classnames";
 import React, { Children, FC } from "react";
+import classNames from "classnames";
 
 import styles from "./answersContainer.module.scss";
 

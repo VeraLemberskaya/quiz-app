@@ -5,9 +5,8 @@ import { AiFillCaretDown } from "react-icons/ai";
 import Image from "../../assets/images/people-quiz.svg";
 
 import Button from "../../components/UI/Button";
-import Modal from "../../components/UI/Modal";
 import FadeTransition from "../../components/Utils/FadeTransition";
-import TopicModal from "../../features/home/components/TopicModal";
+import TopicsModal from "../../features/quiz/components/TopicsModal";
 
 import styles from "./home.module.scss";
 
@@ -48,9 +47,7 @@ const Home: FC = () => {
         <img className="w-100" src={Image} alt="quiz" />
       </div>
       <FadeTransition inProp={modalOpened} timeout={300} styles={styles}>
-        <Modal onClose={() => setModalOpened(false)}>
-          <TopicModal />
-        </Modal>
+        <TopicsModal onClose={() => setModalOpened(false)} />
       </FadeTransition>
     </div>
   );
