@@ -10,34 +10,30 @@ import {
 import { useAnswer } from "./useAnswer";
 
 type Props = {
-  questionId: string;
   onAnswerSelect: (answer: string) => void;
-  //answer: number;
+  answer: string | null;
   correctAnswer: string;
   children: React.ReactNode;
   disabled?: boolean;
 };
 
 const AnswerSelector = ({
-  questionId,
   onAnswerSelect,
-  //answer: answerIndex,
+  answer: initialAnswer,
   correctAnswer,
   children,
   disabled = false,
 }: Props) => {
-  const { answer, isAnswered, setAnswer, resetAnswer, completeAnswer } =
-    useAnswer(disabled);
+  const { answer, isAnswered, setAnswer, completeAnswer } =
+    useAnswer(initialAnswer);
 
   useEffect(() => {
-    resetAnswer();
-  }, [questionId, resetAnswer]);
-
-  useEffect(() => {
-    if (isAnswered) {
-      onAnswerSelect(answer);
+    if (!disabled) {
+      if (isAnswered) {
+        onAnswerSelect(answer);
+      }
     }
-  }, [isAnswered, answer, onAnswerSelect]);
+  }, [isAnswered, answer, onAnswerSelect, disabled]);
 
   const checkAnswer = useCallback(
     (id: string) => id === correctAnswer,

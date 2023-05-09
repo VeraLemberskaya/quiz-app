@@ -2,30 +2,19 @@ import { FC } from "react";
 
 import classNames from "classnames";
 
-import { useAppSelector } from "../../../../store/hooks";
-import { selectQuestionTime } from "../../../settings/services/selectors";
 import Alarm from "../../../../assets/images/alarm.svg";
 import { useQuizTimer } from "../../hooks/useQuizTimer";
 
-import styles from "./quizTimer.module.scss";
-import { useQuiz } from "../../hooks/useQuiz";
+import { TIMER_EXPIRY_TIME } from "../../constants";
 
-//useNavigateButtons и useQuizTimer следят за изменениями isAnswered
+import styles from "./quizTimer.module.scss";
 
 type Props = {
   onExpire: () => void;
 };
 
 const QuizTimer: FC<Props> = ({ onExpire }) => {
-  const questionTime = useAppSelector(selectQuestionTime);
-
-  const { seconds } = useQuizTimer({ expiryTime: questionTime, onExpire });
-
-  const { isResultsMode } = useQuiz();
-
-  if (isResultsMode) {
-    return null;
-  }
+  const { seconds } = useQuizTimer({ expiryTime: TIMER_EXPIRY_TIME, onExpire });
 
   return (
     <div className={styles.timerContainer}>

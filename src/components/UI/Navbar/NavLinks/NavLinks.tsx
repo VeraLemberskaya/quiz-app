@@ -42,9 +42,9 @@ const NavLinks: FC = () => {
           Settings
         </Link>
       </PermissionGate>
-      <Link className={styles.navLink} to="/statistics">
+      {/* <Link className={styles.navLink} to="/statistics">
         Statistics
-      </Link>
+      </Link> */}
       {isAuth ? (
         <>
           <Link

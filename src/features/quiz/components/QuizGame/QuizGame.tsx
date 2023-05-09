@@ -14,17 +14,15 @@ const QuizGame: FC = () => {
   const { topicId } = useQuizTopic();
   const dispatch = useAppDispatch();
 
-  const { data, isSuccess } = useGetQuizQuery(topicId, {
+  const { data, isSuccess, refetch } = useGetQuizQuery(topicId, {
     skip: !topicId,
     refetchOnMountOrArgChange: true,
   });
 
   useEffect(() => {
     if (isSuccess) {
-      const { quiz } = data;
-
       dispatch(resetQuiz());
-      dispatch(setQuiz(quiz));
+      dispatch(setQuiz(data));
 
       setQuizSuccess(true);
     }
@@ -34,8 +32,7 @@ const QuizGame: FC = () => {
     return <Navigate to="/" />;
   }
 
-  //убрать null
-  return quizSuccess ? <Quiz /> : null;
+  return quizSuccess ? <Quiz onStartAgain={refetch} /> : null;
 };
 
 export default QuizGame;

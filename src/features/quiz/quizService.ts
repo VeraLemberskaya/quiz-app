@@ -1,10 +1,15 @@
 import { apiSlice } from "../../api/apiSlice";
 
-import { GetQuizResponse, SetAnswerRequest } from "./types";
+import {
+  Quiz,
+  GetQuizScoreResponse,
+  SetAnswerRequest,
+  GetSavedQuizResponse,
+} from "./types";
 
 export const quizApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getQuiz: builder.query<GetQuizResponse, string>({
+    getQuiz: builder.query<Quiz, string>({
       query: (topicId) => ({
         url: "/quiz",
         method: "POST",
@@ -13,8 +18,14 @@ export const quizApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
-    getQuizById: builder.query<GetQuizResponse, string>({
+    getSavedQuiz: builder.query<GetSavedQuizResponse, void>({
+      query: () => "/quiz",
+    }),
+    getQuizById: builder.query<Quiz, string>({
       query: (id) => `/quiz/${id}`,
+    }),
+    getQuizScore: builder.query<GetQuizScoreResponse, void>({
+      query: () => "/quiz/score",
     }),
     setAnswer: builder.mutation<void, SetAnswerRequest>({
       query: (body) => ({
@@ -28,5 +39,10 @@ export const quizApiSlice = apiSlice.injectEndpoints({
 
 export const { endpoints } = quizApiSlice;
 
-export const { useGetQuizQuery, useGetQuizByIdQuery, useSetAnswerMutation } =
-  quizApiSlice;
+export const {
+  useGetQuizQuery,
+  useGetSavedQuizQuery,
+  useGetQuizScoreQuery,
+  useGetQuizByIdQuery,
+  useSetAnswerMutation,
+} = quizApiSlice;

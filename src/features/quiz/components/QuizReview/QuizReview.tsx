@@ -17,11 +17,9 @@ const QuizReview: FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      const { quiz } = data;
-
       dispatch(resetQuiz());
       dispatch(setResultMode(true));
-      dispatch(setQuiz(quiz));
+      dispatch(setQuiz(data));
 
       setQuizSuccess(true);
     }
@@ -31,7 +29,7 @@ const QuizReview: FC = () => {
     return <Navigate to="/" />;
   }
 
-  return quizSuccess ? <Quiz /> : null;
+  return quizSuccess ? <Quiz resultMode /> : null;
 };
 
 export default QuizReview;

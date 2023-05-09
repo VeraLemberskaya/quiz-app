@@ -50,9 +50,15 @@ const Answer: FC<Props> = ({ id, value, index }) => {
   } = useAnswerSelectorContext();
 
   const getAnswerClass = () => {
-    if (answer === id) {
-      const answerStyle = getAnswerStyles(disabled);
+    const answerStyle = getAnswerStyles(disabled);
 
+    if (isAnswered) {
+      if (checkAnswer(id)) {
+        return answerStyle.correctStyle;
+      }
+    }
+
+    if (answer === id) {
       return checkAnswer(id)
         ? answerStyle.correctStyle
         : answerStyle.wrongStyle;

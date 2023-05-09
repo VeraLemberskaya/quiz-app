@@ -4,14 +4,21 @@ export type Answer = {
 };
 
 export type Question = {
-  id: string;
-  title: string;
-  img: string;
-  answers: Answer[];
-  correctAnswer: string;
+  question: {
+    id: string;
+    title: string;
+    img: string;
+    answers: Answer[];
+    correctAnswer: string;
+  };
+  userAnswer: string | null;
 };
 
-export type Quiz = Question[];
+export type Quiz = {
+  id: string;
+  score: number;
+  questions: Question[];
+};
 
 export type QuizState = {
   topicId: string;
@@ -21,10 +28,15 @@ export type QuizState = {
   isResultMode: boolean;
 };
 
-export type GetQuizResponse = {
-  quiz: Quiz;
+export type GetQuizScoreResponse = {
+  score: number;
 };
 
 export type SetAnswerRequest = {
   answerId: string;
+};
+
+export type GetSavedQuizResponse = {
+  quiz: Quiz | null;
+  questionIndex: number;
 };

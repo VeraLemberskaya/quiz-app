@@ -7,30 +7,29 @@ import AnswerSelector from "../AnswerSelector";
 
 const QuizAnswerSelector = () => {
   const { isResultsMode } = useQuiz();
-  const { currentQuestion, setIsAnswered } = useQuizQuestion();
+  const { currentQuestion, answer, setIsAnswered } = useQuizQuestion();
 
   const [setAnswer] = useSetAnswerMutation({});
 
   const { id, title, img, correctAnswer, answers } = currentQuestion!;
 
   const handleAnswerSelect = useCallback(
-    (answer: string) => {
+    async (answer: string) => {
+      await setAnswer({ answerId: answer });
       setIsAnswered();
-      setAnswer({ answerId: answer });
     },
     [setIsAnswered, setAnswer]
   );
 
   if (!currentQuestion) {
-    //something went wrong
     return null;
   }
 
   return (
     <AnswerSelector
-      questionId={id}
+      key={id}
       onAnswerSelect={handleAnswerSelect}
-      //answer={answers[currentQuestion.id]}
+      answer={answer}
       correctAnswer={correctAnswer}
       disabled={isResultsMode}
     >

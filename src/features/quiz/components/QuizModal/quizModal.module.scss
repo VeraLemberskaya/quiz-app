@@ -54,3 +54,5 @@
   padding: 0 3rem;
   justify-content: space-between;
 }
+
+@include fade-transition(0.3s);

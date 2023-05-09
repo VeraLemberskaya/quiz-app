@@ -27,7 +27,7 @@ export const selectIsResultsMode = createSelector(
 export const selectCurrentQuestion = createSelector(
   selectQuiz,
   selectIndex,
-  (quiz, index) => quiz[index]
+  (quiz, index) => quiz.questions[index]
 );
 
 export const selectAnsweredQuestionIds = createSelector(

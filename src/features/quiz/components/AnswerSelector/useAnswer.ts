@@ -2,14 +2,11 @@ import { useState, useCallback, useMemo } from "react";
 
 type AnswerStatus = "none" | "loading" | "fulfilled";
 
-export const useAnswer = (isResultMode: boolean) => {
-  const [answer, setAnswerState] = useState<string>("");
-  const [answerStatus, setAnswerStatus] = useState<AnswerStatus>("none");
-
-  const resetAnswer = useCallback(() => {
-    setAnswerState("");
-    setAnswerStatus("none");
-  }, [setAnswerState]);
+export const useAnswer = (initialAnswer: string | null) => {
+  const [answer, setAnswerState] = useState<string>(initialAnswer ?? "");
+  const [answerStatus, setAnswerStatus] = useState<AnswerStatus>(
+    initialAnswer ? "fulfilled" : "none"
+  );
 
   const setAnswer = useCallback((answer: string) => {
     setAnswerState(answer);
@@ -29,7 +26,6 @@ export const useAnswer = (isResultMode: boolean) => {
     answer,
     isAnswered,
     setAnswer,
-    resetAnswer,
     completeAnswer,
   };
 };

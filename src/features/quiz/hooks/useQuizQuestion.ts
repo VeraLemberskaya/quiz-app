@@ -16,14 +16,16 @@ export const useQuizQuestion = () => {
   const { index } = useQuestionIndex();
   const { questionCount } = useQuiz();
 
-  const currentQuestion = useAppSelector(selectCurrentQuestion);
+  const { question: currentQuestion, userAnswer } = useAppSelector(
+    selectCurrentQuestion
+  );
   const answeredQuestions = useAppSelector(selectAnsweredQuestionIds);
 
   const dispatch = useDispatch();
 
   const isAnswered: boolean = useMemo(
-    () => answeredQuestions.includes(currentQuestion.id),
-    [currentQuestion, answeredQuestions]
+    () => !!userAnswer || answeredQuestions.includes(currentQuestion.id),
+    [userAnswer, answeredQuestions, currentQuestion.id]
   );
 
   const isLast: boolean = useMemo(
@@ -44,6 +46,7 @@ export const useQuizQuestion = () => {
   }, [dispatch]);
 
   return {
+    answer: userAnswer,
     currentQuestion,
     questionState,
     setIsAnswered,

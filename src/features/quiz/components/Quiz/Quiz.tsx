@@ -1,76 +1,80 @@
 import React, { useEffect, useState } from "react";
 
-import Loader from "../../../../components/UI/Loader";
 import FadeTransition from "../../../../components/Utils/FadeTransition";
 import { useAppDispatch } from "../../../../store/hooks";
 import QuizAnswerSelector from "../QuizAnswerSelector";
-import LoseModal from "../LoseModal";
 import NavigateButtons from "../NavigateButtons";
 import QuizStepper from "../QuizStepper/QuizStepper";
 
+import QuizModal from "../QuizModal";
+
+import { setResultMode } from "../../store/quizReducer";
+
+import { useQuizQuestion } from "../../hooks/useQuizQuestion";
+
+import QuizTimer from "../QuizTimer";
+
+import LoseModal from "../LoseModal";
+
 import styles from "./quiz.module.scss";
 
-// type Props = {
-//   quiz: QuizType;
-//   resultsMode?: boolean;
-// };
+type Props = {
+  resultMode?: boolean;
+  onStartAgain?: () => void;
+};
 
-const Quiz: React.FC = () => {
-  // const [loseModalOpened, setLoseModalOpened] = useState<boolean>(false);
-  // const [modalOpened, setModalOpened] = useState<boolean>(false);
+const Quiz: React.FC<Props> = ({ resultMode = false, onStartAgain }) => {
+  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+  const [isLost, setIsLost] = useState<boolean>(false);
 
-  // const quizResult = useQuiz({ quiz, resultsViewMode: isResultPage });
+  const {
+    currentQuestion: { id },
+    questionState: { isLast, isAnswered },
+  } = useQuizQuestion();
+  const dispatch = useAppDispatch();
 
-  // const { resultsViewMode, isCompleted, reload, isLoading } = quizResult;
+  useEffect(() => {
+    dispatch(setResultMode(resultMode));
+  }, [dispatch, resultMode]);
 
-  // const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (!resultMode) {
+      if (isLast && isAnswered) {
+        setIsModalOpened(true);
+      }
+    }
+  }, [isLast, isAnswered, resultMode]);
 
-  // useEffect(() => {
-  //   dispatch(resetCurrentQuestion());
-  // }, [resultsViewMode, dispatch]);
+  const handleTimerExpire = () => {
+    setIsLost(true);
+  };
 
-  // useEffect(() => {
-  //   if (isCompleted) {
-  //     setTimeout(() => setModalOpened(true), 2000);
-  //   }
-  // }, [isCompleted]);
+  const handleStartAgain = () => {
+    setIsLost(false);
+    onStartAgain && onStartAgain();
+  };
 
   return (
-    // <QuizProvider quiz={quiz} isResultsMode={resultsMode}>
     <div className={styles.quizBody}>
       <div className="mt-5">
         <QuizStepper />
         <QuizAnswerSelector />
       </div>
-      <div className="container position-relative mt-5 mb-4">
-        {/* <QuizTimer onExpire={() => setLoseModalOpened(true)} /> */}
+      <div className="container position-relative mt-5 pb-5">
         <NavigateButtons />
-        {/* {!resultsViewMode && (
-            <>
-              <FadeTransition
-                inProp={modalOpened}
-                timeout={300}
-                styles={styles}
-              >
-                <QuizModal />
-              </FadeTransition>
-              <FadeTransition
-                inProp={loseModalOpened}
-                timeout={300}
-                styles={styles}
-              >
-                <LoseModal
-                  onStartAgain={() => {
-                    setLoseModalOpened(false);
-                    reload();
-                  }}
-                />
-              </FadeTransition>
-            </>
-          )} */}
+        {!resultMode && <QuizTimer key={id} onExpire={handleTimerExpire} />}
+        {isModalOpened && (
+          <FadeTransition inProp={isModalOpened} timeout={300} styles={styles}>
+            <QuizModal />
+          </FadeTransition>
+        )}
+        {isLost && (
+          <FadeTransition inProp={isLost} timeout={300} styles={styles}>
+            <LoseModal onStartAgain={handleStartAgain} />
+          </FadeTransition>
+        )}
       </div>
     </div>
-    //</QuizProvider>
   );
 };
 

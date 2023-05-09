@@ -2,10 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { Quiz, QuizState } from "../types";
 
+const initialQuiz: Quiz = {
+  id: "",
+  score: 0,
+  questions: [],
+};
+
 const initialState: QuizState = {
   topicId: "",
   index: 0,
-  quiz: [],
+  quiz: initialQuiz,
   answeredQuestions: [],
   isResultMode: false,
 };
@@ -37,13 +43,16 @@ const quizSlice = createSlice({
       const index = state.index;
       const answeredQuestions = state.answeredQuestions;
 
-      state.answeredQuestions = [...answeredQuestions, quiz[index].id];
+      state.answeredQuestions = [
+        ...answeredQuestions,
+        quiz.questions[index].question.id,
+      ];
     },
     setResultMode: (state, action: PayloadAction<boolean>) => {
       state.isResultMode = action.payload;
     },
     resetQuiz: (state) => {
-      state.quiz = [];
+      state.quiz = initialQuiz;
       state.answeredQuestions = [];
       state.index = 0;
       state.isResultMode = false;
